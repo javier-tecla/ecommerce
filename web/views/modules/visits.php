@@ -20,9 +20,9 @@
 
             <h3 class="py-3 text-muted">Colombia</h3>
 
-            <input type="text" class="knob" value="70" data-width="90" data-height="90" data-fgColor="#0099FF">
+            <input type="text" class="knob" value="38" data-width="90" data-height="90" data-fgColor="#0099FF">
 
-            <div class="knob-label">70% de las visitas</div>
+            <div class="knob-label">38% de las visitas</div>
 
         </div>
 
@@ -30,9 +30,9 @@
 
             <h3 class="py-3 text-muted">México</h3>
 
-            <input type="text" class="knob" value="50" data-width="90" data-height="90" data-fgColor="#990000">
+            <input type="text" class="knob" value="27" data-width="90" data-height="90" data-fgColor="#990000">
 
-            <div class="knob-label">50% de las visitas</div>
+            <div class="knob-label">27% de las visitas</div>
 
         </div>
 
@@ -40,9 +40,9 @@
 
             <h3 class="py-3 text-muted">Perú</h3>
 
-            <input type="text" class="knob" value="25" data-width="90" data-height="90" data-fgColor="#005599">
+            <input type="text" class="knob" value="14" data-width="90" data-height="90" data-fgColor="#005599">
 
-            <div class="knob-label">25% de las visitas</div>
+            <div class="knob-label">14% de las visitas</div>
 
         </div>
 
@@ -50,9 +50,9 @@
 
             <h3 class="py-3 text-muted">España</h3>
 
-            <input type="text" class="knob" value="15" data-width="90" data-height="90" data-fgColor="#260">
+            <input type="text" class="knob" value="8" data-width="90" data-height="90" data-fgColor="#260">
 
-            <div class="knob-label">15% de las visitas</div>
+            <div class="knob-label">8% de las visitas</div>
 
         </div>
 
@@ -60,9 +60,9 @@
 
             <h3 class="py-3 text-muted">Argentina</h3>
 
-            <input type="text" class="knob" value="15" data-width="90" data-height="90" data-fgColor="#F09">
+            <input type="text" class="knob" value="8" data-width="90" data-height="90" data-fgColor="#F09">
 
-            <div class="knob-label">15% de las visitas</div>
+            <div class="knob-label">8% de las visitas</div>
 
         </div>
 
@@ -70,9 +70,9 @@
 
             <h3 class="py-3 text-muted">Ecuador</h3>
 
-            <input type="text" class="knob" value="10" data-width="90" data-height="90" data-fgColor="#02A">
+            <input type="text" class="knob" value="5" data-width="90" data-height="90" data-fgColor="#02A">
 
-            <div class="knob-label">10% de las visitas</div>
+            <div class="knob-label">5% de las visitas</div>
 
         </div>
 
