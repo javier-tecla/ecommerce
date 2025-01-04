@@ -7,6 +7,18 @@ Variable Path
 $path = TemplateController::path();
 
 /*=================================================
+Capturar las rutas de la URL
+=================================================*/
+ 
+$routesArray = explode("/",$_SERVER["REQUEST_URI"]);
+array_shift($routesArray);
+
+foreach ($routesArray as $key => $value) {
+    $routesArray[$key] = explode("?",$value)[0];
+}
+echo '<pre>'; print_r($routesArray); echo '</pre>';
+
+/*=================================================
 Solicitud GET de Template
 =================================================*/
 
