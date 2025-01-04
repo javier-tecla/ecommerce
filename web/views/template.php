@@ -1,6 +1,33 @@
 <?php
 
+/*=================================================
+Variable Path
+=================================================*/
+
 $path = TemplateController::path();
+
+/*=================================================
+Solicitud GET de Template
+=================================================*/
+
+$url = "templates?linkTo=active_template&equalTo=ok";
+$method = "GET";
+$fields = array();
+
+$template = CurlController::request($url,$method,$fields);
+
+
+if($template->status == 200){
+
+    $template = $template->results[0];
+    
+
+}else{
+
+//Redireccionar a página 500
+
+}
+
 
 ?>
 
@@ -14,7 +41,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Top Navigation + Sidebar</title>
+    <title><?php echo $template->title_template ?></title>
+
+    <meta name="description content="<?php echo $template->description_template ?>">
+
+    <link rel="icon" href="<?php echo $path ?>views/assets/img/template/<?php echo $template->id_template ?>/<?php echo $template->icon_template ?>">
 
     <!-- Google Font: Source Sans Pro -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

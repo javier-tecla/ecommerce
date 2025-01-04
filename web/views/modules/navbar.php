@@ -7,8 +7,9 @@
          <div class="col-12 col-lg-2 mt-1">
 
              <div class="d-flex justify-content-center">
-                 <a href="<?php echo $path ?>views/assets/js/index3.html" class="navbar-brand">
-                     <img src="<?php echo $path ?>views/assets/img/template/logo.png" alt="Logo Ecommerce" class="brand-image img-fluid py-3 px-5 p-lg-0 pe-lg-3">
+
+                 <a href="<?php echo $path ?>" class="navbar-brand">
+                     <img src="<?php echo $path ?>views/assets/img/template/<?php echo $template->id_template ?>/<?php echo $template->logo_template ?>" alt="Logo Ecommerce" class="brand-image img-fluid py-3 px-5 p-lg-0 pe-lg-3">
                  </a>
 
              </div>
@@ -23,10 +24,10 @@
              <div class="dropdown px-1 float-start templateColor ">
 
                  <a id="dropdownSubMenu1" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle text-uppercase">
-                    <span class="d-lg-block d-none">Categorias<i class="ps-lg-2 fas fa-th-list"></i></span>
-                    <span class="d-lg-none d-block"><i class="fas fa-th-list"></i></span>
-                
-                </a>
+                     <span class="d-lg-block d-none">Categorias<i class="ps-lg-2 fas fa-th-list"></i></span>
+                     <span class="d-lg-none d-block"><i class="fas fa-th-list"></i></span>
+
+                 </a>
 
                  <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
 
@@ -182,7 +183,7 @@
              <form class="form-inline">
                  <div class="input-group input-group w-100 me-0 me-lg-4">
                      <input class="form-control rounded-0 p-3 pe-5" type="search" placeholder="Buscar..." style="height:40px">
-                     <div class="input-group-append px-2 templateColor " >
+                     <div class="input-group-append px-2 templateColor ">
                          <button class="btn btn-navbar text-white" type="submit">
                              <i class="fas fa-search"></i>
                          </button>
