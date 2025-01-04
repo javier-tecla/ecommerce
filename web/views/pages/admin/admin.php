@@ -7,5 +7,5 @@ if (!isset($_SESSION["admin"])) {
     include "login/login.php";
 } else {
 
-    include "tablero/table.php";
+    include "tablero/tablero.php";
 }
