@@ -28,6 +28,20 @@ if($template->status == 200){
 
 }
 
+/*=================================================
+Datos en Arreglo
+=================================================*/
+
+$keywords = null;
+
+foreach (json_decode($template->keywords_template, true) as $key => $value) {
+
+    $keywords .= $value.", ";
+}
+
+$keywords = substr($keywords, 0, -2);
+
+
 
 ?>
 
@@ -44,6 +58,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <title><?php echo $template->title_template ?></title>
 
     <meta name="description content="<?php echo $template->description_template ?>">
+    <meta name="keywords" content="<?php echo $keywords ?>">
 
     <link rel="icon" href="<?php echo $path ?>views/assets/img/template/<?php echo $template->id_template ?>/<?php echo $template->icon_template ?>">
 
