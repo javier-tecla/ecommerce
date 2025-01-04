@@ -9,12 +9,12 @@ $path = TemplateController::path();
 /*=================================================
 Capturar las rutas de la URL
 =================================================*/
- 
-$routesArray = explode("/",$_SERVER["REQUEST_URI"]);
+
+$routesArray = explode("/", $_SERVER["REQUEST_URI"]);
 array_shift($routesArray);
 
 foreach ($routesArray as $key => $value) {
-    $routesArray[$key] = explode("?",$value)[0];
+    $routesArray[$key] = explode("?", $value)[0];
 }
 
 
@@ -159,7 +159,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
         include "modules/top.php";
         include "modules/navbar.php";
         include "modules/sidebar.php";
-        include "pages/home/home.php";
+
+        if (!empty($routesArray[0])) {
+
+            if ($routesArray[0] == "admin") {
+
+                include "pages/admin/admin.php";
+            }
+        } else {
+
+            include "pages/home/home.php";
+        }
+
+
         include "modules/visits.php";
         include "modules/footer.php";
 
