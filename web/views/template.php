@@ -173,9 +173,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         if (!empty($routesArray[0])) {
 
-            if ($routesArray[0] == "admin") {
+            if (
+                $routesArray[0] == "admin" ||
+                $routesArray[0] == "salir"
+            ) {
 
-                include "pages/admin/admin.php";
+                include "pages/".$routesArray[0]."/".$routesArray[0].".php";
             }
         } else {
 
