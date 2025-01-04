@@ -47,6 +47,13 @@ $fontFamily = json_decode($template->fonts_template)->fontFamily;
 $fontBody = json_decode($template->fonts_template)->fontBody;
 $fontSlide = json_decode($template->fonts_template)->fontSlide;
 
+/*=================================================
+Datos en JSON
+=================================================*/
+
+$topColor = json_decode($template->colors_template)[0]->top;
+$templateColor = json_decode($template->colors_template)[1]->template;
+
 
 
 ?>
@@ -96,10 +103,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
         }
 
-        .slideOpt h1,  .slideOpt h2, .slideOpt h3{
+        .slideOpt h1,
+        .slideOpt h2,
+        .slideOpt h3 {
             font-family: '<?php echo $fontSlide ?>', sans-serif;
         }
 
+        .topColor {
+            background: <?php echo $topColor->background ?>;
+            color: <?php echo $topColor->color ?>;
+        }
+
+        .templateColor,
+        .templateColor:hover,
+        a.templateColor {
+            background: <?php echo $templateColor->background ?> !important;
+            color: <?php echo $templateColor->color ?> !important;
+        }
     </style>
 
 
