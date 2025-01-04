@@ -16,7 +16,7 @@ array_shift($routesArray);
 foreach ($routesArray as $key => $value) {
     $routesArray[$key] = explode("?",$value)[0];
 }
-echo '<pre>'; print_r($routesArray); echo '</pre>';
+
 
 /*=================================================
 Solicitud GET de Template
