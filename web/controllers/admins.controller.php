@@ -4,7 +4,7 @@
 class AdminsController
 {
 
-/*=================================================
+    /*=================================================
 Login de administradores
 =================================================*/
 
@@ -22,9 +22,9 @@ Login de administradores
 
             );
 
-            $login = CurlController::request($url,$method,$fields);
-            
-            if($login->status == 200){
+            $login = CurlController::request($url, $method, $fields);
+
+            if ($login->status == 200) {
 
                 $_SESSION["admin"] = $login->results[0];
 
@@ -33,6 +33,27 @@ Login de administradores
                 location.reload();
 
                 </script>';
+            } else {
+
+                $error = null;
+
+                if ($login->results == "Wrong email") {
+
+                    $error = "Correo mal escrito";
+                } else {
+
+                    $error = "Contraseña mal escrita";
+                }
+
+                echo '<div class="alert alert-danger mt-3">Error al ingresar: ' . $error . '</div>
+                
+                <script>
+
+                    fncFormatInputs();
+
+                </script>
+                
+                ';
             }
         }
     }
