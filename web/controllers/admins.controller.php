@@ -49,6 +49,7 @@ Login de administradores
                 
                 <script>
 
+                    fncNotie("success", "Error al ingresar: ' . $error . '")
                     fncFormatInputs();
 
                 </script>
