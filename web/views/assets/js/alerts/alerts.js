@@ -94,6 +94,18 @@ function fncSweetAlert(type, text, url) {
 
             break;
 
+        case "loading":
+
+            Swal.fire({
+
+                allowOutsideClick: false,
+                icon: "info",
+                text: text
+            })
+            Swal.showLoading()
+
+            break;
+
     }
 
 
@@ -124,4 +136,33 @@ function fncToastr(type, text) {
         icon: type,
         title: text
     })
+}
+
+/*===========================================
+Alerta Linea Precarga
+=============================================*/
+
+function fncMatPreloader(type) {
+
+    let preloader = new $.materialPreloader({
+        position: 'top',
+        height: '5px',
+        col_1: '#159756',
+        col_2: '#da4733',
+        col_3: '#3b78e7',
+        col_4: '#fdba2c',
+        fadeIn: 200,
+        fadeOut: 200
+
+    })
+
+    if (type == "on") {
+
+        preloader.on();
+    }
+
+    if (type == "off") {
+
+        $(".load-bar-container").remove();
+    }
 }

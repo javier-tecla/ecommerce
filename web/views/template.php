@@ -114,9 +114,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
     
     <!-- Toastr Alert -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/toastr/toastr.min.css">
+    
+    <!-- Material Preloader -->
+    <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/material-preloader/material-preloader.css">
 
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/adminlte/adminlte.min.css">
+
+
 
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/template/template.css">
 
@@ -175,9 +180,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <script src=" <?php echo $path ?>views/assets/js/plugins/sweetalert/sweetalert.min.js""></script>
 
-    <!-- Toastr -->
+    <!-- Toastr Alert -->
     
     <script src=" <?php echo $path ?>views/assets/js/plugins/toastr/toastr.min.js""></script>
+
+    <!-- Material Preloader -->
+    <!--  https://www.jqueryscript.net/demo/Google-Inbox-Style-Linear-Preloader-Plugin-with-jQuery-CSS3/ -->
+
+    <script src=" <?php echo $path ?>views/assets/js/plugins/material-preloader/material-preloader.js""></script>
 
 </head>
 

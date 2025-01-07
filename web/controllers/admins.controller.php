@@ -13,6 +13,13 @@ Login de administradores
 
         if (isset($_POST["loginAdminEmail"])) {
 
+            echo '<script>
+
+                fncMatPreloader("on");
+                fncSweetAlert("loading", "", "");
+            
+            </script>';
+
             $url = "admins?login=true&suffix=admin";
             $method = "POST";
             $fields = array(
@@ -50,8 +57,9 @@ Login de administradores
                 <script>
 
                     // fncNotie("success", "Error al ingresar: ' . $error . '")
-                    // fncSweetAlert("error", "Error al ingresar: '.$error.'","");
-                    fncToastr("error", "Error al ingresar: '.$error.'","");
+                    // fncSweetAlert("error", "Error al ingresar: ' . $error . '","");
+                    fncToastr("error", "Error al ingresar: ' . $error . '","");
+                    fncMatPreloader("off")
                     fncFormatInputs();
 
                 </script>
