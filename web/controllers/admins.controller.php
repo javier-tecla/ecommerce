@@ -20,51 +20,73 @@ Login de administradores
             
             </script>';
 
-            $url = "admins?login=true&suffix=admin";
-            $method = "POST";
-            $fields = array(
+            if (preg_match('/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,}$/', $_POST["loginAdminEmail"])) {
 
-                "email_admin" => $_POST["loginAdminEmail"],
-                "password_admin" => $_POST["loginAdminPass"]
 
-            );
 
-            $login = CurlController::request($url, $method, $fields);
+                $url = "admins?login=true&suffix=admin";
+                $method = "POST";
+                $fields = array(
 
-            if ($login->status == 200) {
+                    "email_admin" => $_POST["loginAdminEmail"],
+                    "password_admin" => $_POST["loginAdminPass"]
 
-                $_SESSION["admin"] = $login->results[0];
+                );
 
-                echo '<script>
-            
-                location.reload();
+                $login = CurlController::request($url, $method, $fields);
 
-                </script>';
+                if ($login->status == 200) {
+
+                    $_SESSION["admin"] = $login->results[0];
+
+                    echo '<script>
+                
+                    location.reload();
+
+                    </script>';
+                } else {
+
+                    $error = null;
+
+                    if ($login->results == "Wrong email") {
+
+                        $error = "Correo mal escrito";
+                    } else {
+
+                        $error = "Contraseña mal escrita";
+                    }
+
+                    echo '<div class="alert alert-danger mt-3">Error al ingresar: ' . $error . '</div>
+                    
+                    <script>
+
+                        // fncNotie("success", "Error al ingresar: ' . $error . '")
+                        // fncSweetAlert("error", "Error al ingresar: ' . $error . '","");
+                        fncToastr("error", "Error al ingresar: ' . $error . '","");
+                        // fncMatPreloader("off")
+                        fncFormatInputs();
+
+                    </script>
+                    
+                    ';
+                }
             } else {
 
                 $error = null;
 
-                if ($login->results == "Wrong email") {
+                echo '<div class="alert alert-danger mt-3">Error de sintaxis en los campos</div>
+                    
+                    <script>
 
-                    $error = "Correo mal escrito";
-                } else {
+                        // fncNotie("success", "Error al ingresar: ' . $error . '")
+                        // fncSweetAlert("error", "Error al ingresar: ' . $error . '", "");
+                        fncToastr("error", "Error de sintaxis en los campos");
+                        fncMatPreloader("off")
+                        fncFormatInputs();
 
-                    $error = "Contraseña mal escrita";
-                }
-
-                echo '<div class="alert alert-danger mt-3">Error al ingresar: ' . $error . '</div>
-                
-                <script>
-
-                    // fncNotie("success", "Error al ingresar: ' . $error . '")
-                    // fncSweetAlert("error", "Error al ingresar: ' . $error . '","");
-                    fncToastr("error", "Error al ingresar: ' . $error . '","");
-                    // fncMatPreloader("off")
-                    fncFormatInputs();
-
-                </script>
-                
-                ';
+                    </script>
+                    
+                    ';
             }
         }
     }
