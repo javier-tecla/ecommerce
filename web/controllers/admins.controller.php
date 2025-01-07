@@ -59,7 +59,7 @@ Login de administradores
                     // fncNotie("success", "Error al ingresar: ' . $error . '")
                     // fncSweetAlert("error", "Error al ingresar: ' . $error . '","");
                     fncToastr("error", "Error al ingresar: ' . $error . '","");
-                    fncMatPreloader("off")
+                    // fncMatPreloader("off")
                     fncFormatInputs();
 
                 </script>

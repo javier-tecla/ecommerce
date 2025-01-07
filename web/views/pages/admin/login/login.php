@@ -8,24 +8,30 @@
             <div class="card-body">
                 <p class="login-box-msg">Inicia sesión para comenzar tu sesión.</p>
 
-                <form method="post">
+                <form method="post" class="needs-validation" novalidate>
 
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email" name="loginAdminEmail">
+                        <input onchange="validateJS(event,'email')" type="email" class="form-control" placeholder="Email" name="loginAdminEmail" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
+
+                        <div class="valid-feedback">Válido</div>
+                        <div class="invalid-feedback">Campo inválido</div>
                     </div>
 
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" placeholder="Password" name="loginAdminPass">
+                        <input type="password" class="form-control" placeholder="Password" name="loginAdminPass" required>
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
+
+                        <div class="valid-feedback">Válido</div>
+                        <div class="invalid-feedback">Campo inválido</div>
                     </div>
 
                     <div class="row">

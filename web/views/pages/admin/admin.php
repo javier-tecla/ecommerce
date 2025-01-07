@@ -9,3 +9,7 @@ if (!isset($_SESSION["admin"])) {
 
     include "tablero/tablero.php";
 }
+
+?>
+
+<script src="<?php echo $path ?>views/assets/js/forms/forms.js"></script>
