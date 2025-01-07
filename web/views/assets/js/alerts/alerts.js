@@ -13,13 +13,88 @@ function fncFormatInputs() {
 Alerta Notie
 =============================================*/
 
-function fncNotie(type, text){
+function fncNotie(type, text) {
 
     notie.alert({
 
         type: type,
-        text:text,
-        time:10
+        text: text,
+        time: 10
 
     })
+}
+
+/*===========================================
+Alerta SweetAlert
+=============================================*/
+
+function fncSweetAlert(type, text, url) {
+
+    switch (type) {
+
+        case "error":
+
+            if (url == "") {
+
+                Swal.fire({
+
+                    icon: "error",
+                    title: "Error",
+                    text: text
+                })
+
+            } else {
+
+                Swal.fire({
+
+                    icon: "error",
+                    title: "Error",
+                    text: text
+
+                }).then((result) => {
+
+                    if (result.value) {
+
+                        window.open(url, "top");
+                    }
+                })
+
+            }
+
+            break;
+
+        case "success":
+
+            if (url == "") {
+
+                Swal.fire({
+
+                    icon: "success",
+                    title: "Correcto",
+                    text: text
+                })
+
+            } else {
+
+                Swal.fire({
+
+                    icon: "error",
+                    title: "Error",
+                    text: text
+
+                }).then((result) => {
+
+                    if (result.value) {
+
+                        window.open(url, "top");
+                    }
+                })
+
+            }
+
+            break;
+
+    }
+
+
 }
