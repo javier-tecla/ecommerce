@@ -100,6 +100,13 @@ Recuperar contraseña
 
         if (isset($_POST["resetPassword"])) {
 
+            echo '<script>
+
+                fncMatPreloader("on");
+                fncSweetAlert("loading", "", "");
+            
+            </script>';
+
             /*=================================================
         Validamos la sintaxis de los campos
         =================================================*/
@@ -115,41 +122,69 @@ Recuperar contraseña
                 $fields = array();
 
                 $admin = CurlController::request($url, $method, $fields);
-                
-                if($admin->status == 200){
 
-                    function genPassword($length){
+                if ($admin->status == 200) {
+
+                    function genPassword($length)
+                    {
 
                         $password = "";
                         $chain = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-                        $password = substr(str_shuffle($chain),0,$length);
+                        $password = substr(str_shuffle($chain), 0, $length);
 
                         return $password;
-
                     }
 
                     $newPassword = genPassword(11);
 
                     $crypt = crypt($newPassword, '$2a$07$azybxcags23425sdg23sdfhsd$');
-                    
+
                     /*=================================================
                     Actualizar contraseña en base de datos
                      ===================================================*/
 
-                     $url = "admins?id=".$admin->results[0]->id_admin."&nameId=id_admin&token=no&except=password_admin";
-                     $method = "PUT";
-                     $fields = "password_admin=".$crypt;
+                    $url = "admins?id=" . $admin->results[0]->id_admin . "&nameId=id_admin&token=no&except=password_admin";
+                    $method = "PUT";
+                    $fields = "password_admin=" . $crypt;
 
-                     $updatePassword = CurlController::request($url,$method,$fields);
+                    $updatePassword = CurlController::request($url, $method, $fields);
 
-                     if($updatePassword->status == 200) {
+                    if ($updatePassword->status == 200) {
 
-                        echo '<pre>'; print_r($newPassword); echo '</pre>';
-                        echo '<pre>'; print_r($crypt); echo '</pre>';
-                     }
 
-                }else{
+                        $subject = 'Solicitud de nueva contraseña - Ecommerce';
+                        $email = $_POST["resetPassword"];
+                        $message = 'Su nueva contraseña: ' . $newPassword;
+                        $link = TemplateController::path() . 'admin';
+
+                        $sendEmail = TemplateController::sendEmail($subject, $email, $message, $link);
+
+                        if ($sendEmail == "ok") {
+
+                            echo '<script>
+                                fncFormatInputs();
+                                fncMatPreloader("off");
+                                fncToastr("success", "Su nueva contraseña ha sido enviada con éxito, por favor revise su correo electrónico");
+                            
+                            </script>
+                            
+                            ';
+
+                        }else{
+
+                            echo '<script>
+                                fncFormatInputs();
+                                matPreloader("off");
+                                fncNotie("error", "'.$sendEmail.'");
+                            
+                            </script>
+                            
+                            ';
+
+                        }
+                    }
+                } else {
 
                     echo '<script> 
                     
@@ -157,7 +192,6 @@ Recuperar contraseña
                         fncNotie("error", "El correo no esta registrado");                 
                     
                     </script>';
-
                 }
             }
         }
