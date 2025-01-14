@@ -41,6 +41,21 @@ if ($template->status == 200) {
     $template = $template->results[0];
 } else {
 
+    echo '<!DOCTYPE html>
+          <html lang="en">
+          <head>
+          <link rel="stylesheet" href="' . $path . 'views/assets/css/plugins/adminlte/adminlte.min.css">
+          </head>
+          <body class="hold-transition sidebar-collapse layout-top-nav">
+          <div class="wrapper">';
+          include "pages/500/500.php";
+    echo '</div>
+          </body>
+          </html>';
+
+    return;
+
+
     //Redireccionar a página 500
 
 }
@@ -108,13 +123,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- JDSlider -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/jdSlider/jdSlider.css">
-    
+
     <!-- Notie Alert -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/notie/notie.min.css">
-    
+
     <!-- Toastr Alert -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/toastr/toastr.min.css">
-    
+
     <!-- Material Preloader -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/material-preloader/material-preloader.css">
 
@@ -167,9 +182,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
     <!-- Knob -->
     <script src=" <?php echo $path ?>views/assets/js/plugins/knob/knob.js""></script>
-    
+
     <script src="<?php echo $path ?>views/assets/js/alerts/alerts.js"></script>
-    
+
     <!-- Notie Alert -->
     <!-- https://jaredreich.com/notie/ -->
 
@@ -181,7 +196,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src=" <?php echo $path ?>views/assets/js/plugins/sweetalert/sweetalert.min.js""></script>
 
     <!-- Toastr Alert -->
-    
+
     <script src=" <?php echo $path ?>views/assets/js/plugins/toastr/toastr.min.js""></script>
 
     <!-- Material Preloader -->
@@ -211,7 +226,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 $routesArray[0] == "salir"
             ) {
 
-                include "pages/".$routesArray[0]."/".$routesArray[0].".php";
+                include "pages/" . $routesArray[0] . "/" . $routesArray[0] . ".php";
+            } else {
+
+                include "pages/404/404.php";
             }
         } else {
 
