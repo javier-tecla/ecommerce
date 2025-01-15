@@ -1,4 +1,0 @@
-[15-Jan-2025 02:24:59 Europe/Berlin] PHP Warning:  include(modules/liistado.php): Failed to open stream: No such file or directory in D:\xampp\htdocs\ecommerce\web\views\pages\admin\administradores\administradores.php on line 22
-[15-Jan-2025 02:24:59 Europe/Berlin] PHP Warning:  include(): Failed opening 'modules/liistado.php' for inclusion (include_path='D:\xampp\php\PEAR') in D:\xampp\htdocs\ecommerce\web\views\pages\admin\administradores\administradores.php on line 22
-[15-Jan-2025 02:25:05 Europe/Berlin] PHP Warning:  include(modules/liistado.php): Failed to open stream: No such file or directory in D:\xampp\htdocs\ecommerce\web\views\pages\admin\administradores\administradores.php on line 22
-[15-Jan-2025 02:25:05 Europe/Berlin] PHP Warning:  include(): Failed opening 'modules/liistado.php' for inclusion (include_path='D:\xampp\php\PEAR') in D:\xampp\htdocs\ecommerce\web\views\pages\admin\administradores\administradores.php on line 22

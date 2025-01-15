@@ -44,3 +44,4 @@ if (!isset($_SESSION["admin"])) {
 ?>
 
 <script src="<?php echo $path ?>views/assets/js/forms/forms.js"></script>
+<script src="<?php echo $path ?>views/assets/js/tables/tables.js"></script>
