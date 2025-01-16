@@ -157,7 +157,7 @@ Recuperar contraseña
                         $email = $_POST["resetPassword"];
                         $title = "SOLICITUD DE NUEVA CONTRASEÑA";
                         $message = '<h4 style="font-weight: 100; color: #999; padding: 0px 20px;"><strong>Su nueva contraseña:
-                        '.$newPassword.'</strong></h4>
+                        ' . $newPassword . '</strong></h4>
                         <h4 style="font-weight: 100; color: #999; padding: 0px 20px;">Ingrese nuevamente al sitio con esta
                         contraseña y recuerde cambiarla en el panel de perfil de usuario</h4>';
                         $link = TemplateController::path() . 'admin';
