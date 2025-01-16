@@ -103,4 +103,23 @@ class TemplateController
             return "ok";
         }
     }
+
+    /*=================================================
+    Función para Limpiar HTML
+    =================================================*/
+
+    public static function htmlClean($code){
+
+        $search = array('/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s');
+
+		$replace = array('>','<','\\1');
+
+		$code = preg_replace($search, $replace, $code);
+
+		$code = str_replace("> <", "><", $code);
+
+		return $code;
+
+    }
+
 }
