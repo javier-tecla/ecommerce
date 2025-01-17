@@ -8,7 +8,7 @@
 
                 <h3 class="card-title">
 
-                    <a href="" class="btn bg-default templateColor py-2 px-3 btn-sm rounded-pill">Agregar Administrador</a>
+                    <a href="/admin/administradores/gestion" class="btn bg-default templateColor py-2 px-3 btn-sm rounded-pill">Agregar Administrador</a>
 
                 </h3>
 
