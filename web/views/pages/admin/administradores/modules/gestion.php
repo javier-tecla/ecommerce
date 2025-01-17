@@ -62,6 +62,7 @@
                                             placeholder="Ingresar nombre"
                                             id="name_admin"
                                             name="name_admin"
+                                            onchange="validateJS(event,'text')"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -107,6 +108,7 @@
                                             placeholder="Ingresar email"
                                             id="email_admin"
                                             name="email_admin"
+                                            onchange="validateJS(event,'email')"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -124,6 +126,7 @@
                                             placeholder="Ingresar contraseña"
                                             id="password_admin"
                                             name="password_admin"
+                                            onchange="validateJS(event,'password')"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>

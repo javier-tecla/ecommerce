@@ -26,15 +26,60 @@ Función para validar formularios
 
 function validateJS(event, type) {
 
+  $(event.target).parent().addClass("was-validated");
+
   if (type == "email") {
 
     let pattern = /^[.a-zA-Z0-9_]+([.][.a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/;
 
     if (!pattern.test(event.target.value)) {
 
-      $(event.target).parent().addClass("was-validated");
-
       $(event.target).parent().children(".invalid-feedback").html("El correo electrónico está mal escrito");
+
+      event.target.value = "";
+
+      return;
+    }
+
+  }
+
+  if (type == "text") {
+
+    let pattern = /^[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}$/;
+
+    if (!pattern.test(event.target.value)) {
+
+      $(event.target).parent().children(".invalid-feedback").html("El campo solo debe llevar texto");
+
+      event.target.value = "";
+
+      return;
+    }
+
+  }
+
+  if (type == "password") {
+
+    let pattern = /^[*\\$\\!\\¡\\?\\.\\_\\#\\-\\A-Za-z0-9]{1,}$/;
+
+    if (!pattern.test(event.target.value)) {
+
+      $(event.target).parent().children(".invalid-feedback").html("La contraseña no puede llevar ciertos caracteres especiales");
+
+      event.target.value = "";
+
+      return;
+    }
+
+  }
+
+  if (type == "complete") {
+
+    let pattern = /^[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\/\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}$/;
+
+    if (!pattern.test(event.target.value)) {
+
+      $(event.target).parent().children(".invalid-feedback").html("La contraseña no puede llevar ciertos caracteres especiales");
 
       event.target.value = "";
 
