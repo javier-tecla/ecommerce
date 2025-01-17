@@ -91,7 +91,7 @@
 
                         </div>
 
-                        <div class="col pl-3">
+                        <div class="col pl-2">
 
                             <div class="card">
 
