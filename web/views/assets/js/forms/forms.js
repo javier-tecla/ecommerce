@@ -79,7 +79,7 @@ function validateJS(event, type) {
 
     if (!pattern.test(event.target.value)) {
 
-      $(event.target).parent().children(".invalid-feedback").html("La contraseña no puede llevar ciertos caracteres especiales");
+      $(event.target).parent().children(".invalid-feedback").html("La entrada tiene errores de caracteres especiales");
 
       event.target.value = "";
 

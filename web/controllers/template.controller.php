@@ -122,4 +122,15 @@ class TemplateController
 
     }
 
+    /*=================================================
+    Función para mayúscula inicial
+    =================================================*/
+
+    public static function capitalize($value){
+
+        $value = mb_convert_case($value, MB_CASE_TITLE, "UTF-8");
+        return $value;
+
+    }
+
 }

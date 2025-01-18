@@ -55,7 +55,7 @@ function fncSweetAlert(type, text, url) {
 
                     if (result.value) {
 
-                        window.open(url, "top");
+                        window.open(url, "_top");
                     }
                 })
 
@@ -78,15 +78,15 @@ function fncSweetAlert(type, text, url) {
 
                 Swal.fire({
 
-                    icon: "error",
-                    title: "Error",
+                    icon: "success",
+                    title: "Correcto",
                     text: text
 
                 }).then((result) => {
 
                     if (result.value) {
 
-                        window.open(url, "top");
+                        window.open(url, "_top");
                     }
                 })
 
