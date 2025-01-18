@@ -1,3 +1,31 @@
+<?php
+
+if(isset($_GET["admin"])){
+
+    $select = "id_admin,name_admin,email_admin,password_admin,rol_admin";
+    $url = "admins?linkTo=id_admin&equalTo=".base64_decode($_GET["admin"]);
+    $method = "GET";
+    $fields = array();
+
+    $admin = CurlController::request($url, $method, $fields);
+    
+    if($admin->status == 200){
+
+        $admin = $admin->results[0];
+
+    }else{
+
+        $admin = null;
+
+    }
+
+}else{
+
+    $admin = null;
+}
+
+?>
+
 <div class="content">
 
     <div class="container">
@@ -5,6 +33,13 @@
         <div class="card">
 
             <form method="post" class="needs-validation" novalidate>
+
+                <?php if (!empty($admin)): ?>
+
+                    <input type="hidden" name="idAdmin" value="<?php echo base64_encode($admin->id_admin) ?>">
+                    <input type="hidden" name="oldPassword" value="<?php echo $admin->password_admin ?>">
+                
+                <?php endif ?>
 
                 <div class="card-header">
 
@@ -14,7 +49,11 @@
 
                             <div class="col-12 col-lg-6 text-center text-lg-left">
 
-                                <h4 class="mt-3">Agregar Administrador</h4>
+                                <?php if (!empty($admin)): ?>
+                                    <h4 class="mt-3">Editar Administrador</h4>
+                                <?php else: ?>
+                                    <h4 class="mt-3">Agregar Administrador</h4>
+                                <?php endif ?>
 
                             </div>
 
@@ -31,7 +70,7 @@
                                     <a href="/admin/administradores" class="btn btn-default py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a>
                                 </div>
                                 <div>
-                                    <button type="submit" class="btn border-0 templateColor py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
+                                    <!-- <button type="submit" class="btn border-0 templateColor py-2 px-3 btn-sm rounded-pill">Guardar Información</button> -->
                                 </div>
 
                             </div>
@@ -71,6 +110,7 @@
                                             id="name_admin"
                                             name="name_admin"
                                             onchange="validateJS(event,'text')"
+                                            value="<?php if (!empty($admin)): ?><?php echo $admin->name_admin ?><?php endif ?>"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -85,8 +125,11 @@
                                         <select name="rol_admin" id="rol_admin" class="form-control" required aria-describedby="rolHelp">
 
                                             <option value="" disabled selected>Elige Rol</option>
-                                            <option value="admin">Administrador</option>
-                                            <option value="editor">Editor</option>
+                                            <option value="admin" <?php if (!empty($admin) && $admin->rol_admin == "admin"): ?>
+                                            selected <?php endif ?>>Administrador</option>
+                                            <option value="editor" <?php if (!empty($admin) && $admin->rol_admin == "editor"): ?>
+                                            selected <?php endif ?>>Editor</option>
+
                                         </select>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -117,6 +160,7 @@
                                             id="email_admin"
                                             name="email_admin"
                                             onchange="validateJS(event,'email')"
+                                            value="<?php if (!empty($admin)): ?><?php echo $admin->email_admin ?><?php endif ?>"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -135,7 +179,8 @@
                                             id="password_admin"
                                             name="password_admin"
                                             onchange="validateJS(event,'password')"
-                                            required>
+                                            <?php if (empty($admin)): ?> required <?php endif ?>
+                                        >
 
                                         <div class="valid-feedback">Válido.</div>
                                         <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
@@ -174,7 +219,7 @@
                             <div class="col-12 text-center d-flex justify-content-center mt-2 d-block d-lg-none">
 
                                 <div>
-                                    <a href="/admin/administradores" class="btn btn-default py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a>
+                                    <!-- <a href="/admin/administradores" class="btn btn-default py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a> -->
                                 </div>
                                 <div>
                                     <button type="submit" class="btn border-0 templateColor py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
