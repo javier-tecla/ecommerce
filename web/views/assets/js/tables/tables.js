@@ -10,14 +10,14 @@ $("#tables").DataTable({
     "url": $("#urlPath").val() + "ajax/data-admins.ajax.php",
     "type": "POST"
   },
-  "columns":[
-   {"data":"id_admin"},
-   {"data":"name_admin"},
-   {"data":"email_admin"},
-   {"data":"rol_admin"},
-   {"data":"date_updated_admin"},
-   {"data":"actions", "orderable":false, "searchable":false}
-],
+  "columns": [
+    { "data": "id_admin" },
+    { "data": "name_admin" },
+    { "data": "email_admin" },
+    { "data": "rol_admin" },
+    { "data": "date_updated_admin" },
+    { "data": "actions", "orderable": false, "searchable": false }
+  ],
   "language": {
 
     "sProcessing": "Procesando...",
@@ -45,3 +45,80 @@ $("#tables").DataTable({
   }
 
 });
+
+/*===========================================
+Eliminar item
+=============================================*/
+
+$(document).on("click", ".deleteItem", function () {
+
+  let idItem = $(this).attr("idItem");
+  let table = $(this).attr("table");
+  let column = $(this).attr("column");
+  let rol = $(this).attr("rol");
+
+  fncSweetAlert("confirm", "¿Está seguro de borrar este item?", "").then(resp => {
+
+    if (resp) {
+
+      fncMatPreloader("on");
+      fncSweetAlert("loading", "", "");
+
+      let token = "";
+      let url = "/ajax/delete-admin.ajax.php";
+
+      if (rol == "admin") {
+        token = localStorage.getItem("token-admin");
+
+      }
+
+      if (!token) {
+        fncSweetAlert("error", "No se encontró un token válido.", "");  // En caso de que no haya token
+        return;
+      }
+
+      let data = new FormData();
+      data.append("token", token);
+      data.append("table", table);
+      data.append("id", idItem);
+      data.append("nameId", "id_" + column);
+
+      $.ajax({
+
+        url: url,
+        method: "POST",
+        data: data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (response) {
+
+          if (response == 200) {
+
+            fncMatPreloader("off");
+            fncSweetAlert(
+              "success",
+              "El item ha sido borrado correctamente",
+              location.reload()
+            )
+
+          }else if (response == "no-borrar") {
+
+            fncMatPreloader("off");
+            fncToastr("warning", "Este item no se puede borrar");
+
+          }else{
+
+            fncMatPreloader("off");
+            fncToastr("Error", "Este item no se pudo borrar");
+
+
+          }
+        }
+
+      })
+    }
+
+  })
+
+})

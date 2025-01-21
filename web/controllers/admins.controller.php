@@ -39,6 +39,7 @@ class AdminsController
 
                     echo '<script>
                 
+                    localStorage.setItem("token-admin", "'.$login->results[0]->token_admin.'")
                     location.reload();
 
                     </script>';
