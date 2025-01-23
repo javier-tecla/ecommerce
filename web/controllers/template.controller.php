@@ -65,16 +65,16 @@ class TemplateController
 
             <center>
 
-                <img src="'.TemplateController::path().'views/assets/img/template/1/logo.png" alt="img logo"
+                <img src="' . TemplateController::path() . 'views/assets/img/template/1/logo.png" alt="img logo"
                     style="padding: 20px; width: 30%;">
 
-                <h3 style="font-weight: 100; color: #999;">'.$title.'</h3>
+                <h3 style="font-weight: 100; color: #999;">' . $title . '</h3>
 
                 <hr style="border: 1px solid #ccc; width: 80%;">
 
-                '.$message.'
+                ' . $message . '
 
-                <a href="'.$link.'" target="_blank" style="text-decoration: none;">
+                <a href="' . $link . '" target="_blank" style="text-decoration: none;">
 
                     <div style="line-height: 25px; background: #000; width: 60%; padding: 10px; color: white; border-radius: 5px;">Haz click aquí</div>
                 </a>
@@ -108,29 +108,42 @@ class TemplateController
     Función para Limpiar HTML
     =================================================*/
 
-    public static function htmlClean($code){
+    public static function htmlClean($code)
+    {
 
-        $search = array('/\>[^\S ]+/s','/[^\S ]+\</s','/(\s)+/s');
+        $search = array('/\>[^\S ]+/s', '/[^\S ]+\</s', '/(\s)+/s');
 
-		$replace = array('>','<','\\1');
+        $replace = array('>', '<', '\\1');
 
-		$code = preg_replace($search, $replace, $code);
+        $code = preg_replace($search, $replace, $code);
 
-		$code = str_replace("> <", "><", $code);
+        $code = str_replace("> <", "><", $code);
 
-		return $code;
-
+        return $code;
     }
 
     /*=================================================
     Función para mayúscula inicial
     =================================================*/
 
-    public static function capitalize($value){
+    public static function capitalize($value)
+    {
 
         $value = mb_convert_case($value, MB_CASE_TITLE, "UTF-8");
         return $value;
-
     }
 
+    /*=================================================
+    Función para Reducir texto
+    =================================================*/
+
+    public static function reduceText($value, $limit){
+
+        if(strlen($value) > $limit){
+
+            $value = substr($value, 0, $limit)."...";
+        }
+
+        return $value;
+    }
 }
