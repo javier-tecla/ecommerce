@@ -16,7 +16,7 @@
 
             <div class="card-body">
 
-                <table id="tables" class="table table-bordered table-striped">
+                <table id="tables" class="table table-bordered table-striped adminsTable">
 
                     <thead>
                         <tr>
