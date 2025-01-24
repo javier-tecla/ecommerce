@@ -21,6 +21,70 @@ Validación Bootstrap 5
 })();
 
 /*===========================================
+Función para validar datos repetidos
+=============================================*/
+
+function validateDataRepeat(event, type) {
+  const value = event.target.value;
+
+  let table;
+  let linkTo;
+
+  if (type === "category") {
+    table = "categories";
+    linkTo = "name_category";
+  } else {
+    console.error("Invalid type provided");
+    return; // Salir si el tipo no es válido
+  }
+
+  const data = new FormData();
+  data.append("table", table);
+  data.append("equalTo", value);
+  data.append("linkTo", linkTo);
+
+  $.ajax({
+    url: "/ajax/forms.ajax.php",
+    method: "POST",
+    data: data,
+    contentType: false,
+    cache: false,
+    processData: false,
+    success: function (response) {
+      
+      if(response == 404){
+
+        validateJS(event,"complete");
+        createUrl(event, "url_category");
+
+      }
+    },
+  });
+}
+
+/*===========================================
+Función para crear Url's
+=============================================*/
+
+function createUrl(event, input){
+
+  let value = event.target.value;
+
+  value = value.toLowerCase();
+  value = value.replace(/[#\\;\\$\\&\\%\\=\\(\\)\\:\\,\\'\\"\\.\\¿\\¡\\!\\?]/g, "");
+  value = value.replace(/[ ]/g, "-");
+  value = value.replace(/[á]/g, "a");
+  value = value.replace(/[é]/g, "e");
+  value = value.replace(/[í]/g, "i");
+  value = value.replace(/[ó]/g, "o");
+  value = value.replace(/[ú]/g, "u");
+  value = value.replace(/[ñ]/g, "n");
+
+    $('[name="'+input+'"]').val(value);
+}
+
+
+/*===========================================
 Función para validar formularios
 =============================================*/
 
@@ -122,3 +186,7 @@ function getEmail() {
 }
 
 getEmail();
+
+/*===========================================
+Función para recordar email en el login
+=============================================*/

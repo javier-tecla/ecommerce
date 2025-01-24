@@ -79,7 +79,7 @@
                                             placeholder="Ingresar el título"
                                             id="name_category"
                                             name="name_category"
-                                            onchange="validateJS(event,'text')"
+                                            onchange="validateDataRepeat(event,'category')"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
