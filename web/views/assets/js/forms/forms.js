@@ -51,10 +51,10 @@ function validateDataRepeat(event, type) {
     cache: false,
     processData: false,
     success: function (response) {
-      
-      if(response == 404){
 
-        validateJS(event,"complete");
+      if (response == 404) {
+
+        validateJS(event, "complete");
         createUrl(event, "url_category");
 
       }
@@ -66,7 +66,7 @@ function validateDataRepeat(event, type) {
 Función para crear Url's
 =============================================*/
 
-function createUrl(event, input){
+function createUrl(event, input) {
 
   let value = event.target.value;
 
@@ -80,7 +80,7 @@ function createUrl(event, input){
   value = value.replace(/[ú]/g, "u");
   value = value.replace(/[ñ]/g, "n");
 
-    $('[name="'+input+'"]').val(value);
+  $('[name="' + input + '"]').val(value);
 }
 
 
@@ -188,5 +188,44 @@ function getEmail() {
 getEmail();
 
 /*===========================================
-Función para recordar email en el login
+Cambio de icono para la categoria
 =============================================*/
+
+function addIcon(event) {
+
+  $("#myIcon").show();
+
+  $(document).ready(function () {
+
+    $(".myInpuIcon").on("keyup", function () {
+
+      let value = $(this).val().toLowerCase();
+
+      $(".btnChangeIcon").filter(function () {
+
+        $(this).toggle($(this).attr("mode").toLowerCase().indexOf(value) > -1)
+      })
+    })
+  })
+
+  $(document).on("click",".btnChangeIcon", function(e){
+
+    e.preventDefault();
+
+    $(".iconView").html(`<i class="`+$(this).attr("mode")+`"></i>`)
+    $(event.target).val($(this).attr("mode"))
+    $("#myIcon").hide();
+
+  })
+}
+
+$(document).on("click", '[data-bs-dismiss="modal"]', function () {
+
+  let modal = $(".modal");
+
+  modal.each((i) => {
+
+    $(modal[i]).hide()
+
+  })
+})
