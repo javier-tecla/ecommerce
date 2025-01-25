@@ -208,11 +208,11 @@ function addIcon(event) {
     })
   })
 
-  $(document).on("click",".btnChangeIcon", function(e){
+  $(document).on("click", ".btnChangeIcon", function (e) {
 
     e.preventDefault();
 
-    $(".iconView").html(`<i class="`+$(this).attr("mode")+`"></i>`)
+    $(".iconView").html(`<i class="` + $(this).attr("mode") + `"></i>`)
     $(event.target).val($(this).attr("mode"))
     $("#myIcon").hide();
 
@@ -229,3 +229,16 @@ $(document).on("click", '[data-bs-dismiss="modal"]', function () {
 
   })
 })
+
+/*===========================================
+Tags Input
+=============================================*/
+
+if ($('.tags-input').length > 0) {
+
+  $('.tags-input').tagsinput({
+    maxTags: 5
+  });
+
+}
+

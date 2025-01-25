@@ -133,6 +133,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Material Preloader -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/material-preloader/material-preloader.css">
 
+    <!-- Tags Input -->
+     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/tags-input/tags-input.css">
+
     <!-- DataTables -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
@@ -203,6 +206,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Material Preloader -->
     <!--  https://www.jqueryscript.net/demo/Google-Inbox-Style-Linear-Preloader-Plugin-with-jQuery-CSS3/ -->
     <script src="<?php echo $path ?>views/assets/js/plugins/material-preloader/material-preloader.js"></script>
+
+    <!-- Tags-Input -->
+     <script src="<?php echo $path ?>views/assets/js/plugins/tags-input/tags-input.js"></script>
 
     <!-- DataTables  & Plugins -->
     <script src="<?php echo $path ?>views/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>

@@ -175,6 +175,7 @@
                                             placeholder="Ingresar la descripción"
                                             id="description_category"
                                             name="description_category"
+                                            onchange="validateJS(event,'complete')"
                                             required></textarea>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -193,9 +194,11 @@
                                         <input
                                             type="text"
                                             class="form-control tags-input"
+                                            data-role="tagsinput"
                                             placeholder="Ingresar las palabras claves"
                                             id="keywords_category"
                                             name="keywords_category"
+                                            onchange="validateJS(event,'complete')"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
