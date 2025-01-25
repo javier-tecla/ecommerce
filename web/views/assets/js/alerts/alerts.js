@@ -28,108 +28,117 @@ function fncNotie(type, text) {
 Alerta SweetAlert
 =============================================*/
 
-function fncSweetAlert(type, text, url) {
+function fncSweetAlert(type, text, url){
 
-    switch (type) {
+	switch (type) {
 
-        case "error":
+		case "error":
 
-            if (url == "") {
+		if(url == ""){
 
-                Swal.fire({
+			Swal.fire({
 
-                    icon: "error",
-                    title: "Error",
-                    text: text
+				icon: "error",
+				title: "Error",
+				text: text
+
+			})
+
+		}else{
+
+			Swal.fire({
+
+				icon: "error",
+				title: "Error",
+				text: text
+
+			}).then((result) =>{
+
+				if (result.value){ 
+
+					window.open(url, "_top");
+
+				}
+			
+			})
+
+		}
+
+		break;
+
+		case "success":
+
+		if(url == ""){
+
+			Swal.fire({
+
+				icon: "success",
+				title: "Correcto",
+				text: text
+
+			})
+
+		}else{
+
+			Swal.fire({
+
+				icon: "success",
+				title: "Correcto",
+				text: text
+
+			}).then((result) =>{
+
+				if (result.value){ 
+
+					window.open(url, "_top");
+
+				}
+			
+			})
+
+		}
+
+		break;
+
+		case "loading":
+
+			Swal.fire({
+            	allowOutsideClick: false,
+            	icon: 'info',
+            	text:text
+          	})
+          	Swal.showLoading()
+
+		break;
+
+		case "confirm":
+
+			return new Promise(resolve=>{ 
+
+		 		Swal.fire({
+		 			text: text,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    cancelButtonText: 'No',
+                    confirmButtonText: 'Si, continuar!'
+		 		}).then(function(result){
+         
+                    resolve(result.value);
+               
                 })
 
-            } else {
+		 	})
+		break;
 
-                Swal.fire({
+		case "close":
 
-                    icon: "error",
-                    title: "Error",
-                    text: text
+		 	Swal.close()
+		 	
+		break;
 
-                }).then((result) => {
-
-                    if (result.value) {
-
-                        window.open(url, "_top");
-                    }
-                })
-
-            }
-
-            break;
-
-        case "success":
-
-            if (url == "") {
-
-                Swal.fire({
-
-                    icon: "success",
-                    title: "Correcto",
-                    text: text
-                })
-
-            } else {
-
-                Swal.fire({
-
-                    icon: "success",
-                    title: "Correcto",
-                    text: text
-
-                }).then((result) => {
-
-                    if (result.value) {
-
-                        window.open(url, "_top");
-                    }
-                })
-
-            }
-
-            break;
-
-        case "loading":
-
-            Swal.fire({
-
-                allowOutsideClick: false,
-                icon: "info",
-                text: text
-            })
-            Swal.showLoading()
-
-            break;
-
-            case "confirm":
-
-                return new Promise(resolve=>{ 
-
-                        Swal.fire({
-                            text: text,
-                            icon: 'warning',
-                            showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            cancelButtonText: 'No',
-                            confirmButtonText: 'Si, continuar!'
-                        }).then(function(result){
-                
-                            resolve(result.value);
-                    
-                        })
-
-                    })
-
-            break;
-
-    }
-
+	}
 
 }
 

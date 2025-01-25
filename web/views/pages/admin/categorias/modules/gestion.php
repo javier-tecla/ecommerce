@@ -228,7 +228,7 @@
 
                                         <label for="image_category">
 
-                                            <img src="/views/assets/img/categories/default/default-image.jpg" alt="image default" class="img-fluid">
+                                            <img src="/views/assets/img/categories/default/default-image.jpg" alt="image default" class="img-fluid chageImage">
 
                                             <p class="help-block small mt-3">Dimensiones recomendadas: 1000 x 600 pixeles | Peso Max.
                                                 2MB | Formato: PNG o JPG</p>
@@ -244,6 +244,7 @@
                                                 name="image_category"
                                                 accept="image/*"
                                                 maxSize="2000000"
+                                                onchange="validateImageJS(event, 'chageImage')"
                                                 required>
 
                                             <div class="valid-feedback">Válido.</div>
