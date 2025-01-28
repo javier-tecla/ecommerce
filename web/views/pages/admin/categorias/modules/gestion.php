@@ -4,7 +4,7 @@
 
         <div class="card">
 
-            <form method="post" class="needs-validation" novalidate>
+            <form method="post" class="needs-validation" novalidate enctype="multipart/form-data">
 
                 <div class="card-header">
 
