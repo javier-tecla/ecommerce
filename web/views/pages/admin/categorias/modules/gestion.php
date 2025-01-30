@@ -1,3 +1,29 @@
+<?php
+
+if (isset($_GET["category"])) {
+
+    $select = "id_category,name_category,url_category,icon_category,image_category,description_category,keywords_category";
+    $url = "categories?linkTo=id_category&equalTo=" . base64_decode($_GET["category"]) . "&select=" . $select;
+    $method = "GET";
+    $fields = array();
+
+    $category = CurlController::request($url, $method, $fields);
+
+    if ($category->status == 200) {
+
+        $category = $category->results[0];
+    } else {
+
+        $category = null;
+    }
+} else {
+
+    $category = null;
+}
+
+
+?>
+
 <div class="content pb-5">
 
     <div class="container">
@@ -5,6 +31,12 @@
         <div class="card">
 
             <form method="post" class="needs-validation" novalidate enctype="multipart/form-data">
+
+                <?php if (!empty($category)): ?>
+
+                    <input type="hidden" name="idCategory" value="<?php echo base64_encode($category->id_category) ?>">
+
+                <?php endif ?>
 
                 <div class="card-header">
 
@@ -80,6 +112,8 @@
                                             id="name_category"
                                             name="name_category"
                                             onchange="validateDataRepeat(event,'category')"
+                                            <?php if (!empty($category)): ?> readonly <?php endif ?>
+                                            value="<?php if (!empty($category)): ?><?php echo $category->name_category ?><?php endif ?>"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -95,14 +129,14 @@
 
                                         <label for="url_category">URL<sup class="text-danger font-weight-bold">*</sup></label>
 
-                                            <input
-                                                type="text"
-                                                class="form-control"
-                                                id="url_category"
-                                                name="url_category"
-                                                readonly
-                                                required
-                                            >
+                                        <input
+                                            type="text"
+                                            class="form-control"
+                                            id="url_category"
+                                            name="url_category"
+                                            value="<?php if (!empty($category)): ?><?php echo $category->url_category ?><?php endif ?>"
+                                            readonly
+                                            required>
 
                                         <div class="valid-feedback">Válido.</div>
                                         <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
@@ -121,7 +155,7 @@
 
                                             <span class="input-group-text iconView">
 
-                                                <i class="fas fa-shopping-bag"></i>
+                                                <i class="<?php if (!empty($category)): ?><?php echo $category->icon_category ?><?php else: ?>fas fa-shopping-bag <?php endif ?>"></i>
 
                                             </span>
 
@@ -131,7 +165,7 @@
                                                 id="icon_category"
                                                 name="icon_category"
                                                 onfocus="addIcon(event)"
-                                                value="fas fa-shopping-bag"
+                                                value="<?php if (!empty($category)): ?><?php echo $category->icon_category ?><?php else: ?>fas fa-shopping-bag <?php endif ?>"
                                                 required>
 
                                             <div class="valid-feedback">Válido.</div>
@@ -176,7 +210,7 @@
                                             id="description_category"
                                             name="description_category"
                                             onchange="validateJS(event,'complete')"
-                                            required></textarea>
+                                            required><?php if (!empty($category)): ?><?php echo $category->description_category ?><?php else: ?>fas fa-shopping-bag <?php endif ?></textarea>
 
                                         <div class="valid-feedback">Válido.</div>
                                         <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
@@ -199,6 +233,7 @@
                                             id="keywords_category"
                                             name="keywords_category"
                                             onchange="validateJS(event,'complete')"
+                                            value="<?php if (!empty($category)): ?><?php echo $category->keywords_category ?><?php else: ?>fas fa-shopping-bag <?php endif ?>"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -218,7 +253,7 @@
 
                                 <div class="card-body">
 
-                                <!--=================================================
+                                    <!--=================================================
                                 Imagen de la categoría
                                 =================================================-->
 
@@ -228,7 +263,18 @@
 
                                         <label for="image_category">
 
-                                            <img src="/views/assets/img/categories/default/default-image.jpg" alt="image default" class="img-fluid chageImage">
+                                            <?php if (!empty($category)): ?>
+
+                                                <input type="hidden" value="<?php echo $category->image_category ?>" name="old_image_category">
+
+                                                <img src="/views/assets/img/categories/<?php echo $category->url_category ?>/<?php echo $category->image_category ?>" alt="image default" class="img-fluid chageImage">
+
+                                            <?php else: ?>
+
+                                                <img src="/views/assets/img/categories/default/default-image.jpg" alt="image default" class="img-fluid chageImage">
+
+                                            <?php endif ?>
+
 
                                             <p class="help-block small mt-3">Dimensiones recomendadas: 1000 x 600 pixeles | Peso Max.
                                                 2MB | Formato: PNG o JPG</p>
@@ -245,7 +291,10 @@
                                                 accept="image/*"
                                                 maxSize="2000000"
                                                 onchange="validateImageJS(event, 'chageImage')"
-                                                required>
+                                                <?php if (empty($category)): ?>
+                                                required
+                                                <?php endif ?>
+                                            >
 
                                             <div class="valid-feedback">Válido.</div>
                                             <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
@@ -316,7 +365,7 @@
 Modal con libreria de iconos
  =================================================-->
 
- <div class="modal" id="myIcon">
+<div class="modal" id="myIcon">
 
     <div class="modal-dialog modal-lg modal-dialog-centered">
 
@@ -333,14 +382,13 @@ Modal con libreria de iconos
 
                 <?php
 
-                $data = file_get_contents($path."views/assets/json/fontawesome.json");
+                $data = file_get_contents($path . "views/assets/json/fontawesome.json");
                 $icons = json_decode($data);
-                
+
                 ?>
 
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-3"
-                style="overflow-y: scroll; overflow-x: hidden; height:350px"
-                >
+                    style="overflow-y: scroll; overflow-x: hidden; height:350px">
 
                     <?php foreach ($icons as $key => $value): ?>
 
@@ -364,4 +412,4 @@ Modal con libreria de iconos
 
     </div>
 
- </div>
+</div>

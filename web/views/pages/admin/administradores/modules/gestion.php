@@ -3,7 +3,7 @@
 if(isset($_GET["admin"])){
 
     $select = "id_admin,name_admin,email_admin,password_admin,rol_admin";
-    $url = "admins?linkTo=id_admin&equalTo=".base64_decode($_GET["admin"]);
+    $url = "admins?linkTo=id_admin&equalTo=".base64_decode($_GET["admin"])."&select=".$select;
     $method = "GET";
     $fields = array();
 
