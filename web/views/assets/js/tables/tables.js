@@ -203,11 +203,6 @@ $(document).on("click",".deleteItem", function(){
               fncMatPreloader("off");
               fncToastr("warning","Este item no se puede borrar porque tiene subcategorías vinculadas");
             
-            }else if(table == "subcategories"){
-
-              fncMatPreloader("off");
-              fncToastr("warning","Este item no se puede borrar porque tiene productos vinculados");
-            
             }else{
                
               fncMatPreloader("off");
