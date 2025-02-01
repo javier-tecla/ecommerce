@@ -143,6 +143,7 @@ class DatatableController
 				if ($value->status_category == 1) {
 
 					$status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='dark' checked='true' idItem='" . base64_encode($value->id_category) . "' table='categories' column='category'>";
+
 				} else {
 
 					$status_category = "<input type='checkbox' data-size='mini' data-bootstrap-switch data-off-color='danger' data-on-color='dark' idItem='" . base64_encode($value->id_category) . "' table='categories' column='category'>";

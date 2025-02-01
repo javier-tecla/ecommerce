@@ -103,7 +103,7 @@ if (isset($_GET["category"])) {
 
                                     <div class="form-group pb-3">
 
-                                        <label for="name_category">Título<sup class="text-danger font-weight-bold">*</sup></label>
+                                        <label for="name_category">Título <sup class="text-danger font-weight-bold">*</sup></label>
 
                                         <input
                                             type="text"
@@ -117,17 +117,16 @@ if (isset($_GET["category"])) {
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
-                                        <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
+                                        <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
                                     </div>
-
                                     <!--=================================================
                                     URL de la Categoría
                                     =================================================-->
 
                                     <div class="form-group pb-3">
 
-                                        <label for="url_category">URL<sup class="text-danger font-weight-bold">*</sup></label>
+                                        <label for="url_category">URL <sup class="text-danger font-weight-bold">*</sup></label>
 
                                         <input
                                             type="text"
@@ -139,24 +138,21 @@ if (isset($_GET["category"])) {
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
-                                        <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
+                                        <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
                                     </div>
-
                                     <!--=================================================
                                     Icono de la Categoría
                                     =================================================-->
 
                                     <div class="form-group pb-3">
 
-                                        <label for="icon_category">Icono<sup class="text-danger font-weight-bold">*</sup></label>
+                                        <label for="icon_category">Icono <sup class="text-danger font-weight-bold">*</sup></label>
 
                                         <div class="input-group">
 
                                             <span class="input-group-text iconView">
-
-                                                <i class="<?php if (!empty($category)): ?><?php echo $category->icon_category ?><?php else: ?>fas fa-shopping-bag <?php endif ?>"></i>
-
+                                                <i class="<?php if (!empty($category)): ?><?php echo $category->icon_category ?><?php else: ?>fas fa-shopping-bag<?php endif ?>"></i>
                                             </span>
 
                                             <input
@@ -165,16 +161,16 @@ if (isset($_GET["category"])) {
                                                 id="icon_category"
                                                 name="icon_category"
                                                 onfocus="addIcon(event)"
-                                                value="<?php if (!empty($category)): ?><?php echo $category->icon_category ?><?php else: ?>fas fa-shopping-bag <?php endif ?>"
+                                                value="<?php if (!empty($category)): ?><?php echo $category->icon_category ?><?php else: ?>fas fa-shopping-bag<?php endif ?>"
                                                 required>
 
                                             <div class="valid-feedback">Válido.</div>
-                                            <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
+                                            <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
                                         </div>
 
-                                    </div>
 
+                                    </div>
                                 </div>
 
                             </div>
@@ -201,7 +197,7 @@ if (isset($_GET["category"])) {
 
                                     <div class="form-group pb-3">
 
-                                        <label for="description_category">Descripción<sup class="text-danger fint-weight-bold">*</sup></label>
+                                        <label for="description_category">Descripción<sup class="text-danger font-weight-bold">*</sup></label>
 
                                         <textarea
                                             rows="9"
@@ -210,10 +206,10 @@ if (isset($_GET["category"])) {
                                             id="description_category"
                                             name="description_category"
                                             onchange="validateJS(event,'complete')"
-                                            required><?php if (!empty($category)): ?><?php echo $category->description_category ?><?php else: ?>fas fa-shopping-bag <?php endif ?></textarea>
+                                            required><?php if (!empty($category)): ?><?php echo $category->description_category ?><?php endif ?></textarea>
 
                                         <div class="valid-feedback">Válido.</div>
-                                        <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
+                                        <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
                                     </div>
 
@@ -221,25 +217,26 @@ if (isset($_GET["category"])) {
                                     Palabras claves de la categoría
                                     =================================================-->
 
-                                    <div class="form-group pb-3">
+                                    <div class="form-group pb-3"> 
 
-                                        <label for="keywords_category">Palabras claves<sup class="text-danger fint-weight-bold">*</sup></label>
+										<label for="keywords_category">Palabras claves<sup class="text-danger font-weight-bold">*</sup></label>
 
-                                        <input
-                                            type="text"
-                                            class="form-control tags-input"
-                                            data-role="tagsinput"
-                                            placeholder="Ingresar las palabras claves"
-                                            id="keywords_category"
-                                            name="keywords_category"
-                                            onchange="validateJS(event,'complete')"
-                                            value="<?php if (!empty($category)): ?><?php echo $category->keywords_category ?><?php else: ?>fas fa-shopping-bag <?php endif ?>"
-                                            required>
+										<input 
+										type="text"
+										class="form-control tags-input"
+										data-role="tagsinput"
+										placeholder="Ingresar las palabras claves"
+										id="keywords_category"
+										name="keywords_category"
+										onchange="validateJS(event,'complete-tags')"
+										value="<?php if (!empty($category)): ?><?php echo $category->keywords_category ?><?php endif ?>"
+										required
+										>
 
-                                        <div class="valid-feedback">Válido.</div>
-                                        <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
+										<div class="valid-feedback">Válido.</div>
+										<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
-                                    </div>
+									</div>
 
                                 </div>
 
@@ -293,8 +290,7 @@ if (isset($_GET["category"])) {
                                                 onchange="validateImageJS(event, 'chageImage')"
                                                 <?php if (empty($category)): ?>
                                                 required
-                                                <?php endif ?>
-                                            >
+                                                <?php endif ?>>
 
                                             <div class="valid-feedback">Válido.</div>
                                             <div class="invalid-feedback">Por favor llenar este campo correctamente.</div>
