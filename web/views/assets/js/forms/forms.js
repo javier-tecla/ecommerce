@@ -57,6 +57,17 @@ function validateDataRepeat(event, type) {
         validateJS(event, "complete");
         createUrl(event, "url_category");
 
+        $(".metaTitle").html(value);
+
+      } else {
+
+        $(event.target).parent().addClass("was-validated");
+        $(event.target).parent().children(".invalid-feedback").html("El nombre de la categoria ya existe en la base de datos")
+
+        event.target.value = "";
+
+        return;
+
       }
     },
   });
@@ -81,6 +92,7 @@ function createUrl(event, input) {
   value = value.replace(/[ñ]/g, "n");
 
   $('[name="' + input + '"]').val(value);
+  $('.metaUrl').html(value);
 }
 
 
@@ -148,6 +160,31 @@ function validateJS(event, type) {
       event.target.value = "";
 
       return;
+
+    } else {
+
+      $(".metaDescription").html(event.target.value)
+
+    }
+
+  }
+
+  if (type == "complete-tags") {
+
+    let pattern = /^[-\\(\\)\\=\\%\\&\\$\\;\\_\\*\\"\\'\\#\\?\\¿\\!\\¡\\:\\,\\.\\/\\0-9a-zA-ZñÑáéíóúÁÉÍÓÚ ]{1,}$/;
+
+    if (!pattern.test(event.target.value)) {
+
+      $(event.target).parent().children(".invalid-feedback").html("La entrada tiene errores de caracteres especiales");
+
+      event.target.value = "";
+
+      return;
+
+    } else {
+
+      $(".metaTags").html(event.target.value)
+
     }
 
   }
@@ -299,7 +336,8 @@ function validateImageJS(event, tagImg) {
 
       fncSweetAlert("close", "", "");
 
-        $("." + tagImg).attr("src", path);
+      $("." + tagImg).attr("src", path);
+      $(".metaImg").attr("src", path);
     })
   }
 
