@@ -33,6 +33,9 @@ function validateDataRepeat(event, type) {
   if (type === "category") {
     table = "categories";
     linkTo = "name_category";
+  } else if (type === "subcategory") {
+    table = "subcategories";
+    linkTo = "name_subcategory";
   } else {
     console.error("Invalid type provided");
     return; // Salir si el tipo no es válido
@@ -55,14 +58,24 @@ function validateDataRepeat(event, type) {
       if (response == 404) {
 
         validateJS(event, "complete");
-        createUrl(event, "url_category");
+
+        if (type == "category") {
+          createUrl(event, "url_category");
+
+        }
+
+
+        if (type == "subcategory") {
+          createUrl(event, "url_subcategory");
+
+        }
 
         $(".metaTitle").html(value);
 
       } else {
 
         $(event.target).parent().addClass("was-validated");
-        $(event.target).parent().children(".invalid-feedback").html("El nombre de la categoria ya existe en la base de datos")
+        $(event.target).parent().children(".invalid-feedback").html("El nombre ya existe en la base de datos")
 
         event.target.value = "";
 
