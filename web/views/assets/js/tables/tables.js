@@ -240,22 +240,20 @@ if ($(".productsTable").length > 0) {
 Eliminar item
 =============================================*/
 $(document).on("click", ".deleteItem", function () {
-  var idItem = $(this).attr("idItem");
-  var table = $(this).attr("table");
-  var column = $(this).attr("column");
-  var rol = $(this).attr("rol");
+  const idItem = $(this).attr("idItem");
+  const table = $(this).attr("table");
+  const column = $(this).attr("column");
+  const rol = $(this).attr("rol");
 
   fncSweetAlert("confirm", "¿Está seguro de borrar este item?", "").then(resp => {
     if (resp) {
       fncMatPreloader("on");
       fncSweetAlert("loading", "", "");
 
-      if (rol == "admin") {
-        var token = localStorage.getItem("token-admin");
-        var url = "/ajax/delete-admin.ajax.php";
-      }
+      const token = rol === "admin" ? localStorage.getItem("token-admin") : "";
+      const url = rol === "admin" ? "/ajax/delete-admin.ajax.php" : "";
 
-      var data = new FormData();
+      const data = new FormData();
       data.append("token", token);
       data.append("table", table);
       data.append("id", idItem);
@@ -268,27 +266,13 @@ $(document).on("click", ".deleteItem", function () {
         contentType: false,
         cache: false,
         processData: false,
-        success: function (response) {
+        success: response => {
+          fncMatPreloader("off");
           if (response == 200) {
-            fncMatPreloader("off");
-            fncSweetAlert(
-              "success",
-              "El item ha sido borrado correctamente",
-              location.reload()
-            );
+            fncSweetAlert("success", "El item ha sido borrado correctamente", location.reload());
           } else if (response == "no-borrar") {
-            if (table == "categories") {
-              fncMatPreloader("off");
-              fncToastr("warning", "Este item no se puede borrar porque tiene subcategorías vinculadas");
-            } else if (table == "subcategories") {
-              fncMatPreloader("off");
-              fncToastr("warning", "Este item no se puede borrar porque tiene productos vinculados");
-            } else {
-              fncMatPreloader("off");
-              fncToastr("warning", "Este item no se puede borrar");
-            }
+            fncToastr("warning", "Este item no se puede borrar");
           } else {
-            fncMatPreloader("off");
             fncToastr("error", "Este item no se pudo borrar");
           }
         }
@@ -304,13 +288,13 @@ $("#tables").on("draw.dt", function () {
   $("input[data-bootstrap-switch]").each(function () {
     $(this).bootstrapSwitch({
       onSwitchChange: function (event, state) {
-        var idItem = $(event.target).attr("idItem");
-        var table = $(event.target).attr("table");
-        var column = $(event.target).attr("column");
-        var status = state ? 1 : 0;
+        const idItem = $(event.target).attr("idItem");
+        const table = $(event.target).attr("table");
+        const column = $(event.target).attr("column");
+        const status = state ? 1 : 0;
+        const token = localStorage.getItem("token-admin");
 
-        var token = localStorage.getItem("token-admin");
-        var data = new FormData();
+        const data = new FormData();
         data.append("token", token);
         data.append("table", table);
         data.append("id", idItem);
@@ -324,15 +308,11 @@ $("#tables").on("draw.dt", function () {
           contentType: false,
           cache: false,
           processData: false,
-          success: function (response) {
+          success: response => {
+            fncMatPreloader("off");
             if (response == 200) {
-              fncMatPreloader("off");
-              fncToastr(
-                "success",
-                "El item ha sido actualizado correctamente"
-              );
+              fncToastr("success", "El item ha sido actualizado correctamente");
             } else {
-              fncMatPreloader("off");
               fncToastr("error", "Este item no se pudo actualizar");
             }
           }
