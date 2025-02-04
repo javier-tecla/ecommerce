@@ -1,8 +1,8 @@
 <?php
 
-if (isset($_GET["category"])) {
+if (isset($_GET["subcategory"])) {
 
-    $select = "id_subcategory,name_subcategory,url_subcategory,icon_subcategory,image_subcategory,description_subcategory,keywords_subcategory";
+    $select = "id_subcategory,name_subcategory,url_subcategory,image_subcategory,description_subcategory,keywords_subcategory,id_category_subcategory";
     $url = "subcategories?linkTo=id_subcategory&equalTo=" . base64_decode($_GET["subcategory"]) . "&select=" . $select;
     $method = "GET";
     $fields = array();
@@ -34,7 +34,7 @@ if (isset($_GET["category"])) {
 
                 <?php if (!empty($subcategory)): ?>
 
-                    <input type="hidden" name="idsubcategory" value="<?php echo base64_encode($subcategory->id_subcategory) ?>">
+                    <input type="hidden" name="idSubcategory" value="<?php echo base64_encode($subcategory->id_subcategory) ?>">
 
                 <?php endif ?>
 
