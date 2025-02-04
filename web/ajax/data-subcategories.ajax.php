@@ -57,7 +57,7 @@ class DatatableController
 				return;
 			}
 
-			$select = "*";
+			$select = "id_subcategory,status_subcategory,name_subcategory,url_subcategory,image_subcategory,description_subcategory,keywords_subcategory,name_category,products_subcategory,views_subcategory,date_updated_subcategory";
 
 			/*=============================================
            	Búsqueda de datos
@@ -108,7 +108,7 @@ class DatatableController
 
 				$recordsFiltered = $totalData;
 			}
-
+			
 			/*=============================================
             Cuando la data viene vacía
             =============================================*/
