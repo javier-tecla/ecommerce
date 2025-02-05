@@ -36,6 +36,9 @@ function validateDataRepeat(event, type) {
   } else if (type === "subcategory") {
     table = "subcategories";
     linkTo = "name_subcategory";
+  } else if (type === "product") {
+    table = "products";
+    linkTo = "name_product";
   } else {
     console.error("Invalid type provided");
     return; // Salir si el tipo no es válido
@@ -59,16 +62,7 @@ function validateDataRepeat(event, type) {
 
         validateJS(event, "complete");
 
-        if (type == "category") {
-          createUrl(event, "url_category");
-
-        }
-
-
-        if (type == "subcategory") {
-          createUrl(event, "url_subcategory");
-
-        }
+        createUrl(event, "url_"+type);
 
         $(".metaTitle").html(value);
 
@@ -355,4 +349,45 @@ function validateImageJS(event, tagImg) {
   }
 
 }
+
+/*===========================================================
+  Traer subcategorias de acuerdo a la categoria seleccionada
+  ==========================================================*/
+
+function changeCategory(event) {
+
+  $("#id_subcategory_product").html(`<option value="">Selecciona Subcategoría</option>`);
+
+  let idCategory = event.target.value;
+
+  let data = new FormData();
+  data.append("idCategory", idCategory);
+
+  $.ajax({
+    url: "/ajax/forms.ajax.php",
+    method: "POST",
+    data: data,
+    contentType: false,
+    cache: false,
+    processData: false,
+    success: function (response) {
+
+      if (JSON.parse(response).length > 0) {
+
+        JSON.parse(response).forEach((v) => {
+
+          $("#id_subcategory_product").append(`
+            
+            <option value="`+ v.id_subcategory + `">` + v.name_subcategory + `</option>
+
+            `)
+        })
+
+      }
+
+    }
+
+  })
+}
+
 

@@ -134,6 +134,7 @@ if (isset($_GET["product"])) {
                                             class="custom-select"
                                             name="id_category_product"
                                             id="id_category_product"
+                                            onchange="changeCategory(event)"
                                             required>
 
                                             <option value="">Selecciona Categoría</option>
@@ -162,7 +163,7 @@ if (isset($_GET["product"])) {
                                             id="id_subcategory_product"
                                             required>
 
-                                            <option value="">Selecciona Subcategoría</option>
+                                            <option value="">Selecciona Primero una Categoría</option>
 
                                         </select>
 
