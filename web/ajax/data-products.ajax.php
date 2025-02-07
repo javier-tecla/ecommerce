@@ -105,7 +105,7 @@ class DatatableController
 
 				$url = "relations?rel=products,subcategories,categories&type=product,subcategory,category&select=" . $select . "&orderBy=" . $orderBy . "&orderMode=" . $orderType . "&startAt=" . $start . "&endAt=" . $length;
 				$data = CurlController::request($url, $method, $fields)->results;
-
+				
 				$recordsFiltered = $totalData;
 			}
 			

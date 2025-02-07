@@ -8,7 +8,7 @@ class ProductsController{
 
 	public function productManage(){
 
-		if(isset($_POST["name_subcategory"])){
+		if(isset($_POST["name_product"])){
 
 			echo '<script>
 
@@ -121,15 +121,15 @@ class ProductsController{
 				Validar y guardar la imagen
 				=============================================*/
 
-				if(isset($_FILES['image_subcategory']["tmp_name"]) && !empty($_FILES['image_subcategory']["tmp_name"])){
+				if(isset($_FILES['image_product']["tmp_name"]) && !empty($_FILES['image_product']["tmp_name"])){
 
-					$image = $_FILES['image_subcategory'];
-					$folder = "assets/img/subcategories/".$_POST["url_subcategory"];
-					$name = $_POST["url_subcategory"];
+					$image = $_FILES['image_product'];
+					$folder = "assets/img/products/".$_POST["url_product"];
+					$name = $_POST["url_product"];
 					$width = 1000;
 					$height = 600;
 
-					$saveImageSubcategory = TemplateController::saveImage($image,$folder,$name,$width,$height);
+					$saveImageProduct = TemplateController::saveImage($image,$folder,$name,$width,$height);
 					
 				}else{
 
@@ -151,46 +151,31 @@ class ProductsController{
 
 				$fields = array(
 				
-					"name_subcategory" => trim(TemplateController::capitalize($_POST["name_subcategory"])),
-					"url_subcategory" => $_POST["url_subcategory"],
-					"image_subcategory" => $saveImageSubcategory,
-					"description_subcategory" => trim($_POST["description_subcategory"]),
-					"keywords_subcategory" => strtolower($_POST["keywords_subcategory"]),
-					"id_category_subcategory" => $_POST["id_category_subcategory"],
-					"date_created_subcategory" => date("Y-m-d")
+					"name_product" => trim(TemplateController::capitalize($_POST["name_product"])),
+					"url_product" => $_POST["url_product"],
+					"image_product" => $saveImageProduct,
+					"description_product" => trim($_POST["description_product"]),
+					"keywords_product" => strtolower($_POST["keywords_product"]),
+					"id_category_product" => $_POST["id_category_product"],
+					"id_subcategory_product" => $_POST["id_subcategory_product"],
+					"date_created_product" => date("Y-m-d")
 
 				);
 
-				$url = "subcategories?token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
+				$url = "products?token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
 				$method = "POST";
 
 				$createData = CurlController::request($url, $method, $fields);
 
-				/*=============================================
-				Aumentar subcategorías vinculadas a categorías
-				=============================================*/
-
-				$url = "categories?equalTo=".$_POST["id_category_subcategory"]."&linkTo=id_category&select=subcategories_category";
-				$method = "GET";
-				$fields = array();
-
-				$subcategories_category = CurlController::request($url, $method, $fields)->results[0]->subcategories_category;
-
-				$url = "categories?id=".$_POST["id_category_subcategory"]."&nameId=id_category&token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
-				$method = "PUT";
-
-				$fields = "subcategories_category=".($subcategories_category+1);
-
-				$updateCategory = CurlController::request($url, $method, $fields);
-
-				if($createData->status == 200 && $updateCategory->status == 200){
+			
+				if($createData->status == 200){
 
 					echo '<script>
 
 								fncMatPreloader("off");
 								fncFormatInputs();
 
-								fncSweetAlert("success","Sus datos han sido creados con éxito","/admin/subcategorias");
+								fncSweetAlert("success","Sus datos han sido creados con éxito","/admin/productos");
 				
 							</script>';	
 

@@ -99,7 +99,7 @@ function createUrl(event, input) {
   value = value.replace(/[ñ]/g, "n");
 
   $('[name="' + input + '"]').val(value);
-  $('.metaUrl').html(value);
+  $('.metaURL').html(value);
 }
 
 
