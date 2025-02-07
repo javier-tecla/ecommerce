@@ -2,23 +2,23 @@
 
 if (isset($_GET["product"])) {
 
-    $select = "id_subcategory,name_subcategory,url_subcategory,image_subcategory,description_subcategory,keywords_subcategory,id_category_subcategory";
-    $url = "subcategories?linkTo=id_subcategory&equalTo=" . base64_decode($_GET["subcategory"]) . "&select=" . $select;
+    $select = "id_product,name_product,url_product,image_product,description_product,keywords_product,id_category_product,id_subcategory_product,name_subcategory";
+    $url = "relations?rel=products,subcategories&type=product,subcategory&linkTo=id_product&equalTo=" . base64_decode($_GET["product"]) . "&select=" . $select;
     $method = "GET";
     $fields = array();
 
-    $subcategory = CurlController::request($url, $method, $fields);
+    $product = CurlController::request($url, $method, $fields);
 
-    if ($subcategory->status == 200) {
+    if ($product->status == 200) {
 
-        $subcategory = $subcategory->results[0];
+        $product = $product->results[0];
     } else {
 
-        $subcategory = null;
+        $product = null;
     }
 } else {
 
-    $subcategory = null;
+    $product = null;
 }
 
 
@@ -32,9 +32,9 @@ if (isset($_GET["product"])) {
 
             <form method="post" class="needs-validation" novalidate enctype="multipart/form-data">
 
-                <?php if (!empty($subcategory)): ?>
+                <?php if (!empty($product)): ?>
 
-                    <input type="hidden" name="idSubcategory" value="<?php echo base64_encode($subcategory->id_subcategory) ?>">
+                    <input type="hidden" name="idProduct" value="<?php echo base64_encode($product->id_product) ?>">
 
                 <?php endif ?>
 
@@ -103,9 +103,9 @@ if (isset($_GET["product"])) {
 
                                     <div class="form-group pb-3">
 
-                                        <?php if (!empty($subcategory)): ?>
+                                        <?php if (!empty($product)): ?>
 
-                                            <input type="hidden" name="old_id_category_subcategory" value="<?php echo base64_encode($subcategory->id_category_subcategory) ?>">
+                                            <input type="hidden" name="old_id_category_product" value="<?php echo base64_encode($product->id_category_product) ?>">
 
                                         <?php endif ?>
 
@@ -141,7 +141,7 @@ if (isset($_GET["product"])) {
 
                                             <?php foreach ($categories as $key => $value): ?>
 
-                                                <option value="<?php echo $value->id_category ?>" <?php if (!empty($subcategory) && $subcategory->id_category_subcategory == $value->id_category): ?> selected <?php endif ?>><?php echo $value->name_category ?></option>
+                                                <option value="<?php echo $value->id_category ?>" <?php if (!empty($product) && $product->id_category_product == $value->id_category): ?> selected <?php endif ?>><?php echo $value->name_category ?></option>
 
                                             <?php endforeach ?>
 
@@ -163,7 +163,15 @@ if (isset($_GET["product"])) {
                                             id="id_subcategory_product"
                                             required>
 
-                                            <option value="">Selecciona Primero una Categoría</option>
+                                            <?php if (!empty($product)): ?>
+
+                                                <option value="<?php echo $product->id_subcategory_product ?>"><?php echo $product->name_product ?></option>
+
+                                            <?php else: ?>
+
+                                                <option value="">Selecciona Primero una Categoría</option>
+                                                
+                                            <?php endif ?>
 
                                         </select>
 
@@ -196,8 +204,8 @@ if (isset($_GET["product"])) {
                                             id="name_product"
                                             name="name_product"
                                             onchange="validateDataRepeat(event,'product')"
-                                            <?php if (!empty($subcategory)): ?> readonly <?php endif ?>
-                                            value="<?php if (!empty($subcategory)): ?><?php echo $subcategory->name_subcategory ?><?php endif ?>"
+                                            <?php if (!empty($product)): ?> readonly <?php endif ?>
+                                            value="<?php if (!empty($product)): ?><?php echo $product->name_product ?><?php endif ?>"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -217,7 +225,7 @@ if (isset($_GET["product"])) {
                                             class="form-control"
                                             id="url_product"
                                             name="url_product"
-                                            value="<?php if (!empty($subcategory)): ?><?php echo $subcategory->url_subcategory ?><?php endif ?>"
+                                            value="<?php if (!empty($product)): ?><?php echo $product->url_product ?><?php endif ?>"
                                             readonly
                                             required>
 
@@ -261,7 +269,7 @@ if (isset($_GET["product"])) {
                                             id="description_product"
                                             name="description_product"
                                             onchange="validateJS(event,'complete')"
-                                            required><?php if (!empty($subcategory)): ?><?php echo $subcategory->description_subcategory ?><?php endif ?></textarea>
+                                            required><?php if (!empty($product)): ?><?php echo $product->description_product ?><?php endif ?></textarea>
 
                                         <div class="valid-feedback">Válido.</div>
                                         <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
@@ -284,7 +292,7 @@ if (isset($_GET["product"])) {
                                             id="keywords_product"
                                             name="keywords_product"
                                             onchange="validateJS(event,'complete-tags')"
-                                            value="<?php if (!empty($subcategory)): ?><?php echo $subcategory->keywords_subcategory ?><?php endif ?>"
+                                            value="<?php if (!empty($product)): ?><?php echo $product->keywords_product ?><?php endif ?>"
                                             required>
 
                                         <div class="valid-feedback">Válido.</div>
@@ -314,11 +322,11 @@ if (isset($_GET["product"])) {
 
                                         <label for="image_product">
 
-                                            <?php if (!empty($subcategory)): ?>
+                                            <?php if (!empty($product)): ?>
 
-                                                <input type="hidden" value="<?php echo $subcategory->image_subcategory ?>" name="old_image_product">
+                                                <input type="hidden" value="<?php echo $product->image_product ?>" name="old_image_product">
 
-                                                <img src="/views/assets/img/products/<?php echo $subcategory->url_subcategory ?>/<?php echo $subcategory->image_subcategory ?>" alt="image default" class="img-fluid chageImage">
+                                                <img src="/views/assets/img/products/<?php echo $product->url_product ?>/<?php echo $product->image_product ?>" alt="image default" class="img-fluid chageImage">
 
                                             <?php else: ?>
 
@@ -342,7 +350,7 @@ if (isset($_GET["product"])) {
                                                 accept="image/*"
                                                 maxSize="2000000"
                                                 onchange="validateImageJS(event, 'chageImage')"
-                                                <?php if (empty($subcategory)): ?>
+                                                <?php if (empty($product)): ?>
                                                 required
                                                 <?php endif ?>>
 
@@ -394,9 +402,9 @@ if (isset($_GET["product"])) {
 
                                                     <figure class="mb-2">
 
-                                                        <?php if (!empty($subcategory)): ?>
+                                                        <?php if (!empty($product)): ?>
 
-                                                            <img src="/views/assets/img/products/<?php echo $subcategory->url_subcategory ?>/<?php echo $subcategory->image_subcategory ?>" class="img-fluid metaImg" alt="img" style="width:100%">
+                                                            <img src="/views/assets/img/products/<?php echo $product->url_product ?>/<?php echo $product->image_product ?>" class="img-fluid metaImg" alt="img" style="width:100%">
 
                                                         <?php else: ?>
 
@@ -412,8 +420,8 @@ if (isset($_GET["product"])) {
 
                                                     <h6 class="text-left text-primary mb-1 metaTitle">
 
-                                                        <?php if (!empty($subcategory)): ?>
-                                                            <?php echo $subcategory->name_subcategory ?>
+                                                        <?php if (!empty($product)): ?>
+                                                            <?php echo $product->name_product ?>
                                                         <?php else: ?>
                                                             Lorem Ipsum Dolor Sit
                                                         <?php endif ?>
@@ -424,7 +432,7 @@ if (isset($_GET["product"])) {
 
                                                     <p class="text-left text-success small mb-1">
 
-                                                        <?php echo $path ?><span class="metaURL"><?php if (!empty($subcategory)): ?><?php echo $subcategory->url_subcategory ?><?php else: ?>lorem<?php endif ?></span>
+                                                        <?php echo $path ?><span class="metaURL"><?php if (!empty($product)): ?><?php echo $product->url_product ?><?php else: ?>lorem<?php endif ?></span>
 
                                                     </p>
 
@@ -434,8 +442,8 @@ if (isset($_GET["product"])) {
 
                                                     <p class="text-left small mb-1 metaDescription">
 
-                                                        <?php if (!empty($subcategory)): ?>
-                                                            <?php echo $subcategory->description_subcategory ?>
+                                                        <?php if (!empty($product)): ?>
+                                                            <?php echo $product->description_product ?>
                                                         <?php else: ?>
                                                             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since.
                                                         <?php endif ?>
@@ -448,8 +456,8 @@ if (isset($_GET["product"])) {
 
                                                     <p class="small text-left text-secondary metaTags">
 
-                                                        <?php if (!empty($subcategory)): ?>
-                                                            <?php echo $subcategory->keywords_subcategory ?>
+                                                        <?php if (!empty($product)): ?>
+                                                            <?php echo $product->keywords_product ?>
                                                         <?php else: ?>
                                                             lorem, ipsum, dolor, sit
                                                         <?php endif ?>
