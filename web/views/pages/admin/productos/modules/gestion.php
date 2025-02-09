@@ -155,6 +155,12 @@ if (isset($_GET["product"])) {
 
                                     <div class="form-group pb-3">
 
+                                    <?php if (!empty($product)): ?>
+
+                                        <input type="hidden" name="old_id_subcategory_product" value="<?php echo base64_encode($product->id_subcategory_product) ?>">
+
+                                    <?php endif ?>
+
                                         <label for="id_subcategory_product">Seleccionar Subcategoría<sup class="text-danger">*</sup></label>
 
                                         <select

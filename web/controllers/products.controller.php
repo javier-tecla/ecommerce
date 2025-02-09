@@ -46,9 +46,77 @@ class ProductsController{
 				$method = "PUT";
 
 				$updateData = CurlController::request($url, $method, $fields);
-				
 
-				if($updateData->status == 200){
+				/*=============================================
+				Quitar producto vinculado a categoria
+				=============================================*/
+
+				$url = "categories?equalTo=" .base64_decode($_POST["old_id_category_product"]) . "&linkTo=id_category&select=products_category";
+                $method = "GET";
+				$fields = array();
+
+				$old_products_category = CurlController::request($url, $method, $fields)->results[0]->products_category;
+
+				$url = "categories?id=" .base64_decode($_POST["old_id_category_product"]) . "&nameId=id_category&token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
+                $method = "PUT";
+				$fields = "products_category=".($old_products_category-1);
+
+				$updateOldCategory = CurlController::request($url, $method, $fields);
+				
+				/*=============================================
+				Agregar producto vinculado a categoria
+				=============================================*/
+
+				$url = "categories?equalTo=".$_POST["id_category_product"]."&linkTo=id_category&select=products_category";
+				$method = "GET";
+				$fields = array();
+
+				$products_category = CurlController::request($url, $method, $fields)->results[0]->products_category;
+
+				$url = "categories?id=".$_POST["id_category_product"]."&nameId=id_category&token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
+				$method = "PUT";
+				$fields = "products_category=".($products_category+1);
+
+				$updateCategory = CurlController::request($url, $method, $fields);
+
+				/*=============================================
+				Quitar producto vinculado a subcategoria
+				=============================================*/
+
+				$url = "subcategories?equalTo=" .base64_decode($_POST["old_id_subcategory_product"]) . "&linkTo=id_subcategory&select=products_subcategory";
+                $method = "GET";
+				$fields = array();
+
+				$old_products_subcategory = CurlController::request($url, $method, $fields)->results[0]->products_subcategory;
+
+				$url = "subcategories?id=" .base64_decode($_POST["old_id_subcategory_product"]) . "&nameId=id_subcategory&token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
+                $method = "PUT";
+				$fields = "products_subcategory=".($old_products_subcategory-1);
+
+				$updateOldSubcategory = CurlController::request($url, $method, $fields);
+				
+				/*=============================================
+				Agregar producto vinculado a subcategoria
+				=============================================*/
+
+				$url = "subcategories?equalTo=".$_POST["id_subcategory_product"]."&linkTo=id_subcategory&select=products_subcategory";
+				$method = "GET";
+				$fields = array();
+
+				$products_subcategory = CurlController::request($url, $method, $fields)->results[0]->products_subcategory;
+
+				$url = "subcategories?id=".$_POST["id_subcategory_product"]."&nameId=id_subcategory&token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
+				$method = "PUT";
+				$fields = "products_subcategory=".($products_subcategory+1);
+
+				$updateSubcategory = CurlController::request($url, $method, $fields);
+
+				if($updateData->status == 200 && 
+					$updateOldCategory->status == 200 && 
+					$updateCategory->status == 200 && 
+					$updateOldSubcategory->status == 200 && 
+					$updateSubcategory->status == 200
+				){
 
 					echo '<script>
 
@@ -138,8 +206,39 @@ class ProductsController{
 
 				$createData = CurlController::request($url, $method, $fields);
 
+				/*=============================================
+				Aumentar productos vinculados en categoría
+				=============================================*/
+
+				$url = "categories?equalTo=" . $_POST["id_category_product"] . "&linkTo=id_category&select=products_category";
+                $method = "GET";
+				$fields = array();
+
+				$products_category = CurlController::request($url, $method, $fields)->results[0]->products_category;
+
+				$url = "categories?id=" . $_POST["id_category_product"] . "&nameId=id_category&token=" . $_SESSION["admin"]->token_admin . "&table=admins&suffix=admin";
+                $method = "PUT";
+				$fields = "products_category=".($products_category+1);
+
+				$updateCategory = CurlController::request($url, $method, $fields);
+
+				/*=============================================
+				Aumentar productos vinculados en subcategoría
+				=============================================*/
+
+				$url = "subcategories?equalTo=" . $_POST["id_subcategory_product"] . "&linkTo=id_subcategory&select=products_subcategory";
+                $method = "GET";
+				$fields = array();
+
+				$products_subcategory = CurlController::request($url, $method, $fields)->results[0]->products_subcategory;
+
+				$url = "subcategories?id=" . $_POST["id_subcategory_product"] . "&nameId=id_subcategory&token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
+                $method = "PUT";
+				$fields = "products_subcategory=".($products_subcategory+1);
+
+				$updateSubcategory = CurlController::request($url, $method, $fields);
 			
-				if($createData->status == 200){
+				if($createData->status == 200 && $updateCategory->status == 200 && $updateSubcategory->status == 200){
 
 					echo '<script>
 
