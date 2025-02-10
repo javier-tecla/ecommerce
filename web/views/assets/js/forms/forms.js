@@ -390,29 +390,51 @@ function changeCategory(event) {
   })
 }
 
-/*===============================================
-  Summernote
-  ==============================================*/
+/*=============================================
+Summernote
+=============================================*/
 
-if ($('.summernote').length > 0) {
+if($('.summernote').length > 0){
 
   $('.summernote').summernote({
 
     minHeight: 500,
     prettifyHtml:false,
-    followingToolbar:true,
+    followingToolbar: true,
+    codemirror: { // codemirror options
+        mode: "application/xml",
+        styleActiveLine: true,
+        lineNumbers: true,
+        lineWrapping: true
+    },
     toolbar:[
       ['misc', ['codeview', 'undo', 'redo']],
       ['style', ['bold', 'italic', 'underline', 'clear']],
       ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
       ['fontsize', ['fontsize']],
       ['color', ['color']],
-      ['insert', ['link', 'picture', 'hr', 'video', 'table', 'emoji']],
-    
+      ['insert', ['link','picture', 'hr','video','table','emoji']],
     ]
 
   })
 
 }
+
+/*=============================================
+Adicionar fondo blanco al toolbar de summernote
+Adicionar iconos al toolbar de summernote
+=============================================*/
+
+if($(".note-toolbar").length > 0){
+
+  $(".note-toolbar").addClass("bg-white");
+
+  $(".emoji-picker").removeClass("fa-smile-o");
+  $(".emoji-picker").addClass("fa-smile");
+
+  $("[aria-label='More Color']").html(`<i class="fas fa-caret-down"></i>`)
+
+}
+
 
 

@@ -104,7 +104,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo $template->title_template ?></title>
 
-    <meta name="description content=" <?php echo $template->description_template ?>">
+    <meta name="description" content=" <?php echo $template->description_template ?>">
     <meta name="keywords" content="<?php echo $keywords ?>">
 
     <link rel="icon" href="<?php echo $path ?>views/assets/img/template/<?php echo $template->id_template ?>/<?php echo $template->icon_template ?>">
@@ -134,7 +134,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/material-preloader/material-preloader.css">
 
     <!-- Tags Input -->
-     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/tags-input/tags-input.css">
+    <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/tags-input/tags-input.css">
 
     <!-- DataTables -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -178,25 +178,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
     </style>
 
 
-    <!-- JS --> 
+    <!-- JS -->
 
 
     <!-- jQuery -->
     <script src="<?php echo $path ?>views/assets/js/plugins/jquery/jquery.min.js"></script>
 
-    <?php if (!empty($routesArrey[0]) && $routesArray[0] == "admin" &&
-              !empty($routesArray[1]) && $routesArray[1] == "productos" &&
-              !empty($routesArray[2]) && $routesArray[2] == "gestion"): ?>
+    <?php if (
+        !empty($routesArray[0]) && $routesArray[0] == "admin" &&
+        !empty($routesArray[1]) && $routesArray[1] == "productos" &&
+        !empty($routesArray[2]) && $routesArray[2] == "gestion"
+    ): ?>
 
-         <!-- Bootstrap 4 --> 
-         <script src="<?php echo $path ?>views/assets/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> 
-         
+        <!-- Bootstrap 4 -->
+        <script src="<?php echo $path ?>views/assets/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+
     <?php else: ?>
 
         <!-- Bootstrap 5 -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <?php endif ?>
+
 
     <!-- JDSlider 
     https://www.jqueryscript.net/slider/Carousel-Slideshow-jdSlider.html -->
@@ -222,7 +225,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?php echo $path ?>views/assets/js/plugins/material-preloader/material-preloader.js"></script>
 
     <!-- Tags-Input -->
-     <script src="<?php echo $path ?>views/assets/js/plugins/tags-input/tags-input.js"></script>
+    <script src="<?php echo $path ?>views/assets/js/plugins/tags-input/tags-input.js"></script>
 
     <!-- DataTables  & Plugins -->
     <script src="<?php echo $path ?>views/assets/js/plugins/datatables/jquery.dataTables.min.js"></script>
@@ -252,7 +255,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
 
-<input type="hidden" id="urlPath" value="<?php echo $path ?>">
+    <input type="hidden" id="urlPath" value="<?php echo $path ?>">
     <div class="wrapper">
 
         <?php
