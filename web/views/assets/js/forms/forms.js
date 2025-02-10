@@ -62,7 +62,7 @@ function validateDataRepeat(event, type) {
 
         validateJS(event, "complete");
 
-        createUrl(event, "url_"+type);
+        createUrl(event, "url_" + type);
 
         $(".metaTitle").html(value);
 
@@ -388,6 +388,31 @@ function changeCategory(event) {
     }
 
   })
+}
+
+/*===============================================
+  Summernote
+  ==============================================*/
+
+if ($('.summernote').length > 0) {
+
+  $('.summernote').summernote({
+
+    minHeight: 500,
+    prettifyHtml:false,
+    followingToolbar:true,
+    toolbar:[
+      ['misc', ['codeview', 'undo', 'redo']],
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
+      ['fontsize', ['fontsize']],
+      ['color', ['color']],
+      ['insert', ['link', 'picture', 'hr', 'video', 'table', 'emoji']],
+    
+    ]
+
+  })
+
 }
 
 

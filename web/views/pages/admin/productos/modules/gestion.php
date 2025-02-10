@@ -2,7 +2,7 @@
 
 if (isset($_GET["product"])) {
 
-    $select = "id_product,name_product,url_product,image_product,description_product,keywords_product,id_category_product,id_subcategory_product,name_subcategory";
+    $select = "id_product,name_product,url_product,image_product,description_product,keywords_product,id_category_product,id_subcategory_product,name_subcategory,info_product";
     $url = "relations?rel=products,subcategories&type=product,subcategory&linkTo=id_product&equalTo=" . base64_decode($_GET["product"]) . "&select=" . $select;
     $method = "GET";
     $fields = array();
@@ -378,6 +378,51 @@ if (isset($_GET["product"])) {
 
                     <!--=================================================
                       TERCER BLOQUE
+                     =================================================-->
+
+                    <div class="row row-cols-1 pt-2">
+
+                        <div class="col">
+
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <div class="form-group mx-auto" style="max-width:700px">
+
+                                        <!--==================================
+                                        Información del producto
+                                        ====================================-->
+
+                                        <label for="info_product">Información del Producto<sup class="text-danger">*</sup></label>
+
+                                        <textarea
+                                            class="summernote"
+                                            name="info_product"
+                                            id="info_product"
+                                            required
+                                        >
+                                        <?php if (!empty($product)): ?>
+                                            <?php echo $product->info_product ?>
+                                        <?php endif ?>
+                                        
+                                        </textarea>
+
+                                        <div class="valid-feedback">Válido</div>
+                                        <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!--=================================================
+                      CUARTO BLOQUE
                      =================================================-->
 
                     <div class="row row-cols-1 pt-2">
