@@ -405,7 +405,7 @@ if ($('.summernote').length > 0) {
       mode: "application/xml",
       styleActiveLine: true,
       lineNumbers: true,
-      lineWrapping: true
+      lineWrapping: true,
     },
     toolbar: [
       ['misc', ['codeview', 'undo', 'redo']],
