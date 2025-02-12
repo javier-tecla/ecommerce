@@ -544,5 +544,22 @@ function upload(file) {
 
 }
 
+/*=============================================
+Cambio de variante: Galería o video
+=============================================*/
+
+function changeVariant(event, item) {
+
+  if(event.target.value == "video"){
+
+    $(".inputVideo_"+item).show();
+
+  } else {
+
+    $(".inputVideo_"+item).hide();
+
+  }
+}
+
 
 

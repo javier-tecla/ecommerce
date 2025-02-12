@@ -155,11 +155,11 @@ if (isset($_GET["product"])) {
 
                                     <div class="form-group pb-3">
 
-                                    <?php if (!empty($product)): ?>
+                                        <?php if (!empty($product)): ?>
 
-                                        <input type="hidden" name="old_id_subcategory_product" value="<?php echo base64_encode($product->id_subcategory_product) ?>">
+                                            <input type="hidden" name="old_id_subcategory_product" value="<?php echo base64_encode($product->id_subcategory_product) ?>">
 
-                                    <?php endif ?>
+                                        <?php endif ?>
 
                                         <label for="id_subcategory_product">Seleccionar Subcategoría<sup class="text-danger">*</sup></label>
 
@@ -176,7 +176,7 @@ if (isset($_GET["product"])) {
                                             <?php else: ?>
 
                                                 <option value="">Selecciona Primero una Categoría</option>
-                                                
+
                                             <?php endif ?>
 
                                         </select>
@@ -400,8 +400,7 @@ if (isset($_GET["product"])) {
                                             class="summernote"
                                             name="info_product"
                                             id="info_product"
-                                            required
-                                        >
+                                            required>
                                         <?php if (!empty($product)): ?>
                                             <?php echo $product->info_product ?>
                                         <?php endif ?>
@@ -423,6 +422,184 @@ if (isset($_GET["product"])) {
 
                     <!--=================================================
                       CUARTO BLOQUE
+                     =================================================-->
+
+                    <div class="row row-cols-1 pt-2">
+
+                        <div class="col">
+
+                            <div class="card">
+
+                                <div class="card-body">
+
+                                    <!--=================================================
+                                Variantes
+                                =================================================-->
+
+                                    <div class="form-group">
+
+                                        <div class="d-flex justify-content-between">
+
+                                            <label for="info_product">Variante 1<sup class="text-danger">*</sup></label>
+
+                                            <div>
+                                                <button type="button" class="btn btn-default btn-sm rounded-pill px-3"><i class="fas fa-plus fa-xs"></i> Agregar otra variante</button>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+
+                                    <div class="row row-cols-1 row-cols-md-2">
+
+                                        <div class="col">
+
+                                            <!--=================================================
+                                             Tipo de variante 
+                                            =================================================-->
+
+                                            <div class="form-group">
+
+                                                <select
+                                                    class="custom-select"
+                                                    name="type_variant_1"
+                                                    onchange="changeVariant(event, 1)"
+                                                    >
+
+                                                    <option value="gallery">Galería de fotos</option>
+                                                    <option value="video">Video</option>
+
+                                                </select>
+
+                                            </div>
+
+                                            <!--=================================================
+                                        Galeria del Producto
+                                        =================================================-->
+
+                                            <div class="mb-3">
+
+                                                <!--=================================================
+                                                    Plugin Dropzone
+                                                    =================================================-->
+
+                                            </div>
+
+                                            <!--=================================================
+                                        Insertar video Youtube
+                                        =================================================-->
+
+                                            <div class="input-group mb-3 inputVideo_1" style="display:none">
+
+                                                <span class="input-group-text">
+                                                    <i class="fas fa-clipboard-list"></i>
+                                                </span>
+
+                                                <input
+                                                    type="text"
+                                                    class="form-control"
+                                                    name="videoProduct_1"
+                                                    placeholder="Ingresar la URL de Youtube"
+                                                >
+                                                    
+
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="col">
+
+                                            <!--=================================================
+                                        Descripció de la variante
+                                        =================================================-->
+
+                                            <div class="input-group mb-3">
+
+                                                <span class="input-group-text"><i class="fas fa-clipboard-list"></i></span>
+
+                                                <input type="text" class="form-control" name="description_variant_1" placeholder="Descripción: Color Negro, talla S, Material Goma">
+
+                                            </div>
+
+                                            <!--=================================================
+                                        Costo de la variante
+                                        =================================================-->
+
+                                            <div class="input-group mb-3">
+
+                                                <span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>
+
+                                                <input type="number" step="any" class="form-control" name="cost_variant_1" placeholder="Costo de compra">
+
+                                            </div>
+
+                                            <!--=================================================
+                                        Precio de la variante
+                                        =================================================-->
+
+                                            <div class="input-group mb-3">
+
+                                                <span class="input-group-text"><i class="fas fa-funnel-dollar"></i></span>
+
+                                                <input type="number" step="any" class="form-control" name="price_variant_1" placeholder="Precio de venta">
+
+                                            </div>
+
+                                            <!--=================================================
+                                        Oferta de la variante
+                                        =================================================-->
+
+                                            <div class="input-group mb-3">
+
+                                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
+
+                                                <input type="number" step="any" class="form-control" name="offer_variant_1" placeholder="Precio de descuento">
+
+                                            </div>
+
+                                            <!--=================================================
+                                        Fin de Oferta de la variante
+                                        =================================================-->
+
+                                            <div class="input-group mb-3">
+
+                                                <span class="input-group-text">Fin del descuento</span>
+
+                                                <input type="date" class="form-control" name="date_variant_1">
+
+                                            </div>
+
+                                            <!--=================================================
+                                        Stock de la variante
+                                        =================================================-->
+
+                                            <div class="input-group mb-3">
+
+                                                <span class="input-group-text"><i class="fas fa-list"></i></span>
+
+                                                <input type="number" class="form-control" name="stock_variant_1" placeholder="Stock disponible">
+
+                                            </div>
+
+
+
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!--=================================================
+                      QUINTO BLOQUE
                      =================================================-->
 
                     <div class="row row-cols-1 pt-2">
