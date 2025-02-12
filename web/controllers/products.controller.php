@@ -58,7 +58,7 @@ class ProductsController{
 					}
 				}
 
-				$fields = "name_product=".trim(TemplateController::capitalize($_POST["name_product"]))."&url_product=".$_POST["url_product"]."&image_product=".$saveImageProduct."&description_product=".trim($_POST["description_product"])."&keywords_product=".strtolower($_POST["keywords_product"])."&id_category_product=".$_POST["id_category_product"]."&id_subcategory_product=".$_POST["id_subcategory_product"]."&info_product=".urlencode(trim(str_replace('src="/views/assets/img/temp"','src="/views/assets/img/products/'.$_POST["url_product"].'"',$_POST["info_product"])));
+				$fields = "name_product=".trim(TemplateController::capitalize($_POST["name_product"]))."&url_product=".$_POST["url_product"]."&image_product=".$saveImageProduct."&description_product=".trim($_POST["description_product"])."&keywords_product=".strtolower($_POST["keywords_product"])."&id_category_product=".$_POST["id_category_product"]."&id_subcategory_product=".$_POST["id_subcategory_product"]."&info_product=".urlencode(trim(str_replace('src="/views/assets/img/temp','src="/views/assets/img/products/'.$_POST["url_product"],$_POST["info_product"])));
 
 				$url = "products?id=".base64_decode($_POST["idProduct"])."&nameId=id_product&token=".$_SESSION["admin"]->token_admin."&table=admins&suffix=admin";
 				$method = "PUT";
@@ -202,6 +202,24 @@ class ProductsController{
 
 				}
 
+				/*===================================================
+				Mover todos los ficheros temporales al destino final
+				=====================================================*/
+
+				if(is_dir('views/assets/img/temp')) {
+
+					$start = glob('views/assets/img/temp/*');
+
+					foreach($start as $file) {
+
+						$archive = explode("/", $file);
+
+						copy($file, "views/assets/img/products/".$_POST["url_product"]."/".$archive[count($archive)-1]);
+
+						unlink($file);
+					}
+				}
+
 				/*=============================================
 				Validar y guardar la información de la categoría
 				=============================================*/
@@ -215,6 +233,7 @@ class ProductsController{
 					"keywords_product" => strtolower($_POST["keywords_product"]),
 					"id_category_product" => $_POST["id_category_product"],
 					"id_subcategory_product" => $_POST["id_subcategory_product"],
+					"info_product" => urlencode(trim(str_replace('src="/views/assets/img/temp','src="/views/assets/img/products/'.$_POST["url_product"],$_POST["info_product"]))),
 					"date_created_product" => date("Y-m-d")
 
 				);
