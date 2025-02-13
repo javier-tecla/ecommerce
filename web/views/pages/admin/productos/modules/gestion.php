@@ -477,7 +477,7 @@ if (isset($_GET["product"])) {
                                         Galeria del Producto
                                         =================================================-->
 
-                                            <div class="dropzone mb-3">
+                                            <div class="dropzone dropzone_1 mb-3">
 
                                                 <!--=================================================
                                                     Plugin Dropzone
@@ -499,7 +499,7 @@ if (isset($_GET["product"])) {
 
                                             </div>
 
-                                            <input type="hidden" name="galleryProduct" class="galleryProduct">
+                                            <input type="hidden" name="galleryProduct_1" class="galleryProduct_1">
 
                                             <!--=================================================
                                         Insertar video Youtube
@@ -516,11 +516,12 @@ if (isset($_GET["product"])) {
                                                     class="form-control"
                                                     name="videoProduct_1"
                                                     placeholder="Ingresar la URL de Youtube"
+                                                    onchange="changeVideo(event, 1)"
                                                 >
-                                                    
-
+                                                
                                             </div>
-
+                                            
+                                            <iframe width="100%" height="280" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_1" style="display:none"></iframe>
 
                                         </div>
 

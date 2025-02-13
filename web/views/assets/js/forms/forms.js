@@ -553,10 +553,16 @@ function changeVariant(event, item) {
   if (event.target.value == "video") {
 
     $(".inputVideo_" + item).show();
+    $(".iframeYoutube_" + item).show();
+    $(".dropzone_" + item).hide();
+    $(".galleryProduct_" + item).hide();
 
   } else {
 
     $(".inputVideo_" + item).hide();
+    $(".iframeYoutube_" + item).hide();
+    $(".dropzone_" + item).show();
+    $(".galleryProduct_" + item).show();
 
   }
 }
@@ -597,7 +603,7 @@ $(".dropzone").dropzone({
 
         })
 
-        elem.parent().children(".galleryProduct").val(JSON.stringify(arrayFiles));
+        elem.parent().children(".galleryProduct_1").val(JSON.stringify(arrayFiles));
 
       }, 500 * countArrayFiles)
 
@@ -620,7 +626,7 @@ $(".dropzone").dropzone({
 
         arrayFiles.splice(index, 1);
 
-        elem.parent().children(".galleryProduct").val(JSON.stringify(arrayFiles));
+        elem.parent().children(".galleryProduct_1").val(JSON.stringify(arrayFiles));
 
       }, 500 * countArrayFiles)
 
@@ -645,6 +651,17 @@ $(".dropzone").dropzone({
   }
 
 });
+
+/*=============================================
+Insertar Video de Youtube
+=============================================*/
+
+function changeVideo(event, item){
+
+  let idYoutube = event.target.value.split("/").slice(-1);
+  $(".iframeYoutube_"+item).attr("src", "https://www.youtube.com/embed/"+idYoutube)
+
+}
 
 
 
