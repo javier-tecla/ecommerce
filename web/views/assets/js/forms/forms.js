@@ -550,16 +550,101 @@ Cambio de variante: Galería o video
 
 function changeVariant(event, item) {
 
-  if(event.target.value == "video"){
+  if (event.target.value == "video") {
 
-    $(".inputVideo_"+item).show();
+    $(".inputVideo_" + item).show();
 
   } else {
 
-    $(".inputVideo_"+item).hide();
+    $(".inputVideo_" + item).hide();
 
   }
 }
+
+/*=============================================
+DropZone
+=============================================*/
+
+Dropzone.autoDiscover = false;
+
+$(".dropzone").dropzone({
+
+  url: "/",
+  addRemoveLinks: true,
+  acceptedFiles: "image/jpeg, image/png, image/gif",
+  maxFilesize: 10,
+  maxFiles: 10,
+  init: function () {
+
+    let elem = $(this.element);
+
+    let arrayFiles = [];
+
+    let countArrayFiles = 0;
+
+    this.on("addedfile", function (file) {
+
+      countArrayFiles++;
+
+      setTimeout(function () {
+
+        arrayFiles.push({
+
+          "file": file.dataURL,
+          "type": file.type,
+          "width": file.width,
+          "height": file.height
+
+        })
+
+        elem.parent().children(".galleryProduct").val(JSON.stringify(arrayFiles));
+
+      }, 500 * countArrayFiles)
+
+    })
+
+    this.on("removedfile", function (file) {
+
+      countArrayFiles++;
+
+      setTimeout(function () {
+
+        let index = arrayFiles.indexOf({
+
+          "file": file.dataURL,
+          "type": file.type,
+          "width": file.width,
+          "height": file.height
+
+        })
+
+        arrayFiles.splice(index, 1);
+
+        elem.parent().children(".galleryProduct").val(JSON.stringify(arrayFiles));
+
+      }, 500 * countArrayFiles)
+
+    })
+
+   let myDropzone = this;
+
+    $(".saveBtn").click(function () {
+
+      if (arrayFiles.length >= 1) {
+
+        myDropzone.processQueue();
+
+      } else {
+
+        fncSweetAlert("error", "La galería no puede estar vacía", null)
+
+        return;
+      }
+
+    })
+  }
+
+});
 
 
 
