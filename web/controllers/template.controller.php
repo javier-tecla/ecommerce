@@ -199,15 +199,21 @@ class TemplateController
                 //definimos el destino donde queremos guardar el archivo
                 $folderPath = $directory . '/' . $newName;
 
-                //Crear una copia de la imagen
-                $start = imagecreatefromjpeg($image["tmp_name"]);
+                if (isset($image["mode"]) && $image["mode"] == "base64") {
 
-                //Instrucciones para aplicar a la imagen definitiva
-                $end = imagecreatetruecolor($width, $height);
+                    file_put_contents($folderPath, file_get_contents($image["tmp_name"]));
+                } else {
 
-                imagecopyresized($end, $start, 0, 0, 0, 0, $width, $height, $lastWidth, $lastHeight);
+                    //Crear una copia de la imagen
+                    $start = imagecreatefromjpeg($image["tmp_name"]);
 
-                imagejpeg($end, $folderPath);
+                    //Instrucciones para aplicar a la imagen definitiva
+                    $end = imagecreatetruecolor($width, $height);
+
+                    imagecopyresized($end, $start, 0, 0, 0, 0, $width, $height, $lastWidth, $lastHeight);
+
+                    imagejpeg($end, $folderPath);
+                }
             }
 
             if ($image["type"] == "image/png") {
@@ -218,19 +224,25 @@ class TemplateController
                 //definimos el destino donde queremos guardar el archivo
                 $folderPath = $directory . '/' . $newName;
 
-                //Crear una copia de la imagen
-                $start = imagecreatefrompng($image["tmp_name"]);
+                if (isset($image["mode"]) && $image["mode"] == "base64") {
 
-                //Instrucciones para aplicar a la imagen definitiva
-                $end = imagecreatetruecolor($width, $height);
+                    file_put_contents($folderPath, file_get_contents($image["tmp_name"]));
+                } else {
 
-                imagealphablending($end, FALSE);
+                    //Crear una copia de la imagen
+                    $start = imagecreatefrompng($image["tmp_name"]);
 
-                imagesavealpha($end, TRUE);
+                    //Instrucciones para aplicar a la imagen definitiva
+                    $end = imagecreatetruecolor($width, $height);
 
-                imagecopyresampled($end, $start, 0, 0, 0, 0, $width, $height, $lastWidth, $lastHeight);
+                    imagealphablending($end, FALSE);
 
-                imagepng($end, $folderPath);
+                    imagesavealpha($end, TRUE);
+
+                    imagecopyresampled($end, $start, 0, 0, 0, 0, $width, $height, $lastWidth, $lastHeight);
+
+                    imagepng($end, $folderPath);
+                }
             }
 
             if ($image["type"] == "image/gif") {
@@ -239,11 +251,15 @@ class TemplateController
 
                 $folderPath = $directory . '/' . $newName;
 
-                move_uploaded_file($image["tmp_name"], $folderPath);
+                if (isset($image["mode"]) && $image["mode"] == "base64") {
 
+                    file_put_contents($folderPath, file_get_contents($image["tmp_name"]));
+                } else {
+
+                    move_uploaded_file($image["tmp_name"], $folderPath);
+                }
             }
             return $newName;
-            
         } else {
 
             return "error";
