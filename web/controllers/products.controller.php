@@ -4,7 +4,7 @@ class ProductsController
 {
 
 	/*=============================================
-	Gestión Subcategorias
+	Gestión Productos
 	=============================================*/
 
 	public function productManage()
@@ -24,6 +24,7 @@ class ProductsController
 			=============================================*/
 
 			if (isset($_POST["idProduct"])) {
+
 
 				if (isset($_FILES['image_product']["tmp_name"]) && !empty($_FILES['image_product']["tmp_name"])) {
 
@@ -163,6 +164,9 @@ class ProductsController
 							}
 						}
 					}
+				} else {
+
+					$media_variant = $_POST["videoProduct_1"];
 				}
 
 				/*=============================================
@@ -172,7 +176,7 @@ class ProductsController
 				$fields = array(
 
 
-					"id_product_variant" => $_POST["idProduct"],
+					"id_product_variant" => base64_decode($_POST["idProduct"]),
 					"type_variant" => $_POST["type_variant_1"],
 					"media_variant" => $media_variant,
 					"description_variant" => $_POST["description_variant_1"],
@@ -184,6 +188,7 @@ class ProductsController
 					"date_created_variant" => date("Y-m-d")
 
 				);
+
 
 				$url = "variants?token=" . $_SESSION["admin"]->token_admin . "&table=admins&suffix=admin";
 				$method = "POST";
@@ -231,7 +236,13 @@ class ProductsController
 						</script>';
 					}
 				}
-			} else {
+
+
+				/*=============================================
+				Creación Producto
+				=============================================*/
+
+				} else {
 
 				/*=============================================
 				Validar y guardar la imagen
@@ -332,7 +343,73 @@ class ProductsController
 
 				$updateSubcategory = CurlController::request($url, $method, $fields);
 
-				if ($createData->status == 200 && $updateCategory->status == 200 && $updateSubcategory->status == 200) {
+				/*=============================================
+				Variantes
+				=============================================*/
+
+				if ($_POST["type_variant_1"] == "gallery") {
+
+					$galleryProduct = array();
+					$galleryCount = 0;
+
+					if (!empty($_POST["galleryProduct_1"])) {
+
+						foreach (json_decode($_POST["galleryProduct_1"], true) as $key => $value) {
+
+							$galleryCount++;
+
+							$image["tmp_name"] = $value["file"];
+							$image["type"] = $value["type"];
+							$image["mode"] = "base64";
+
+							$folder = "assets/img/products/" . $_POST["url_product"];
+							$name = mt_rand(10000, 99999);
+							$width = $value["width"];
+							$height = $value["height"];
+
+
+							$saveImageGallery = TemplateController::saveImage($image, $folder, $name, $width, $height);
+
+							array_push($galleryProduct, $saveImageGallery);
+
+							if (count(json_decode($_POST["galleryProduct_1"], true)) == $galleryCount) {
+
+								$media_variant = json_encode($galleryProduct);
+							}
+						}
+					}
+				} else {
+
+					$media_variant = $_POST["videoProduct_1"];
+				}
+
+				/*=============================================
+				Campos de las variantes
+				=============================================*/
+
+				$fields = array(
+
+
+					"id_product_variant" => $createData->results->lastId,
+					"type_variant" => $_POST["type_variant_1"],
+					"media_variant" => $media_variant,
+					"description_variant" => $_POST["description_variant_1"],
+					"cost_variant" => $_POST["cost_variant_1"],
+					"price_variant" => $_POST["price_variant_1"],
+					"offer_variant" => $_POST["offer_variant_1"],
+					"end_offer_variant" => $_POST["date_variant_1"],
+					"stock_variant" => $_POST["stock_variant_1"],
+					"date_created_variant" => date("Y-m-d")
+
+				);
+
+				$url = "variants?token=" . $_SESSION["admin"]->token_admin . "&table=admins&suffix=admin";
+				$method = "POST";
+
+
+				$createVariant = CurlController::request($url, $method, $fields);
+
+				if ($createData->status == 200 && $createVariant-> status == 200 && $updateCategory->status == 200 && $updateSubcategory->status == 200) {
 
 					echo '<script>
 
