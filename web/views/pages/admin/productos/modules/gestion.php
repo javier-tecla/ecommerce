@@ -432,64 +432,291 @@ if (isset($_GET["product"])) {
 
                                 <div class="card-body">
 
-                                    <!--=================================================
-                                Variantes
-                                =================================================-->
+                                    <?php if (!empty($product)): ?>
 
-                                    <div class="form-group">
+                                        <?php
 
-                                        <div class="d-flex justify-content-between">
+                                        $url = "variants?linkTo=id_product_variant&equalTo=" . $product->id_product;
+                                        $method = "GET";
+                                        $fields = array();
 
-                                            <label for="info_product">Variante 1<sup class="text-danger">*</sup></label>
+                                        $variants = CurlController::request($url, $method, $fields);
 
-                                            <div>
-                                                <button type="button" class="btn btn-default btn-sm rounded-pill px-3"><i class="fas fa-plus fa-xs"></i> Agregar otra variante</button>
-                                            </div>
-                                        </div>
+                                        if ($variants->status == 200) {
+
+                                            $variants = $variants->results;
+                                        } else {
+
+                                            $variants = array();
+                                        }
 
 
-                                    </div>
+                                        ?>
 
-                                    <div class="row row-cols-1 row-cols-md-2">
+                                    <?php endif ?>
 
-                                        <div class="col">
+                                    <?php if (count($variants) > 0): ?>
+
+                                        <?php foreach ($variants as $key => $value): ?>
+
+
 
                                             <!--=================================================
-                                             Tipo de variante 
-                                            =================================================-->
+                                        Variantes
+                                        =================================================-->
 
                                             <div class="form-group">
 
-                                                <select
-                                                    class="custom-select"
-                                                    name="type_variant_1"
-                                                    onchange="changeVariant(event, 1)"
-                                                    >
+                                                <div class="d-flex justify-content-between">
 
-                                                    <option value="gallery">Galería de fotos</option>
-                                                    <option value="video">Video</option>
+                                                    <label for="info_product">Variante <?php echo ($key + 1) ?><sup class="text-danger">*</sup></label>
 
-                                                </select>
+                                                    <div>
+                                                        <button type="button" class="btn btn-default btn-sm rounded-pill px-3"><i class="fas fa-plus fa-xs"></i> Agregar otra variante</button>
+                                                    </div>
+                                                </div>
+
 
                                             </div>
 
-                                            <!--=================================================
-                                        Galeria del Producto
-                                        =================================================-->
+                                            <div class="row row-cols-1 row-cols-md-2">
 
-                                            <div class="dropzone dropzone_1 mb-3">
+                                                <div class="col">
 
-                                                <!--=================================================
+                                                    <!--=================================================
+                                                Tipo de variante 
+                                                =================================================-->
+
+                                                    <div class="form-group">
+
+                                                        <select
+                                                            class="custom-select"
+                                                            name="type_variant_<?php echo ($key + 1) ?>"
+                                                            onchange="changeVariant(event, <?php echo ($key + 1) ?>)">
+
+                                                            <option <?php if ($value->type_variant == "gallery"): ?>
+                                                                selected <?php endif ?> value="gallery">Galería de fotos</option>
+
+                                                            <option <?php if ($value->type_variant == "video"): ?>selected <?php endif ?> value="video">Video</option>
+
+                                                        </select>
+
+                                                    </div>
+
+                                                    <?php if ($value->type_variant == "gallery"): ?>
+
+                                                        <!--=================================================
+                                                Galeria del Producto
+                                                =================================================-->
+
+                                                        <div class="dropzone dropzone_<?php echo ($key + 1) ?> mb-3">
+
+                                                            <!--=================================================
                                                     Plugin Dropzone
                                                     =================================================-->
 
+                                                            <?php foreach (json_decode($value->media_variant, true) as $index => $item): ?>
+
+                                                                <div class="dz-preview dz-file-preview">
+
+                                                                    <div class="dz-image">
+
+                                                                        <img class="img-fluid" src="<?php echo "/views/assets/img/products/" . $product->url_product . "/" . $item ?>">
+
+                                                                    </div>
+
+                                                                    <a class="dz-remove" data-dz-remove></a>
+
+                                                                </div>
+
+                                                            <?php endforeach ?>
+
+                                                            <div class="dz-message">
+
+                                                                Arrastra tus imágenes acá, tamaño máximo 400px * 450px
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <input type="hidden" name="galleryProduct_<?php echo ($key + 1) ?>" class="galleryProduct_<?php echo ($key + 1) ?>">
+
+                                                    <?php else: ?>
+
+                                                        <!--=================================================
+                                                Insertar video Youtube
+                                                =================================================-->
+
+                                                        <div class="input-group mb-3 inputVideo_<?php echo ($key + 1) ?>" style="display:none">
+
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-clipboard-list"></i>
+                                                            </span>
+
+                                                            <input
+                                                                type="text"
+                                                                class="form-control"
+                                                                name="videoProduct_<?php echo ($key + 1) ?>"
+                                                                placeholder="Ingresar la URL de Youtube"
+                                                                value="<?php echo $value->media_variant ?>"
+                                                                onchange="changeVideo(event, <?php echo ($key + 1) ?>)">
+
+                                                        </div>
+
+                                                        <iframe width="100%" height="280" src="https://www.youtube.com/embed/<?php echo end(explode("/", $value->media_variant)) ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_<?php echo ($key + 1) ?>" style="display:none"></iframe>
+
+                                                    <?php endif ?>
+
+
+
+                                                </div>
+
+                                                <div class="col">
+
+                                                    <!--=================================================
+                                                Descripción de la variante
+                                                =================================================-->
+
+                                                    <div class="input-group mb-3">
+
+                                                        <span class="input-group-text"><i class="fas fa-clipboard-list"></i></span>
+
+                                                        <input type="text" class="form-control" name="description_variant_<?php echo ($key + 1) ?>" placeholder="Descripción: Color Negro, talla S, Material Goma" value="<?php echo $value->description_variant ?>">
+
+                                                    </div>
+
+                                                    <!--=================================================
+                                                Costo de la variante
+                                                =================================================-->
+
+                                                    <div class="input-group mb-3">
+
+                                                        <span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>
+
+                                                        <input type="number" step="any" class="form-control" name="cost_variant_<?php echo ($key + 1) ?>" placeholder="Costo de compra" value="<?php echo $value->cost_variant ?>">
+
+                                                    </div>
+
+                                                    <!--=================================================
+                                                Precio de la variante
+                                                =================================================-->
+
+                                                    <div class="input-group mb-3">
+
+                                                        <span class="input-group-text"><i class="fas fa-funnel-dollar"></i></span>
+
+                                                        <input type="number" step="any" class="form-control" name="price_variant_<?php echo ($key + 1) ?>" placeholder="Precio de venta" value="<?php echo $value->price_variant ?>">
+
+                                                    </div>
+
+                                                    <!--=================================================
+                                                Oferta de la variante
+                                                =================================================-->
+
+                                                    <div class="input-group mb-3">
+
+                                                        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+
+                                                        <input type="number" step="any" class="form-control" name="offer_variant_<?php echo ($key + 1) ?>" placeholder="Precio de descuento" value="<?php echo $value->offer_variant ?>">
+
+                                                    </div>
+
+                                                    <!--=================================================
+                                                Fin de Oferta de la variante
+                                                =================================================-->
+
+                                                    <div class="input-group mb-3">
+
+                                                        <span class="input-group-text">Fin del descuento</span>
+
+                                                        <input type="date" class="form-control" name="date_variant_<?php echo ($key + 1) ?>" value="<?php echo $value->end_offer_variant ?>">
+
+                                                    </div>
+
+                                                    <!--=================================================
+                                                Stock de la variante
+                                                =================================================-->
+
+                                                    <div class="input-group mb-3">
+
+                                                        <span class="input-group-text"><i class="fas fa-list"></i></span>
+
+                                                        <input type="number" class="form-control" name="stock_variant_<?php echo ($key + 1) ?>" placeholder="Stock disponible" value="<?php echo $value->stock_variant ?>">
+
+                                                    </div>
+
+
+
+                                                </div>
+
+                                            </div>
+
+                                        <?php endforeach ?>
+
+
+                                    <?php else: ?>
+
+
+
+
+
+                                        <!--=================================================
+                                     Variantes
+                                     =================================================-->
+
+                                        <div class="form-group">
+
+                                            <div class="d-flex justify-content-between">
+
+                                                <label for="info_product">Variante 1<sup class="text-danger">*</sup></label>
+
+                                                <div>
+                                                    <button type="button" class="btn btn-default btn-sm rounded-pill px-3"><i class="fas fa-plus fa-xs"></i> Agregar otra variante</button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div class="row row-cols-1 row-cols-md-2">
+
+                                            <div class="col">
+
+                                                <!--=================================================
+                                                Tipo de variante 
+                                                =================================================-->
+
+                                                <div class="form-group">
+
+                                                    <select
+                                                        class="custom-select"
+                                                        name="type_variant_1"
+                                                        onchange="changeVariant(event, 1)">
+
+                                                        <option value="gallery">Galería de fotos</option>
+                                                        <option value="video">Video</option>
+
+                                                    </select>
+
+                                                </div>
+
+                                                <!--=================================================
+                                            Galeria del Producto
+                                            =================================================-->
+
+                                                <div class="dropzone dropzone_1 mb-3">
+
+                                                    <!--=================================================
+                                                        Plugin Dropzone
+                                                        =================================================-->
+
                                                     <!-- <div class="dz-preview dz-file-preview">
 
-                                                        <div class="dz-image"></div>
+                                                            <div class="dz-image"></div>
 
-                                                        <a class="dz-remove" data-dz-remove></a>
+                                                            <a class="dz-remove" data-dz-remove></a>
 
-                                                    </div> -->
+                                                        </div> -->
 
                                                     <div class="dz-message">
 
@@ -497,113 +724,114 @@ if (isset($_GET["product"])) {
 
                                                     </div>
 
+                                                </div>
+
+                                                <input type="hidden" name="galleryProduct_1" class="galleryProduct_1">
+
+                                                <!--=================================================
+                                            Insertar video Youtube
+                                            =================================================-->
+
+                                                <div class="input-group mb-3 inputVideo_1" style="display:none">
+
+                                                    <span class="input-group-text">
+                                                        <i class="fas fa-clipboard-list"></i>
+                                                    </span>
+
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        name="videoProduct_1"
+                                                        placeholder="Ingresar la URL de Youtube"
+                                                        onchange="changeVideo(event, 1)">
+
+                                                </div>
+
+                                                <iframe width="100%" height="280" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_1" style="display:none"></iframe>
+
                                             </div>
 
-                                            <input type="hidden" name="galleryProduct_1" class="galleryProduct_1">
+                                            <div class="col">
 
-                                            <!--=================================================
-                                        Insertar video Youtube
-                                        =================================================-->
+                                                <!--=================================================
+                                            Descripció de la variante
+                                            =================================================-->
 
-                                            <div class="input-group mb-3 inputVideo_1" style="display:none">
+                                                <div class="input-group mb-3">
 
-                                                <span class="input-group-text">
-                                                    <i class="fas fa-clipboard-list"></i>
-                                                </span>
+                                                    <span class="input-group-text"><i class="fas fa-clipboard-list"></i></span>
 
-                                                <input
-                                                    type="text"
-                                                    class="form-control"
-                                                    name="videoProduct_1"
-                                                    placeholder="Ingresar la URL de Youtube"
-                                                    onchange="changeVideo(event, 1)"
-                                                >
-                                                
+                                                    <input type="text" class="form-control" name="description_variant_1" placeholder="Descripción: Color Negro, talla S, Material Goma">
+
+                                                </div>
+
+                                                <!--=================================================
+                                            Costo de la variante
+                                            =================================================-->
+
+                                                <div class="input-group mb-3">
+
+                                                    <span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>
+
+                                                    <input type="number" step="any" class="form-control" name="cost_variant_1" placeholder="Costo de compra">
+
+                                                </div>
+
+                                                <!--=================================================
+                                            Precio de la variante
+                                            =================================================-->
+
+                                                <div class="input-group mb-3">
+
+                                                    <span class="input-group-text"><i class="fas fa-funnel-dollar"></i></span>
+
+                                                    <input type="number" step="any" class="form-control" name="price_variant_1" placeholder="Precio de venta">
+
+                                                </div>
+
+                                                <!--=================================================
+                                            Oferta de la variante
+                                            =================================================-->
+
+                                                <div class="input-group mb-3">
+
+                                                    <span class="input-group-text"><i class="fas fa-tag"></i></span>
+
+                                                    <input type="number" step="any" class="form-control" name="offer_variant_1" placeholder="Precio de descuento">
+
+                                                </div>
+
+                                                <!--=================================================
+                                            Fin de Oferta de la variante
+                                            =================================================-->
+
+                                                <div class="input-group mb-3">
+
+                                                    <span class="input-group-text">Fin del descuento</span>
+
+                                                    <input type="date" class="form-control" name="date_variant_1">
+
+                                                </div>
+
+                                                <!--=================================================
+                                            Stock de la variante
+                                            =================================================-->
+
+                                                <div class="input-group mb-3">
+
+                                                    <span class="input-group-text"><i class="fas fa-list"></i></span>
+
+                                                    <input type="number" class="form-control" name="stock_variant_1" placeholder="Stock disponible">
+
+                                                </div>
+
+
+
                                             </div>
-                                            
-                                            <iframe width="100%" height="280" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_1" style="display:none"></iframe>
 
                                         </div>
 
-                                        <div class="col">
-
-                                            <!--=================================================
-                                        Descripció de la variante
-                                        =================================================-->
-
-                                            <div class="input-group mb-3">
-
-                                                <span class="input-group-text"><i class="fas fa-clipboard-list"></i></span>
-
-                                                <input type="text" class="form-control" name="description_variant_1" placeholder="Descripción: Color Negro, talla S, Material Goma">
-
-                                            </div>
-
-                                            <!--=================================================
-                                        Costo de la variante
-                                        =================================================-->
-
-                                            <div class="input-group mb-3">
-
-                                                <span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>
-
-                                                <input type="number" step="any" class="form-control" name="cost_variant_1" placeholder="Costo de compra">
-
-                                            </div>
-
-                                            <!--=================================================
-                                        Precio de la variante
-                                        =================================================-->
-
-                                            <div class="input-group mb-3">
-
-                                                <span class="input-group-text"><i class="fas fa-funnel-dollar"></i></span>
-
-                                                <input type="number" step="any" class="form-control" name="price_variant_1" placeholder="Precio de venta">
-
-                                            </div>
-
-                                            <!--=================================================
-                                        Oferta de la variante
-                                        =================================================-->
-
-                                            <div class="input-group mb-3">
-
-                                                <span class="input-group-text"><i class="fas fa-tag"></i></span>
-
-                                                <input type="number" step="any" class="form-control" name="offer_variant_1" placeholder="Precio de descuento">
-
-                                            </div>
-
-                                            <!--=================================================
-                                        Fin de Oferta de la variante
-                                        =================================================-->
-
-                                            <div class="input-group mb-3">
-
-                                                <span class="input-group-text">Fin del descuento</span>
-
-                                                <input type="date" class="form-control" name="date_variant_1">
-
-                                            </div>
-
-                                            <!--=================================================
-                                        Stock de la variante
-                                        =================================================-->
-
-                                            <div class="input-group mb-3">
-
-                                                <span class="input-group-text"><i class="fas fa-list"></i></span>
-
-                                                <input type="number" class="form-control" name="stock_variant_1" placeholder="Stock disponible">
-
-                                            </div>
-
-
-
-                                        </div>
-
-                                    </div>
+                                    <?php endif ?>
 
 
                                 </div>
