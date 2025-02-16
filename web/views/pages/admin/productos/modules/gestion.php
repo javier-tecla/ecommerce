@@ -543,7 +543,28 @@ if (isset($_GET["product"])) {
 
                                                         <input type="hidden" name="galleryOldProduct_<?php echo ($key + 1) ?>" class="galleryOldProduct_<?php echo ($key + 1) ?>" value='<?php echo $value->media_variant ?>'>
 
-                                                        <input type="hidden" name="deleteGalleryProduct_<?php echo ($key + 1) ?>" class="deleteGalleryProduct_<?php echo ($key+1) ?>" value='[]'>
+                                                        <input type="hidden" name="deleteGalleryProduct_<?php echo ($key + 1) ?>" class="deleteGalleryProduct_<?php echo ($key + 1) ?>" value='[]'>
+
+                                                        <!--=================================================
+                                                         Insertar video Youtube
+                                                         =================================================-->
+
+                                                        <div class="input-group mb-3 inputVideo_<?php echo ($key + 1) ?>" style="display:none">
+
+                                                            <span class="input-group-text">
+                                                                <i class="fas fa-clipboard-list"></i>
+                                                            </span>
+
+                                                            <input
+                                                                type="text"
+                                                                class="form-control"
+                                                                name="videoProduct_<?php echo ($key + 1) ?>"
+                                                                placeholder="Ingresar la URL de Youtube"
+                                                                onchange="changeVideo(event, <?php echo ($key + 1) ?>)">
+
+                                                        </div>
+
+                                                        <iframe width="100%" height="280" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_<?php echo ($key + 1) ?>" style="display:none"></iframe>
 
                                                     <?php else: ?>
 
@@ -567,14 +588,34 @@ if (isset($_GET["product"])) {
 
                                                         </div>
 
-                                                        <?php 
-                                                        
-                                                        $idYoutube = explode("/",$value->media_variant);
+                                                        <?php
+
+                                                        $idYoutube = explode("/", $value->media_variant);
                                                         $idYoutube = end($idYoutube);
-                                                
+
                                                         ?>
 
                                                         <iframe width="100%" height="280" src="https://www.youtube.com/embed/<?php echo $idYoutube ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_<?php echo ($key + 1) ?>"></iframe>
+
+                                                        <!--=================================================
+                                                        Galeria del Producto
+                                                        =================================================-->
+
+                                                        <div class="dropzone dropzone_<?php echo ($key + 1) ?> mb-3" style="display: none">
+
+                                                            <!--=================================================
+                                                            Plugin Dropzone
+                                                            =================================================-->
+
+                                                            <div class="dz-message">
+
+                                                                Arrastra tus imágenes acá, tamaño máximo 400px * 450px
+
+                                                            </div>
+
+                                                        </div>
+
+                                                        <input type="hidden" name="galleryProduct_<?php echo ($key + 1) ?>" class="galleryProduct_<?php echo ($key + 1) ?>" style="display: none">
 
                                                     <?php endif ?>
 
@@ -720,14 +761,6 @@ if (isset($_GET["product"])) {
                                                     <!--=================================================
                                                         Plugin Dropzone
                                                         =================================================-->
-
-                                                    <!-- <div class="dz-preview dz-file-preview">
-
-                                                            <div class="dz-image"></div>
-
-                                                            <a class="dz-remove" data-dz-remove></a>
-
-                                                        </div> -->
 
                                                     <div class="dz-message">
 
