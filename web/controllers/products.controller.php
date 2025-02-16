@@ -301,7 +301,7 @@ class ProductsController
 					"keywords_product" => strtolower($_POST["keywords_product"]),
 					"id_category_product" => $_POST["id_category_product"],
 					"id_subcategory_product" => $_POST["id_subcategory_product"],
-					"info_product" => urlencode(trim(str_replace('src="/views/assets/img/temp', 'src="/views/assets/img/products/' . $_POST["url_product"], $_POST["info_product"]))),
+					"info_product" => trim(str_replace('src="/views/assets/img/temp', 'src="/views/assets/img/products/' . $_POST["url_product"], $_POST["info_product"])),
 					"date_created_product" => date("Y-m-d")
 
 				);

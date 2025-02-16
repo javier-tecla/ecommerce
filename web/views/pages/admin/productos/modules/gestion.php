@@ -525,7 +525,7 @@ if (isset($_GET["product"])) {
 
                                                                     </div>
 
-                                                                    <a class="dz-remove" data-dz-remove></a>
+                                                                    <a class="dz-remove" data-dz-remove remove="<?php echo $item ?>" onclick="removeGallery(this, <?php echo ($key + 1) ?>)">Remove file</a>
 
                                                                 </div>
 
@@ -541,13 +541,17 @@ if (isset($_GET["product"])) {
 
                                                         <input type="hidden" name="galleryProduct_<?php echo ($key + 1) ?>" class="galleryProduct_<?php echo ($key + 1) ?>">
 
+                                                        <input type="hidden" name="galleryOldProduct_<?php echo ($key + 1) ?>" class="galleryOldProduct_<?php echo ($key + 1) ?>" value='<?php echo $value->media_variant ?>'>
+
+                                                        <input type="hidden" name="deleteGalleryProduct_<?php echo ($key + 1) ?>" class="deleteGalleryProduct_<?php echo ($key+1) ?>" value='[]'>
+
                                                     <?php else: ?>
 
                                                         <!--=================================================
                                                 Insertar video Youtube
                                                 =================================================-->
 
-                                                        <div class="input-group mb-3 inputVideo_<?php echo ($key + 1) ?>" style="display:none">
+                                                        <div class="input-group mb-3 inputVideo_<?php echo ($key + 1) ?>">
 
                                                             <span class="input-group-text">
                                                                 <i class="fas fa-clipboard-list"></i>
@@ -563,7 +567,14 @@ if (isset($_GET["product"])) {
 
                                                         </div>
 
-                                                        <iframe width="100%" height="280" src="https://www.youtube.com/embed/<?php echo end(explode("/", $value->media_variant)) ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_<?php echo ($key + 1) ?>" style="display:none"></iframe>
+                                                        <?php 
+                                                        
+                                                        $idYoutube = explode("/",$value->media_variant);
+                                                        $idYoutube = end($idYoutube);
+                                                
+                                                        ?>
+
+                                                        <iframe width="100%" height="280" src="https://www.youtube.com/embed/<?php echo $idYoutube ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_<?php echo ($key + 1) ?>"></iframe>
 
                                                     <?php endif ?>
 
