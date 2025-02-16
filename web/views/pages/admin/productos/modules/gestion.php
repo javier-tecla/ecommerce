@@ -457,9 +457,11 @@ if (isset($_GET["product"])) {
 
                                     <?php if (count($variants) > 0): ?>
 
+                                        <input type="hidden" name="totalVariants" value="<?php echo count($variants) ?>">
+
                                         <?php foreach ($variants as $key => $value): ?>
 
-
+                                            <input type="hidden" name="idVariant_<?php echo ($key+1) ?>" value="<?php echo $value->id_variant ?>">
 
                                             <!--=================================================
                                         Variantes
