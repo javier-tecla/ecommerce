@@ -573,93 +573,110 @@ DropZone
 
 Dropzone.autoDiscover = false;
 
-$(".dropzone").dropzone({
+function initDropzone(item){
 
-  url: "/",
-  addRemoveLinks: true,
-  acceptedFiles: "image/jpeg, image/png, image/gif",
-  maxFilesize: 10,
-  maxFiles: 10,
-  init: function () {
+  $(".dropzone_"+item).dropzone({
 
-    let elem = $(this.element);
+    url: "/",
+    addRemoveLinks: true,
+    acceptedFiles: "image/jpeg, image/png, image/gif",
+    maxFilesize: 10,
+    maxFiles: 10,
+    init: function () {
 
-    let arrayFiles = [];
+      let elem = $(this.element);
 
-    let countArrayFiles = 0;
+      let arrayFiles = [];
 
-    this.on("addedfile", function (file) {
+      let countArrayFiles = 0;
 
-      countArrayFiles++;
+      this.on("addedfile", function (file) {
 
-      setTimeout(function () {
+        countArrayFiles++;
 
-        arrayFiles.push({
+        setTimeout(function () {
 
-          "file": file.dataURL,
-          "type": file.type,
-          "width": file.width,
-          "height": file.height
+          arrayFiles.push({
 
-        })
+            "file": file.dataURL,
+            "type": file.type,
+            "width": file.width,
+            "height": file.height
 
-        elem.parent().children(".galleryProduct_1").val(JSON.stringify(arrayFiles));
+          })
 
-      }, 500 * countArrayFiles)
+          elem.parent().children(".galleryProduct_"+item).val(JSON.stringify(arrayFiles));
 
-    })
+        }, 500 * countArrayFiles)
 
-    this.on("removedfile", function (file) {
+      })
 
-      countArrayFiles++;
+      this.on("removedfile", function (file) {
 
-      setTimeout(function () {
+        countArrayFiles++;
 
-        let index = arrayFiles.indexOf({
+        setTimeout(function () {
 
-          "file": file.dataURL,
-          "type": file.type,
-          "width": file.width,
-          "height": file.height
+          let index = arrayFiles.indexOf({
 
-        })
+            "file": file.dataURL,
+            "type": file.type,
+            "width": file.width,
+            "height": file.height
 
-        arrayFiles.splice(index, 1);
+          })
 
-        elem.parent().children(".galleryProduct_1").val(JSON.stringify(arrayFiles));
+          arrayFiles.splice(index, 1);
 
-      }, 500 * countArrayFiles)
+          elem.parent().children(".galleryProduct_"+item).val(JSON.stringify(arrayFiles));
 
-    })
+        }, 500 * countArrayFiles)
 
-   let myDropzone = this;
+      })
 
-    $(".saveBtn").click(function () {
+      let myDropzone = this;
 
-      if (arrayFiles.length >= 1) {
+      $(".saveBtn").click(function () {
 
-        myDropzone.processQueue();
+        if (arrayFiles.length >= 1 || $(".galleryOldProduct_"+item).val() != null || $(".type_variant_"+item).val() == "video") {
 
-      } else {
+          myDropzone.processQueue();
 
-        fncSweetAlert("error", "La galería no puede estar vacía", null)
+        } else {
 
-        return;
-      }
+          fncSweetAlert("error", "La galería no puede estar vacía", null)
 
-    })
-  }
+        }
 
-});
+      })
+    }
+
+  });
+
+}
+
+
+/*===============================================================
+Activar DropZone de acuerdo a la cantidad de galerias existentes
+================================================================*/
+
+let numDropzone = $(".dropzone");
+
+for(let item = 1; item <= numDropzone.length; item++){
+
+  initDropzone(item);
+
+}
+
 
 /*=============================================
 Insertar Video de Youtube
 =============================================*/
 
-function changeVideo(event, item){
+function changeVideo(event, item) {
 
   let idYoutube = event.target.value.split("/").slice(-1);
-  $(".iframeYoutube_"+item).attr("src", "https://www.youtube.com/embed/"+idYoutube)
+  $(".iframeYoutube_" + item).attr("src", "https://www.youtube.com/embed/" + idYoutube)
 
 }
 
@@ -670,26 +687,219 @@ Edición de Galeria
 let arrayFilesEdit = Array();
 let arrayFilesDelete = Array();
 
-function removeGallery(elem, item){
+function removeGallery(elem, item) {
 
   $(elem).parent().remove();
 
-  let index = JSON.parse($(".galleryOldProduct_"+item).val()).indexOf($(elem).attr("remove"));
+  let index = JSON.parse($(".galleryOldProduct_" + item).val()).indexOf($(elem).attr("remove"));
 
-  arrayFilesEdit = JSON.parse($(".galleryOldProduct_"+item).val());
+  arrayFilesEdit = JSON.parse($(".galleryOldProduct_" + item).val());
 
   arrayFilesEdit.splice(index, 1);
 
-  $(".galleryOldProduct_"+item).val(JSON.stringify(arrayFilesEdit));
+  $(".galleryOldProduct_" + item).val(JSON.stringify(arrayFilesEdit));
 
-  arrayFilesDelete = JSON.parse($(".deleteGalleryProduct_"+item).val());
+  arrayFilesDelete = JSON.parse($(".deleteGalleryProduct_" + item).val());
 
   arrayFilesDelete.push($(elem).attr("remove"));
 
-  $(".deleteGalleryProduct_"+item).val(JSON.stringify(arrayFilesDelete));
-  
+  $(".deleteGalleryProduct_" + item).val(JSON.stringify(arrayFilesDelete));
+
 
 }
+
+/*=============================================
+Adicionar Variante
+=============================================*/
+
+
+$(document).on("click", ".addVariant", function () {
+
+  let variantItem =  Number($('[name="totalVariants"]').val()) + 1;
+
+  $(".variantList").append(`
+    
+    <div class="col variantCount">
+
+      <div class="card">
+
+        <div class="card-body">
+
+          <div class="form-group">
+
+             <div class="d-flex justify-content-between">
+
+              <label for="info_product">Variante ${variantItem}<sup class="text-danger">*</sup></label>
+
+                <div>
+                  <button type="button" class="btn btn-default btn-sm rounded-pill px-3 quitVariant"><i class="fas fa-times fa-xs"></i> Quitar esta variante</button>
+                </div>
+
+              </div>
+
+          </div>
+          
+           <div class="row row-cols-1 row-cols-md-2">
+
+                <div class="col">
+
+                    <!--=================================================
+                    Tipo de variante 
+                    =================================================-->
+
+                    <div class="form-group">
+
+                        <select
+                            class="custom-select"
+                            name="type_variant_${variantItem}"
+                            onchange="changeVariant(event, ${variantItem})">
+
+                            <option value="gallery">Galería de fotos</option>
+                            <option value="video">Video</option>
+
+                        </select>
+
+                    </div>
+
+                    <!--=================================================
+                Galeria del Producto
+                =================================================-->
+
+                    <div class="dropzone dropzone_${variantItem} mb-3">
+
+                        <!--=================================================
+                            Plugin Dropzone
+                            =================================================-->
+
+                        <div class="dz-message">
+
+                            Arrastra tus imágenes acá, tamaño máximo 400px * 450px
+
+                        </div>
+
+                    </div>
+
+                    <input type="hidden" name="galleryProduct_${variantItem}" class="galleryProduct_${variantItem}">
+                    <input type="hidden" name="galleryOldProduct_${variantItem}" class="galleryOldProduct_${variantItem}" value='[]'>
+                    <input type="hidden" name="deleteGalleryProduct_${variantItem}" class="deleteGalleryProduct_${variantItem}" value='[]'>
+
+                    <!--=================================================
+                Insertar video Youtube
+                =================================================-->
+
+                    <div class="input-group mb-3 inputVideo_${variantItem}" style="display:none">
+
+                        <span class="input-group-text">
+                            <i class="fas fa-clipboard-list"></i>
+                        </span>
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="videoProduct_${variantItem}"
+                            placeholder="Ingresar la URL de Youtube"
+                            onchange="changeVideo(event, ${variantItem})">
+
+                    </div>
+
+                    <iframe width="100%" height="280" src="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen class="mb-3 iframeYoutube_${variantItem}" style="display:none"></iframe>
+
+                </div>
+
+                <div class="col">
+
+                    <!--=================================================
+                Descripció de la variante
+                =================================================-->
+
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text"><i class="fas fa-clipboard-list"></i></span>
+
+                        <input type="text" class="form-control" name="description_variant_${variantItem}" placeholder="Descripción: Color Negro, talla S, Material Goma">
+
+                    </div>
+
+                    <!--=================================================
+                Costo de la variante
+                =================================================-->
+
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text"><i class="fas fa-hand-holding-usd"></i></span>
+
+                        <input type="number" step="any" class="form-control" name="cost_variant_${variantItem}" placeholder="Costo de compra">
+
+                    </div>
+
+                    <!--=================================================
+                Precio de la variante
+                =================================================-->
+
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text"><i class="fas fa-funnel-dollar"></i></span>
+
+                        <input type="number" step="any" class="form-control" name="price_variant_${variantItem}" placeholder="Precio de venta">
+
+                    </div>
+
+                    <!--=================================================
+                Oferta de la variante
+                =================================================-->
+
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text"><i class="fas fa-tag"></i></span>
+
+                        <input type="number" step="any" class="form-control" name="offer_variant_${variantItem}" placeholder="Precio de descuento">
+
+                    </div>
+
+                    <!--=================================================
+                Fin de Oferta de la variante
+                =================================================-->
+
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text">Fin del descuento</span>
+
+                        <input type="date" class="form-control" name="date_variant_${variantItem}">
+
+                    </div>
+
+                    <!--=================================================
+                Stock de la variante
+                =================================================-->
+
+                    <div class="input-group mb-3">
+
+                        <span class="input-group-text"><i class="fas fa-list"></i></span>
+
+                        <input type="number" class="form-control" name="stock_variant_${variantItem}" placeholder="Stock disponible">
+
+                    </div>
+
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    `)
+
+    $('[name="totalVariants"]').val(variantItem);
+
+    initDropzone(variantItem)
+
+})
 
 
 
