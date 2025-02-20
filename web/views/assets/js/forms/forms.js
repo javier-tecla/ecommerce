@@ -638,15 +638,16 @@ function initDropzone(item) {
 
       $(".saveBtn").click(function () {
 
-        if (arrayFiles.length >= 1 || $(".galleryOldProduct_" + item).val() != null || $(".type_variant_" + item).val() == "video") {
+        if (arrayFiles.length == 0 && $("[name='type_variant_" + item + "']").val() == "gallery" && $(".idVariant").length == 0) {
 
-          myDropzone.processQueue();
+          fncToastr("error", "La galería no puede estar vacía");
 
         } else {
 
-          fncSweetAlert("error", "La galería no puede estar vacía", null)
+          myDropzone.processQueue();
 
         }
+
 
       })
     }
