@@ -573,9 +573,9 @@ DropZone
 
 Dropzone.autoDiscover = false;
 
-function initDropzone(item){
+function initDropzone(item) {
 
-  $(".dropzone_"+item).dropzone({
+  $(".dropzone_" + item).dropzone({
 
     url: "/",
     addRemoveLinks: true,
@@ -605,7 +605,7 @@ function initDropzone(item){
 
           })
 
-          elem.parent().children(".galleryProduct_"+item).val(JSON.stringify(arrayFiles));
+          elem.parent().children(".galleryProduct_" + item).val(JSON.stringify(arrayFiles));
 
         }, 500 * countArrayFiles)
 
@@ -628,7 +628,7 @@ function initDropzone(item){
 
           arrayFiles.splice(index, 1);
 
-          elem.parent().children(".galleryProduct_"+item).val(JSON.stringify(arrayFiles));
+          elem.parent().children(".galleryProduct_" + item).val(JSON.stringify(arrayFiles));
 
         }, 500 * countArrayFiles)
 
@@ -638,7 +638,7 @@ function initDropzone(item){
 
       $(".saveBtn").click(function () {
 
-        if (arrayFiles.length >= 1 || $(".galleryOldProduct_"+item).val() != null || $(".type_variant_"+item).val() == "video") {
+        if (arrayFiles.length >= 1 || $(".galleryOldProduct_" + item).val() != null || $(".type_variant_" + item).val() == "video") {
 
           myDropzone.processQueue();
 
@@ -662,7 +662,7 @@ Activar DropZone de acuerdo a la cantidad de galerias existentes
 
 let numDropzone = $(".dropzone");
 
-for(let item = 1; item <= numDropzone.length; item++){
+for (let item = 1; item <= numDropzone.length; item++) {
 
   initDropzone(item);
 
@@ -715,13 +715,13 @@ Adicionar Variante
 
 $(document).on("click", ".addVariant", function () {
 
-  let variantItem =  Number($('[name="totalVariants"]').val()) + 1;
+  let variantItem = Number($('[name="totalVariants"]').val()) + 1;
 
   $(".variantList").append(`
     
-    <div class="col variantCount">
+    <div class="col">
 
-      <div class="card">
+      <div class="card variantCount">
 
         <div class="card-body">
 
@@ -895,9 +895,50 @@ $(document).on("click", ".addVariant", function () {
 
     `)
 
-    $('[name="totalVariants"]').val(variantItem);
+  $('[name="totalVariants"]').val(variantItem);
 
-    initDropzone(variantItem)
+  initDropzone(variantItem)
+
+})
+
+/*=============================================
+Quitar Variante
+=============================================*/
+
+$(document).on("click", ".deleteVariant", function () {
+
+  $(this).parent().parent().parent().parent().parent().remove();
+
+  let variantCount = $(".variantCount");
+  $('[name="totalVariants"]').val(variantCount.length);
+
+  if ($(this).attr("idVariant") != undefined) {
+
+    let data = new FormData();
+
+    data.append("token", localStorage.getItem("token-admin"));
+    data.append("table", "variants");
+    data.append("id", $(this).attr("idVariant"));
+    data.append("nameId", "id_variant");
+
+    $.ajax({
+
+      url: "/ajax/delete-admin.ajax.php",
+      method: "POST",
+      data: data,
+      contentType: false,
+      cache: false,
+      processData: false,
+      success: function (response) {
+
+        if (response == 200) {
+
+          fncToastr("success", "Variante borrada correctamente");
+        }
+      }
+    })
+
+  }
 
 })
 

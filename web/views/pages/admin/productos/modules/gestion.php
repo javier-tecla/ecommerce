@@ -426,7 +426,7 @@ if (isset($_GET["product"])) {
 
                     <div class="row row-cols-1 pt-2 variantList">
 
-                        <div class="col variantCount">
+                        <div class="col">
 
                             <div class="card">
 
@@ -466,7 +466,7 @@ if (isset($_GET["product"])) {
                                         Variantes
                                         =================================================-->
 
-                                            <div class="card">
+                                            <div class="card variantCount">
 
                                                 <div class="card-body">
 
@@ -485,7 +485,7 @@ if (isset($_GET["product"])) {
                                                             <?php else: ?>
 
                                                                 <div>
-                                                                    <button type="button" class="btn btn-default btn-sm rounded-pill px-3 quitVariant"><i class="fas fa-times fa-xs"></i> Quitar esta variante</button>
+                                                                    <button type="button" class="btn btn-default btn-sm rounded-pill px-3 deleteVariant" idVariant="<?php echo base64_encode($value->id_variant) ?>"><i class="fas fa-times fa-xs"></i> Quitar esta variante</button>
                                                                 </div>
 
                                                             <?php endif ?>
