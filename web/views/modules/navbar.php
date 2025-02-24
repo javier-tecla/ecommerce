@@ -1,3 +1,22 @@
+ <?php
+    $select = "id_category,name_category,url_category,icon_category";
+    $url = "categories?select=" . $select;
+    $method = "GET";
+    $fields = array();
+
+    $dataCategories = CurlController::request($url, $method, $fields);
+
+    if ($dataCategories->status == 200) {
+
+        $dataCategories = $dataCategories->results;
+    } else {
+
+        $dataCategories = array();
+    }
+
+    ?>
+
+
  <!-- Navbar -->
 
  <div class="container py-2 py-lg-4">
@@ -21,7 +40,7 @@
 
              <?php if (isset($_SESSION["admin"])): ?>
 
-                <a class="nav-link float-start" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                 <a class="nav-link float-start" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
 
              <?php endif ?>
 
@@ -36,151 +55,58 @@
 
                  <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
 
-                     <!-- Level two dropdown-->
-                     <li class="dropdown-submenu dropdown-hover">
+                     <?php foreach ($dataCategories as $key => $value): ?>
 
-                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle text-uppercase">
-                             <i class="fas fa-tshirt pe-2 fa-xs"></i> Ropa
-                         </a>
-                         <ul class="border-0 shadow py-3 ps-3 d-block d-lg-none">
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Ropa para dama</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Ropa para hombre</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Ropa deportiva</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Ropa infantil</a>
-                             </li>
-                         </ul>
-                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Ropa para dama</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Ropa para hombre</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Ropa deportiva</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Ropa infantil</a>
-                             </li>
-                         </ul>
-                     </li>
-                     <!-- End Level two -->
+                         <?php
 
-                     <li class="dropdown-submenu dropdown-hover">
+                            $select = "name_subcategory,url_subcategory";
+                            $url = "subcategories?linkTo=id_category_subcategory&equalTo=" . $value->id_category . "&select=" . $select;
+                            $method = "GET";
+                            $fields = array();
 
-                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle text-uppercase">
-                             <i class="fas fa-shoe-prints pe-2 fa-xs"></i> Calzado
-                         </a>
-                         <ul class="border-0 shadow py-3 ps-3 d-block d-lg-none">
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Calzado para dama</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Calzado para hombre</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Calzado deportiva</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Calzado infantil</a>
-                             </li>
-                         </ul>
-                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Calzado para dama</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Calzado para hombre</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Calzado deportiva</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Calzado infantil</a>
-                             </li>
-                         </ul>
-                     </li>
-                     <!-- End Level two -->
+                            $dataSubcategories = CurlController::request($url, $method, $fields);
 
-                     <li class="dropdown-submenu dropdown-hover">
+                            if ($dataSubcategories->status == 200) {
 
-                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle text-uppercase">
-                             <i class="fas fa-laptop pe-2 fa-xs"></i> Tecnología
-                         </a>
-                         <ul class="border-0 shadow py-3 ps-3 d-block d-lg-none">
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Telefonía móvil</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Tabletas electrónicas</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Computadoras</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Auriculares</a>
-                             </li>
-                         </ul>
-                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Telefonía móvil</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Tabletas electrónicas</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Computadoras</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Auriculares</a>
-                             </li>
-                         </ul>
-                     </li>
-                     <!-- End Level two -->
+                                $dataSubcategories = $dataSubcategories->results;
+                            } else {
+
+                                $dataSubcategories = array();
+                            }
+
+                            ?>
 
 
-                     <li class="dropdown-submenu dropdown-hover">
+                         <li class="dropdown-submenu dropdown-hover">
 
-                         <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle text-uppercase">
-                             <i class="fas fa-graduation-cap pe-2 fa-xs"></i> Cursos
-                         </a>
-                         <ul class="border-0 shadow py-3 ps-3 d-block d-lg-none">
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Desarrollo web</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Aplicaciones móviles</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Diseño gráfico</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Marketing digital</a>
-                             </li>
-                         </ul>
-                         <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Desarrollo web</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Aplicaciones móviles</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Diseño gráfico</a>
-                             </li>
-                             <li>
-                                 <a tabindex="-1" href="#" class="dropdown-item">Marketing digital</a>
-                             </li>
-                         </ul>
-                     </li>
-                     <!-- End Level two -->
+                             <a id="dropdownSubMenu<?php echo $key ?>" href="/<?php echo $value->url_category ?>" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle text-uppercase" onclick="redirect('/<?php echo $value->url_category ?>')" >
+                                 <i class="<?php echo $value->icon_category ?> pe-2 fa-xs"></i> <?php echo $value->name_category ?>
+                             </a>
+                             <ul class="border-0 shadow py-3 ps-3 d-block d-lg-none">
+
+                                 <?php foreach ($dataSubcategories as $index => $item): ?>
+
+                                     <li>
+                                         <a tabindex="-1" href="/<?php echo $item->url_subcategory ?>" class="dropdown-item"><?php echo $item->name_subcategory ?></a>
+                                     </li>
+
+                                 <?php endforeach ?>
+
+                             </ul>
+                             <ul aria-labelledby="dropdownSubMenu<?php echo $key ?>" class="dropdown-menu border-0 shadow menuSubcategory">
+
+                                 <?php foreach ($dataSubcategories as $index => $item): ?>
+
+                                     <li>
+                                         <a tabindex="-1" href="/<?php echo $item->url_subcategory ?>" class="dropdown-item"><?php echo $item->name_subcategory ?></a>
+                                     </li>
+
+                                 <?php endforeach ?>
+                             </ul>
+                         </li>
+
+                     <?php endforeach ?>
+
                  </ul>
              </div>
 
@@ -224,5 +150,19 @@
 
      </div>
  </div>
+
+ <script>
+
+    function redirect(value){
+
+        window.location = value;
+    }
+
+    if(window.matchMedia("(max-width:768px)").matches){
+
+        $(".menuSubcategory").remove();
+    }
+
+</script>
 
  <!-- /.navbar -->
