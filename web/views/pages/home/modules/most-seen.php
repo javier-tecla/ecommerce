@@ -1,3 +1,27 @@
+<?php
+
+$select = "name_product,url_product,type_variant,media_variant,date_created_product,price_variant,offer_variant,end_offer_variant,stock_variant,views_product,description_product";
+$url = "relations?rel=variants,products&type=variant,product&linkTo=views_product&between1=1&between2=1000&startAt=0&endAt=4&orderBy=views_product&orderMode=DESC&select=" . $select;
+$method = "GET";
+$fields = array();
+
+$viewsProducts = CurlController::request($url, $method, $fields);
+
+if ($viewsProducts->status == 200) {
+
+    $viewsProducts = $viewsProducts->results;
+} else {
+
+    $viewsProducts = array();
+}
+
+if (count($viewsProducts) == 0) {
+
+    return;
+}
+
+?>
+
 <div class="container-fluid bg-light border">
 
     <div class="container clearfix">
@@ -52,169 +76,93 @@
 
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-3 pb-4 grid-2">
 
-            <div class="col px-3 py-2 py-lg-0">
+            <?php foreach ($viewsProducts as $key => $value): ?>
 
-                <a href="#">
+                <div class="col px-3 py-2 py-lg-0">
 
-                   <figure class="imgProduct">
+                    <a href="/<?php echo $value->url_product ?>">
 
-                        <img src="<?php echo $path ?>views/assets/img/products/ropa/1/ropa01.jpg" class="img-fluid">
+                        <figure class="imgProduct">
 
-                   </figure> 
+                            <?php if ($value->type_variant == "gallery"): ?>
 
-                   <h5><small class="text-uppercase text-muted">Falda de flores</small></h5>
+                                <img src="<?php echo $path ?>views/assets/img/products/<?php echo $value->url_product ?>/<?php echo json_decode($value->media_variant)[0] ?>" class="img-fluid">
 
-                </a>
+                            <?php else: $arrayYT = explode("/", $value->media_variant) ?>
 
-                <h6>
-                    <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
-                </h6>
+                                <img src="http://imgyoutube.com/vi/<?php echo end($arrayYT) ?>maxresdefault.jpg" class="img-fluid bg-light">
 
-                <div class="clearfix">
+                            <?php endif ?>
 
-                    <h5 class="float-start text-uppercase text-muted"><del class="small" style="color:#bbb">USD $29</del> $11</h5>
+                        </figure>
 
-                    <span class="float-end">
+                        <h5><small class="text-uppercase text-muted"><?php echo $value->name_product ?></small></h5>
 
-                        <div class="btn-group btn-group-sm">
+                    </a>
 
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-heart"></i>
-                            </button>
+                    <p class="small">
 
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
+                        <?php
 
-                    </span>
+                        $date1 = new DateTime($value->date_created_product);
+                        $date2 = new DateTime(date("Y-m-d"));
+                        $diff = $date1->diff($date2);
 
-                </div>
+                        ?>
 
-            </div>
+                        <?php if ($diff->days < 30): ?>
 
-            <div class="col px-3 py-2 py-lg-0">
+                            <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
 
-                <a href="#">
+                        <?php endif ?>
 
-                   <figure class="imgProduct">
+                        <?php if ($value->offer_variant > 0): ?>
 
-                        <img src="<?php echo $path ?>views/assets/img/products/ropa/2/ropa02.jpg" class="img-fluid">
+                            <span class="badge bg-danger text-uppercase text-white mt-1 p-2">¡En oferta!</span>
 
-                   </figure class="imgProduct"> 
+                        <?php endif ?>
 
-                   <h5><small class="text-uppercase text-muted">Vestido jean</small></h5>
+                        <?php if ($value->stock_variant == 0 && $value->type_variant == "gallery"): ?>
 
-                </a>
+                            <span class="badge bg-dark text-uppercase text-white mt-1 p-2">No tiene stock</span>
 
-                <h6>
-                    <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
-                </h6>
+                        <?php endif ?>
 
-                <div class="clearfix">
+                    </p>
 
-                    <h5 class="float-start text-uppercase text-muted"><del class="small" style="color:#bbb">USD $29</del> $11</h5>
+                    <div class="clearfix">
 
-                    <span class="float-end">
+                        <h5 class="float-start text-uppercase text-muted">
 
-                        <div class="btn-group btn-group-sm">
+                            <?php if ($value->offer_variant > 0): ?>
+                                <del class="small" style="color:#bbb">
+                                    USD $<?php echo $value->price_variant ?>
+                                </del> $<?php echo $value->offer_variant ?>
+                            <?php else: ?>
+                                $<?php echo $value->price_variant ?>
+                            <?php endif ?>
+                        </h5>
 
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-heart"></i>
-                            </button>
+                        <span class="float-end">
 
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
+                            <div class="btn-group btn-group-sm">
 
-                    </span>
+                                <button type="button" class="btn btn-light border">
+                                    <i class="fas fa-heart"></i>
+                                </button>
 
-                </div>
+                                <button type="button" class="btn btn-light border" onclick="location.href='/<?php echo $value->url_product ?>'">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
 
-            </div>
+                        </span>
 
-            <div class="col px-3 py-2 py-lg-0">
-
-                <a href="#">
-
-                   <figure class="imgProduct">
-
-                        <img src="<?php echo $path ?>views/assets/img/products/ropa/3/ropa03.jpg" class="img-fluid">
-
-                   </figure class="imgProduct"> 
-
-                   <h5><small class="text-uppercase text-muted">Top dama</small></h5>
-
-                </a>
-
-                <h6>
-                    <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
-                </h6>
-
-                <div class="clearfix">
-
-                    <h5 class="float-start text-uppercase text-muted"><del class="small" style="color:#bbb">USD $29</del> $11</h5>
-
-                    <span class="float-end">
-
-                        <div class="btn-group btn-group-sm">
-
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-heart"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-
-                    </span>
+                    </div>
 
                 </div>
 
-            </div>
-
-            <div class="col px-3 py-2 py-lg-0">
-
-                <a href="#">
-
-                   <figure class="imgProduct">
-
-                        <img src="<?php echo $path ?>views/assets/img/products/ropa/4/ropa04.jpg" class="img-fluid">
-
-                   </figure class="imgProduct"> 
-
-                   <h5><small class="text-uppercase text-muted">Sombrero hombre</small></h5>
-
-                </a>
-
-                <h6>
-                    <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
-                </h6>
-
-                <div class="clearfix">
-
-                    <h5 class="float-start text-uppercase text-muted"><del class="small" style="color:#bbb">USD $29</del> $11</h5>
-
-                    <span class="float-end">
-
-                        <div class="btn-group btn-group-sm">
-
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-heart"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-
-                    </span>
-
-                </div>
-
-            </div>
+            <?php endforeach ?>
 
         </div>
 
@@ -222,172 +170,102 @@
 
         <div class="row list-2" style="display:none">
 
-            <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
+            <?php foreach ($viewsProducts as $key => $value): ?>
 
-                   <figure class="imgProduct">
+                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
 
-                        <img src="<?php echo $path ?>views/assets/img/products/ropa/1/ropa01.jpg" class="img-fluid" style="width:150px">
+                    <a href="/<?php echo $value->url_product ?>">
 
-                   </figure> 
+                        <figure class="imgProduct">
 
-                   <div class="media-body ps-3">
+                            <?php if ($value->type_variant == "gallery"): ?>
 
-                       <h5><small class="text-uppercase text-muted">Falda flores</small></h5>
+                                <img src="<?php echo $path ?>views/assets/img/products/<?php echo $value->url_product ?>/<?php echo json_decode($value->media_variant)[0] ?>" class="img-fluid" style="width:150px">
 
-                       <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
+                            <?php else: $arrayYT = explode("/", $value->media_variant) ?>
 
-                       <p class="my-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, incidunt? Quasi aliquid distinctio, repudiandae minus, ullam assumenda cupiditate sint ea excepturi porro autem aliquam officiis sit earum aspernatur voluptatem? Eveniet!</p>
+                                <img src="http://imgyoutube.com/vi/<?php echo end($arrayYT) ?>maxresdefault.jpg" class="img-fluid bg-light" style="width:150px">
 
-                        <div class="clearfix">
+                            <?php endif ?>
 
-                    <h5 class="float-start text-uppercase text-muted"><del class="small" style="color:#bbb">USD $29</del> $11</h5>
+                        </figure>
 
-                    <span class="float-end">
+                    </a>
+                        <div class="media-body ps-3">
 
-                        <div class="btn-group btn-group-sm">
+                                <a href="/<?php echo $value->url_product ?>">
+                                    <h5><small class="text-uppercase text-muted"><?php echo $value->name_product ?></small></h5>
+                                </a>
 
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-heart"></i>
-                            </button>
+                                <p class="small">
 
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
+                                    <?php
 
-                    </span>
+                                    $date1 = new DateTime($value->date_created_product);
+                                    $date2 = new DateTime(date("Y-m-d"));
+                                    $diff = $date1->diff($date2);
 
-                </div>
+                                    ?>
 
-                   </div>
+                                    <?php if ($diff->days < 30): ?>
 
-            </div>
+                                        <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
 
-            <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
+                                    <?php endif ?>
 
-                   <figure class="imgProduct">
+                                    <?php if ($value->offer_variant > 0): ?>
 
-                        <img src="<?php echo $path ?>views/assets/img/products/ropa/2/ropa02.jpg" class="img-fluid" style="width:150px">
+                                        <span class="badge bg-danger text-uppercase text-white mt-1 p-2">¡En oferta!</span>
 
-                   </figure> 
+                                    <?php endif ?>
 
-                   <div class="media-body ps-3">
+                                    <?php if ($value->stock_variant == 0 && $value->type_variant == "gallery"): ?>
 
-                       <h5><small class="text-uppercase text-muted">Vestido jean</small></h5>
+                                        <span class="badge bg-dark text-uppercase text-white mt-1 p-2">No tiene stock</span>
 
-                       <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
+                                    <?php endif ?>
 
-                       <p class="my-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, incidunt? Quasi aliquid distinctio, repudiandae minus, ullam assumenda cupiditate sint ea excepturi porro autem aliquam officiis sit earum aspernatur voluptatem? Eveniet!</p>
+                                </p>
 
-                        <div class="clearfix">
+                                <p class="my-2"><?php echo $value->description_product ?></p>
 
-                    <h5 class="float-start text-uppercase text-muted"><del class="small" style="color:#bbb">USD $29</del> $11</h5>
+                                <div class="clearfix">
 
-                    <span class="float-end">
+                                    <h5 class="float-start text-uppercase text-muted">
+                                        <?php if ($value->offer_variant > 0): ?>
+                                            <del class="small" style="color:#bbb">
+                                                USD $<?php echo $value->price_variant ?>
+                                            </del> $<?php echo $value->offer_variant ?>
+                                        <?php else: ?>
+                                            $<?php echo $value->price_variant ?>
+                                        <?php endif ?>
+                                    </h5>
 
-                        <div class="btn-group btn-group-sm">
+                                    <span class="float-end">
 
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-heart"></i>
-                            </button>
+                                        <div class="btn-group btn-group-sm">
 
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
+                                            <button type="button" class="btn btn-light border">
+                                                <i class="fas fa-heart"></i>
+                                            </button>
 
-                    </span>
+                                            <button type="button" class="btn btn-light border">
+                                                <i class="fas fa-eye" onclick="location.href='/<?php echo $value->url_product ?>'"></i>
+                                            </button>
+                                        </div>
 
-                </div>
+                                    </span>
 
-                   </div>
-
-            </div>
-
-            <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
-
-                   <figure class="imgProduct">
-
-                        <img src="<?php echo $path ?>views/assets/img/products/ropa/3/ropa03.jpg" class="img-fluid" style="width:150px">
-
-                   </figure> 
-
-                   <div class="media-body ps-3">
-
-                       <h5><small class="text-uppercase text-muted">Top dama</small></h5>
-
-                       <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
-
-                       <p class="my-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, incidunt? Quasi aliquid distinctio, repudiandae minus, ullam assumenda cupiditate sint ea excepturi porro autem aliquam officiis sit earum aspernatur voluptatem? Eveniet!</p>
-
-                        <div class="clearfix">
-
-                    <h5 class="float-start text-uppercase text-muted"><del class="small" style="color:#bbb">USD $29</del> $11</h5>
-
-                    <span class="float-end">
-
-                        <div class="btn-group btn-group-sm">
-
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-heart"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-
-                    </span>
+                                </div>
 
                 </div>
-
-                   </div>
-
-            </div>
-
-            <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
-
-                   <figure class="imgProduct">
-
-                        <img src="<?php echo $path ?>views/assets/img/products/ropa/4/ropa04.jpg" class="img-fluid" style="width:150px">
-
-                   </figure> 
-
-                   <div class="media-body ps-3">
-
-                       <h5><small class="text-uppercase text-muted">Sombrero hombre</small></h5>
-
-                       <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
-
-                       <p class="my-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, incidunt? Quasi aliquid distinctio, repudiandae minus, ullam assumenda cupiditate sint ea excepturi porro autem aliquam officiis sit earum aspernatur voluptatem? Eveniet!</p>
-
-                        <div class="clearfix">
-
-                    <h5 class="float-start text-uppercase text-muted"><del class="small" style="color:#bbb">USD $29</del> $11</h5>
-
-                    <span class="float-end">
-
-                        <div class="btn-group btn-group-sm">
-
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-heart"></i>
-                            </button>
-
-                            <button type="button" class="btn btn-light border">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                        </div>
-
-                    </span>
-
-                </div>
-
-                   </div>
-
-            </div>
 
         </div>
 
+    <?php endforeach ?>
+
     </div>
+
+</div>
 
 </div>

@@ -1,6 +1,6 @@
 <?php
 
-$select = "name_product,url_product,type_variant,media_variant,date_created_product";
+$select = "name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product";
 $url = "relations?rel=variants,products&type=variant,product&linkTo=price_variant&equalTo=0&startAt=0&endAt=4&orderBy=id_variant&orderMode=DESC&select=" . $select;
 $method = "GET";
 $fields = array();
@@ -83,7 +83,7 @@ if (count($freeProducts) == 0) {
                             <figure class="imgProduct">
 
                                 <?php if ($value->type_variant == "gallery"): ?>
-                                    
+
                                     <img src="<?php echo $path ?>views/assets/img/products/<?php echo $value->url_product ?>/<?php echo json_decode($value->media_variant)[0] ?>" class="img-fluid">
 
                                 <?php else: $arrayYT = explode("/", $value->media_variant) ?>
@@ -99,23 +99,29 @@ if (count($freeProducts) == 0) {
 
                         </a>
 
-                        <h6>
+                        <p class="small">
 
                             <?php
 
-                           $date1 = new DateTime($value->date_created_product);
-                           $date2 = new DateTime(date("Y-m-d")); 
-                           $diff = $date1->diff($date2);
+                            $date1 = new DateTime($value->date_created_product);
+                            $date2 = new DateTime(date("Y-m-d"));
+                            $diff = $date1->diff($date2);
 
                             ?>
 
-                            <?php if($diff->days < 30): ?>
-                                
+                            <?php if ($diff->days < 30): ?>
+
                                 <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
 
                             <?php endif ?>
 
-                        </h6>
+                            <?php if ($value->stock_variant == 0 && $value->type_variant == "gallery"): ?>
+
+                                <span class="badge bg-dark text-uppercase text-white mt-1 p-2">No tiene stock</span>
+
+                            <?php endif ?>
+
+                        </p>
 
                         <div class="clearfix">
 
@@ -148,169 +154,88 @@ if (count($freeProducts) == 0) {
 
             <div class="row list-1" style="display:none">
 
-                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
+                <?php foreach ($freeProducts as $key => $value): ?>
 
-                    <figure class="imgProduct">
+                    <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
 
-                        <img src="<?php echo $path ?>views/assets/img/products/accesorios/1/accesorio01.jpg" class="img-fluid" style="width:150px">
+                        <a href="/<?php echo $value->url_product ?>">
 
-                    </figure>
+                            <figure class="imgProduct">
 
-                    <div class="media-body ps-3">
+                                <?php if ($value->type_variant == "gallery"): ?>
 
-                        <h5><small class="text-uppercase text-muted">Collar de Diamantes</small></h5>
+                                    <img src="<?php echo $path ?>views/assets/img/products/<?php echo $value->url_product ?>/<?php echo json_decode($value->media_variant)[0] ?>" class="img-fluid" style="width:150px">
 
-                        <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
+                                <?php else: $arrayYT = explode("/", $value->media_variant) ?>
 
-                        <p class="my-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, incidunt? Quasi aliquid distinctio, repudiandae minus, ullam assumenda cupiditate sint ea excepturi porro autem aliquam officiis sit earum aspernatur voluptatem? Eveniet!</p>
+                                    <img src="http://imgyoutube.com/vi/<?php echo end($arrayYT) ?>maxresdefault.jpg" class="img-fluid bg-light" style="width:150px">
 
-                        <div class="clearfix">
+                                <?php endif ?>
 
-                            <h5 class="float-start text-uppercase text-muted"><small>Gratis</small></h5>
+                            </figure>
+                        </a>
 
-                            <span class="float-end">
+                        <div class="media-body ps-3">
 
-                                <div class="btn-group btn-group-sm">
+                            <a href="/<?php echo $value->url_product ?>">
+                                <h5><small class="text-uppercase text-muted"><?php echo $value->name_product ?></small></h5>
+                            </a>
 
-                                    <button type="button" class="btn btn-light border">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
 
-                                    <button type="button" class="btn btn-light border">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
+                            <p class="small">
 
-                            </span>
+                                <?php
 
-                        </div>
+                                $date1 = new DateTime($value->date_created_product);
+                                $date2 = new DateTime(date("Y-m-d"));
+                                $diff = $date1->diff($date2);
 
-                    </div>
+                                ?>
 
-                </div>
+                                <?php if ($diff->days < 30): ?>
 
-                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
+                                    <span class="badge badgeNew bg-warning text-uppercase text-white mt-1 p-2">Nuevo</span>
 
-                    <figure class="imgProduct">
+                                <?php endif ?>
 
-                        <img src="<?php echo $path ?>views/assets/img/products/accesorios/2/accesorio02.jpg" class="img-fluid" style="width:150px">
+                                <?php if ($value->stock_variant == 0 && $value->type_variant == "gallery"): ?>
 
-                    </figure>
+                                    <span class="badge bg-dark text-uppercase text-white mt-1 p-2">No tiene stock</span>
 
-                    <div class="media-body ps-3">
+                                <?php endif ?>
 
-                        <h5><small class="text-uppercase text-muted">Bolso deportivo gris</small></h5>
+                            </p>
 
-                        <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
 
-                        <p class="my-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, incidunt? Quasi aliquid distinctio, repudiandae minus, ullam assumenda cupiditate sint ea excepturi porro autem aliquam officiis sit earum aspernatur voluptatem? Eveniet!</p>
 
-                        <div class="clearfix">
+                            <p class="my-2"><?php echo $value->description_product ?></p>
 
-                            <h5 class="float-start text-uppercase text-muted"><small>Gratis</small></h5>
+                            <div class="clearfix">
 
-                            <span class="float-end">
+                                <h5 class="float-start text-uppercase text-muted"><small>Gratis</small></h5>
 
-                                <div class="btn-group btn-group-sm">
+                                <span class="float-end">
 
-                                    <button type="button" class="btn btn-light border">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
+                                    <div class="btn-group btn-group-sm">
 
-                                    <button type="button" class="btn btn-light border">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
+                                        <button type="button" class="btn btn-light border">
+                                            <i class="fas fa-heart"></i>
+                                        </button>
 
-                            </span>
+                                        <button type="button" class="btn btn-light border">
+                                            <i class="fas fa-eye" onclick="location.href='/<?php echo $value->url_product ?>'"></i>
+                                        </button>
+                                    </div>
 
-                        </div>
+                                </span>
 
-                    </div>
-
-                </div>
-
-                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
-
-                    <figure class="imgProduct">
-
-                        <img src="<?php echo $path ?>views/assets/img/products/accesorios/3/accesorio03.jpg" class="img-fluid" style="width:150px">
-
-                    </figure>
-
-                    <div class="media-body ps-3">
-
-                        <h5><small class="text-uppercase text-muted">Bolso militar</small></h5>
-
-                        <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
-
-                        <p class="my-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, incidunt? Quasi aliquid distinctio, repudiandae minus, ullam assumenda cupiditate sint ea excepturi porro autem aliquam officiis sit earum aspernatur voluptatem? Eveniet!</p>
-
-                        <div class="clearfix">
-
-                            <h5 class="float-start text-uppercase text-muted"><small>Gratis</small></h5>
-
-                            <span class="float-end">
-
-                                <div class="btn-group btn-group-sm">
-
-                                    <button type="button" class="btn btn-light border">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-light border">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-
-                            </span>
+                            </div>
 
                         </div>
 
                     </div>
 
-                </div>
-
-                <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
-
-                    <figure class="imgProduct">
-
-                        <img src="<?php echo $path ?>views/assets/img/products/accesorios/4/accesorio04.jpg" class="img-fluid" style="width:150px">
-
-                    </figure>
-
-                    <div class="media-body ps-3">
-
-                        <h5><small class="text-uppercase text-muted">Pulsera de diamantes</small></h5>
-
-                        <span class="badge badgeNew bg-warning text-uppercase text-white p-2">Nuevo</span>
-
-                        <p class="my-2">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam, incidunt? Quasi aliquid distinctio, repudiandae minus, ullam assumenda cupiditate sint ea excepturi porro autem aliquam officiis sit earum aspernatur voluptatem? Eveniet!</p>
-
-                        <div class="clearfix">
-
-                            <h5 class="float-start text-uppercase text-muted"><small>Gratis</small></h5>
-
-                            <span class="float-end">
-
-                                <div class="btn-group btn-group-sm">
-
-                                    <button type="button" class="btn btn-light border">
-                                        <i class="fas fa-heart"></i>
-                                    </button>
-
-                                    <button type="button" class="btn btn-light border">
-                                        <i class="fas fa-eye"></i>
-                                    </button>
-                                </div>
-
-                            </span>
-
-                        </div>
-
-                    </div>
-
-                </div>
+                <?php endforeach ?>
 
             </div>
 
