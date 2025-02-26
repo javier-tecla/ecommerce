@@ -148,8 +148,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Codemirror -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/codemirror/codemirror.min.css">
 
-     <!-- Dropzone -->
-     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/dropzone/dropzone.css">
+    <!-- Dropzone -->
+    <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/dropzone/dropzone.css">
 
     <!-- Theme style -->
     <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/adminlte/adminlte.min.css">
@@ -257,7 +257,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <script src="<?php echo $path ?>views/assets/js/plugins/summernote/emoji.config.js"></script>
     <script src="<?php echo $path ?>views/assets/js/plugins/summernote/tam-emoji.min.js"></script>
 
-     <!-- Codemirror -->
+    <!-- Codemirror -->
     <script src="<?php echo $path ?>views/assets/js/plugins/codemirror/codemirror.min.js"></script>
     <script src="<?php echo $path ?>views/assets/js/plugins/codemirror/xml.min.js"></script>
     <script src="<?php echo $path ?>views/assets/js/plugins/codemirror/formatting.min.js"></script>
@@ -293,7 +293,20 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 include "pages/" . $routesArray[0] . "/" . $routesArray[0] . ".php";
             } else {
 
-                include "pages/404/404.php";
+                /*=============================================
+                Buscar coincidencia url - categoria
+                =============================================*/
+
+                $url = "categories?linkTo=url_category&equalTo=" . $routesArray[0] . "&select=url_category";
+                $category = CurlController::request($url,$method,$fields);
+
+                if ($category->status == 200) {
+
+                    include "pages/products/products.php";
+                } else {
+
+                    include "pages/404/404.php";
+                }
             }
         } else {
 
