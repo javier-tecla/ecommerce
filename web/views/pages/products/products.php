@@ -80,7 +80,7 @@ if (!empty($products)) {
 
             <?php foreach ($products as $key => $value): ?>
 
-                <div class="col px-3 py-2 py-lg-0">
+                <div class="col px-3 py-3">
 
                     <a href="/<?php echo $value->url_product ?>">
 
@@ -172,7 +172,7 @@ if (!empty($products)) {
 
         <div class="row list-2" style="display:none">
 
-            <?php foreach ($viewsProducts as $key => $value): ?>
+            <?php foreach ($products as $key => $value): ?>
 
                 <div class="media border-bottom px-3 pt-4 pb-3 pb-lg-2">
 
@@ -203,7 +203,7 @@ if (!empty($products)) {
 
                             <?php
 
-                            $date1 = new DateTime($value->date_created_product);
+                            $date1 = new DateTime($value->date_created_variant);
                             $date2 = new DateTime(date("Y-m-d"));
                             $diff = $date1->diff($date2);
 
