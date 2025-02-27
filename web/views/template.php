@@ -265,6 +265,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- Dropzone -->
     <script src="<?php echo $path ?>views/assets/js/plugins/dropzone/dropzone.js"></script>
 
+    <!-- pagination -->
+    <!-- http://josecebe.github.io/twbs-pagination/ -->
+    <script src="<?php echo $path ?>views/assets/js/plugins/twbs-pagination/twbs-pagination.min.js"></script>
+
+    
 
 </head>
 
