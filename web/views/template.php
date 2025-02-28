@@ -269,7 +269,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- http://josecebe.github.io/twbs-pagination/ -->
     <script src="<?php echo $path ?>views/assets/js/plugins/twbs-pagination/twbs-pagination.min.js"></script>
 
-    
+
 
 </head>
 
@@ -303,14 +303,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 =============================================*/
 
                 $url = "categories?linkTo=url_category&equalTo=" . $routesArray[0] . "&select=url_category";
-                $category = CurlController::request($url,$method,$fields);
+                $category = CurlController::request($url, $method, $fields);
 
                 if ($category->status == 200) {
 
                     include "pages/products/products.php";
                 } else {
 
-                    include "pages/404/404.php";
+                    /*=============================================
+                     Buscar coincidencia url - subcategoria
+                    =============================================*/
+
+                    $url = "subcategories?linkTo=url_subcategory&equalTo=" . $routesArray[0] . "&select=url_subcategory";
+                    $subcategory = CurlController::request($url, $method, $fields);
+
+                    if ($subcategory->status == 200) {
+
+                        include "pages/products/products.php";
+                    } else {
+
+                        include "pages/404/404.php";
+                    }
                 }
             }
         } else {
