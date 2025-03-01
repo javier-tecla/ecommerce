@@ -58,7 +58,7 @@ if (count($freeProducts) == 0) {
 
                 <span class="float-end">
 
-                    <a href="#" class="btn btn-default templateColor">
+                    <a href="/free" class="btn btn-default templateColor">
 
                         <small>VER MÁS <i class="fas fa-chevron-right"></i></small>
 

@@ -322,15 +322,26 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         include "pages/products/products.php";
                     } else {
 
-                        include "pages/404/404.php";
+                        if (
+                            $routesArray[0] == "free" ||
+                            $routesArray[0] == "most-seen" ||
+                            $routesArray[0] == "most-sold"
+                        ) {
+
+                            include "pages/products/products.php";
+
+                        } else {
+
+                            include "pages/404/404.php";
+                        }
                     }
                 }
             }
+
         } else {
 
             include "pages/home/home.php";
         }
-
 
         // include "modules/visits.php";
         include "modules/footer.php";

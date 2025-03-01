@@ -57,3 +57,7 @@ a:active {
 .page-error{
     height: 50vh !important;
 }
+
+.page-item.active .page-link{
+    color: #fff !important;
+}

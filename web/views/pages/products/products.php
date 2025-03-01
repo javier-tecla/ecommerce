@@ -69,10 +69,117 @@ if ($totalProducts->status == 200) {
     } else {
 
         /*=============================================
+        Traemos productos gratuitos
+        =============================================*/
+
+        if ($routesArray[0] == "free") {
+
+            $url = "relations?rel=variants,products&type=variant,product&linkTo=price_variant&equalTo=0&select=id_product";
+            $totalProducts = CurlController::request($url, $method, $fields);
+
+            if ($totalProducts->status == 200) {
+
+                $totalProducts = $totalProducts->total;
+
+                if ($startAt > $totalProducts) {
+
+                    echo '<script>
+                    window.location = "/404";
+                </script>';
+                }
+
+                $select = "name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
+                $url = "relations?rel=variants,products&type=variant,product&linkTo=price_variant&equalTo=0&startAt=" . $startAt . "&endAt=" . $endAt . "&orderBy=id_variant&orderMode=DESC&select=" . $select;
+                $method = "GET";
+                $fields = array();
+
+                $products = CurlController::request($url, $method, $fields)->results;
+                $products[0]->check_variant = "yes";
+            } else {
+
+                /*=============================================
+                Anulamos ingreso al catalogo
+                =============================================*/
+
+                $products = array();
+
+            }
+
+        } else if ($routesArray[0] == "most-seen") {
+
+            $url = "relations?rel=variants,products&type=variant,product&linkTo=views_product&between1=1&between2=1000&select=id_product";
+            $totalProducts = CurlController::request($url, $method, $fields);
+
+            if ($totalProducts->status == 200) {
+
+                $totalProducts = $totalProducts->total;
+
+                if ($startAt > $totalProducts) {
+
+                    echo '<script>
+                    window.location = "/404";
+                </script>';
+                }
+
+                $select = "name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
+                $url = "relations?rel=variants,products&type=variant,product&linkTo=views_product&between1=1&between2=1000&startAt=" . $startAt . "&endAt=" . $endAt . "&orderBy=id_variant&orderMode=DESC&select=" . $select;
+                $method = "GET";
+                $fields = array();
+
+                $products = CurlController::request($url, $method, $fields)->results;
+                $products[0]->check_variant = "yes";
+            } else {
+
+                /*=============================================
+                Anulamos ingreso al catalogo
+                =============================================*/
+
+                $products = array();
+
+            }
+
+
+        } else if ($routesArray[0] == "most-sold") {
+
+            $url = "relations?rel=variants,products&type=variant,product&linkTo=sales_product&between1=1&between2=1000&select=id_product";
+            $totalProducts = CurlController::request($url, $method, $fields);
+
+            if ($totalProducts->status == 200) {
+
+                $totalProducts = $totalProducts->total;
+
+                if ($startAt > $totalProducts) {
+
+                    echo '<script>
+                    window.location = "/404";
+                </script>';
+                }
+
+                $select = "name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
+                $url = "relations?rel=variants,products&type=variant,product&linkTo=sales_product&between1=1&between2=1000&startAt=" . $startAt . "&endAt=" . $endAt . "&orderBy=id_variant&orderMode=DESC&select=" . $select;
+                $method = "GET";
+                $fields = array();
+
+                $products = CurlController::request($url, $method, $fields)->results;
+                $products[0]->check_variant = "yes";
+            } else {
+
+                /*=============================================
+                Anulamos ingreso al catalogo
+                =============================================*/
+
+                $products = array();
+
+            }
+
+        } else {
+
+            /*=============================================
         Anulamos ingreso al catalogo
         =============================================*/
 
-        $products = array();
+            $products = array();
+        }
     }
 }
 
@@ -81,11 +188,11 @@ if ($totalProducts->status == 200) {
  Traemos la primera variante de los productos
  =============================================*/
 
-if (!empty($products)) {
+if (!empty($products) && !isset($products[0]->check_variant)) {
 
     foreach ($products as $key => $value) {
 
-        $select = "type_variant,media_variant,price_variant,offer_variant,end_offer_variant,stock_variant,date_created_variant";
+        $select = "type_variant,media_variant,price_variant,offer_variant,end_offer_variant,stock_variant";
         $url = "variants?linkTo=id_product_variant&equalTo=" . $value->id_product . "&select=" . $select;
         $variant = CurlController::request($url, $method, $fields)->results[0];
 
@@ -95,7 +202,6 @@ if (!empty($products)) {
         $products[$key]->offer_variant = $variant->offer_variant;
         $products[$key]->end_offer_variant = $variant->end_offer_variant;
         $products[$key]->stock_variant = $variant->stock_variant;
-        $products[$key]->date_created_variant = $variant->date_created_variant;
     }
 }
 
@@ -206,16 +312,22 @@ if (!empty($products)) {
 
                         <div class="clearfix">
 
-                            <h5 class="float-start text-uppercase text-muted">
+                            <?php if ($value->price_variant == 0): ?>
+                                <h5 class="float-start text-uppercase text-muted"><small>Gratis</small></h5>
+                            <?php else: ?>
 
-                                <?php if ($value->offer_variant > 0): ?>
-                                    <del class="small" style="color:#bbb">
-                                        USD $<?php echo $value->price_variant ?>
-                                    </del> $<?php echo $value->offer_variant ?>
-                                <?php else: ?>
-                                    $<?php echo $value->price_variant ?>
-                                <?php endif ?>
-                            </h5>
+                                <h5 class="float-start text-uppercase text-muted">
+
+                                    <?php if ($value->offer_variant > 0): ?>
+                                        <del class="small" style="color:#bbb">
+                                            USD $<?php echo $value->price_variant ?>
+                                        </del> $<?php echo $value->offer_variant ?>
+                                    <?php else: ?>
+                                        $<?php echo $value->price_variant ?>
+                                    <?php endif ?>
+                                </h5>
+
+                            <?php endif ?>
 
                             <span class="float-end">
 
@@ -246,7 +358,7 @@ if (!empty($products)) {
 
             <div class="login-page page-error bg-white">
 
-                <div class="login-box bg-white">
+                <div class="login-box bg-white d-flex justify-content-center">
 
                     <section class="content pb-5">
 

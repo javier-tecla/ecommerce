@@ -1,6 +1,6 @@
 <div class="login-page page-error bg-white">
 
-    <div class="login-box bg-white">
+    <div class="login-box bg-white d-flex justify-content-center">
     <!-- /.login-logo  -->
 
     <section class="content">
