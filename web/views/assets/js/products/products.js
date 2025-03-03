@@ -50,9 +50,6 @@ if (target.length > 0) {
             urlPage = el.data("url-page"),
             currentPage = el.data("current-page");
 
-        console.log("totalPages", totalPages);
-
-
         el.twbsPagination({
             totalPages: totalPages,
             startPage: currentPage,
@@ -84,3 +81,23 @@ if (target.length > 0) {
     })
 
 }
+
+/*===================================
+Función para buscar productos
+===================================*/
+
+$(document).on("click", ".btnSearch", function () {
+
+    let value = $(this).parent().parent().children(".inputSearch").val().toLowerCase();
+
+    value = value.replace(/[#\\;\\$\\&\\%\\=\\(\\)\\:\\,\\'\\"\\.\\¿\\¡\\!\\?]/g, "");
+    value = value.replace(/[ ]/g, "-");
+    value = value.replace(/[á]/g, "a");
+    value = value.replace(/[é]/g, "e");
+    value = value.replace(/[í]/g, "i");
+    value = value.replace(/[ó]/g, "o");
+    value = value.replace(/[ú]/g, "u");
+    value = value.replace(/[ñ]/g, "n");
+
+    window.location = "/" + value;
+})

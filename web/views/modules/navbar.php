@@ -113,9 +113,9 @@
              <!-- SEARCH FORM -->
              <form class="form-inline">
                  <div class="input-group input-group w-100 me-0 me-lg-4">
-                     <input class="form-control rounded-0 p-3 pe-5" type="search" placeholder="Buscar..." style="height:40px">
+                     <input class="form-control rounded-0 p-3 pe-5 inputSearch" type="search" placeholder="Buscar..." style="height:40px">
                      <div class="input-group-append px-2 templateColor ">
-                         <button class="btn btn-navbar text-white" type="submit">
+                         <button class="btn btn-navbar text-white btnSearch" type="button">
                              <i class="fas fa-search"></i>
                          </button>
                      </div>

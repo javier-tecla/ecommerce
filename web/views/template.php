@@ -292,7 +292,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             if (
                 $routesArray[0] == "admin" ||
-                $routesArray[0] == "salir"
+                $routesArray[0] == "salir" ||
+                $routesArray[0] == "no-found"
             ) {
 
                 include "pages/" . $routesArray[0] . "/" . $routesArray[0] . ".php";
@@ -322,6 +323,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         include "pages/products/products.php";
                     } else {
 
+                        /*=============================================
+                    Filtro de productos gratuitos y demas
+                    =============================================*/
                         if (
                             $routesArray[0] == "free" ||
                             $routesArray[0] == "most-seen" ||
@@ -329,15 +333,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         ) {
 
                             include "pages/products/products.php";
-
                         } else {
 
-                            include "pages/404/404.php";
+                            /*=============================================
+                    Filtro de búsqueda
+                    =============================================*/
+
+                            $linkTo = ["name_product", "keywords_product", "name_category", "keywords_category", "name_subcategory", "keywords_subcategory"];
+                            $totalSearch = 0;
+                           
+
+                            foreach ($linkTo as $key => $value) {
+
+                                $totalSearch++;
+
+
+                                $url = "relations?rel=products,subcategories,categories&type=product,subcategory,category&linkTo=" . $value . "&search=" . $routesArray[0] . "&select=id_product";
+                                $search = CurlController::request($url, $method, $fields);
+
+                                if ($search->status == 200) {
+
+                                    include "pages/products/products.php";
+
+                                    break;
+                                }
+                            }
+
+                            if ($totalSearch == count($linkTo)) {
+
+                                include "pages/404/404.php";
+                            }
                         }
                     }
                 }
             }
-
         } else {
 
             include "pages/home/home.php";
