@@ -101,3 +101,28 @@ $(document).on("click", ".btnSearch", function () {
 
     window.location = "/" + value;
 })
+
+/*============================================
+Función para buscar productos con tecla Enter
+==============================================*/
+
+$(".inputSearch").keyup(function (event) {
+
+    event.preventDefault();
+
+    if (event.keyCode == 13 && $(".inputSearch").val() != "") {
+
+        let value = $(".inputSearch").val().toLowerCase();
+
+        value = value.replace(/[#\\;\\$\\&\\%\\=\\(\\)\\:\\,\\'\\"\\.\\¿\\¡\\!\\?]/g, "");
+        value = value.replace(/[ ]/g, "-");
+        value = value.replace(/[á]/g, "a");
+        value = value.replace(/[é]/g, "e");
+        value = value.replace(/[í]/g, "i");
+        value = value.replace(/[ó]/g, "o");
+        value = value.replace(/[ú]/g, "u");
+        value = value.replace(/[ñ]/g, "n");
+
+        window.location = "/" + value;
+    }
+})
