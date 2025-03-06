@@ -1,5 +1,5 @@
 <footer>
-  <div class="container-fluid bg-dark small">
+  <div class="container-fluid bg-dark small footerBlock">
 
     <div class="container py-5 text-light">
 
