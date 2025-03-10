@@ -159,7 +159,7 @@ if(!empty($product)){
 					class="container-fluid countdown"
 					dsize="col-12"
 					dlanguage="es"
-					dtimezone="	America/Bogota"
+					dtimezone="America/Argentina/Buenos_Aires"
 					ddate="<?php if ($product->variants[0]->end_offer_variant != "0000-00-00"): ?><?php echo $product->variants[0]->end_offer_variant ?><?php else: ?><?php echo date("Y-m-d") ?><?php endif ?> 00:00"
 					dbackground="#009B9D"
 					ddigitscolor="#333"
