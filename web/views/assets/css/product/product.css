@@ -1,0 +1,22 @@
+/*======================================
+Animacíón botón de compra
+========================================*/
+
+button.pulseAnimation {
+
+    animation: increaseSize 3s infinite;
+}
+
+@keyframes increaseSize {
+    0% {
+        transform: scale(1);
+    }
+
+    10% {
+        transform: scale(1.2);
+    }
+
+    20% {
+        transform: scale(1);
+    }
+}
