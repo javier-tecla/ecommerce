@@ -278,6 +278,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
 
+<?php
+
+    include "views/modules/spinner.php";
+
+?>
+
   <input type="hidden" id="urlPath" value="<?php echo $path ?>">
 <div class="wrapper">
 
