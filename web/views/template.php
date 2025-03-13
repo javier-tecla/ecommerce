@@ -150,6 +150,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- FlexSlider -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/flexslider/flexslider.css">
 
+  <!-- Preload -->
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/preload/preload.css">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/adminlte/adminlte.min.css">
 
@@ -272,17 +275,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- sticky -->
   <!-- https://rgalus.github.io/sticky-js/ -->
   <script src="<?php echo $path ?>views/assets/js/plugins/sticky/sticky.min.js"></script>
-
+  
+  <!-- Preload -->
+  <!-- https://codepen.io/tutorialesatualcance/pen/oNqObGL -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/preload/preload.js"></script>
 
 </head>
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
-
-<?php
-
-    include "views/modules/spinner.php";
-
-?>
 
   <input type="hidden" id="urlPath" value="<?php echo $path ?>">
 <div class="wrapper">

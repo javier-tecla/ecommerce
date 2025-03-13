@@ -1,5 +1,7 @@
 <?php
 
+include "views/modules/spinner.php";
+
 $select = "id_product,name_product,url_product,info_product";
 $url = "relations?rel=variants,products&type=variant,product&linkTo=url_product&equalTo=".$routesArray[0]."&select=".$select;
 $method = "GET";

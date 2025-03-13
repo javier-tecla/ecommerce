@@ -1,5 +1,6 @@
 <?php
 
+
 /*=============================================
     Configuracion de la paginación
     =============================================*/
@@ -293,9 +294,45 @@ if (!empty($products) && !isset($products[0]->check_variant)) {
 
     <div class="container">
 
+        <!--=====================================
+            Grid Preload
+            =========================================-->
+
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-3 pb-4 preloadTrue">
+
+            <?php for ($i = 0; $i < count($products); $i++): ?>
+
+                <div class="col px-3 py-3">
+
+                    <div class="p-5 bg-preload" style="height: 285px;">
+                        <div class="into-preload"></div>
+                    </div>
+
+                    <div class="p-3 bg-preload my-3">
+                        <div class="into-preload"></div>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+
+                        <div class="p-3 px-5 bg-preload">
+                            <div class="into-preload"></div>
+                        </div>
+
+                        <div class="p-3 px-5 bg-preload">
+                            <div class="into-preload"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <?php endfor ?>
+
+        </div>
+
         <!-- GRID -->
 
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-3 pb-4 grid-2">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 pt-3 pb-4 grid-2 preloadFalse">
 
 
 
