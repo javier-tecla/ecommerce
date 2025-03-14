@@ -61,3 +61,13 @@ a:active {
 .page-item.active .page-link{
     color: #fff !important;
 }
+
+.facebook{
+    color:white;
+    background: #46639f;
+}
+
+.google{
+    color:white;
+    background: #d6513e;
+}

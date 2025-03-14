@@ -54,7 +54,7 @@ if ($socials->status == 200) {
 
                     <div class="p-2">
 
-                        <a href="#" class="text-white">
+                        <a href="#login" class="text-white" data-bs-toggle="modal">
 
                             Ingresar
 
@@ -70,7 +70,7 @@ if ($socials->status == 200) {
 
                     <div class="p-2">
 
-                        <a href="#" class="text-white">
+                        <a href="#register" class="text-white" data-bs-toggle="modal">
 
                             Crear cuenta
 
