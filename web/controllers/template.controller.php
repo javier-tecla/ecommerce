@@ -265,6 +265,19 @@ class TemplateController
             return "error";
         }
 
-        return;
     }
+
+     /*=================================================
+        Función para generar texto aleatorio
+        ===============================================*/
+
+        public static function genPassword($length){
+
+            $password = "";
+            $chain = "0123456789abcdefghijklmnopqrstuvwxyz";
+
+            $password = substr(str_shuffle($chain),0,$length);
+
+            return $password;
+        }
 }
