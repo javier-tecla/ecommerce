@@ -284,6 +284,40 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
 
+<?php
+
+/*===========================================
+Verificación de usuarios
+=============================================*/
+
+if(isset($_GET["confirm"])){
+
+    $url = "users?linkTo=confirm_user&equalTo=".$_GET["confirm"];
+    $method = "GET";
+    $fields = array();
+
+    $confirm = CurlController::request($url,$method,$fields);
+
+    if($confirm->status == 200){
+
+      $url = "users?id=".$confirm->results[0]->id_user."&nameId=id_user&token=no&except=verification_user";
+      $method = "PUT";
+      $fields = "verification_user=1";
+
+      $verification = CurlController::request($url,$method,$fields);
+
+      if($verification->status == 200){
+
+        echo '<script>
+        fncToastr("success", "Felicidades su cuenta ha sido verificada,ya puede ingresar al sistema y utilizar todas las funciones");
+        </script>';
+      }
+    }
+}
+
+
+?>
+
   <input type="hidden" id="urlPath" value="<?php echo $path ?>">
 <div class="wrapper">
 
