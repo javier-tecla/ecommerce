@@ -1,60 +1,64 @@
 <?php
 
-class UsersController {
+class UsersController
+{
 
-      /*============================================
+    /*============================================
         Registro de usuarios
         =============================================*/
 
-        public function register(){
+    public function register()
+    {
 
-            if(isset($_POST["email_user"])){
-    
-                echo '<script>
+        if (isset($_POST["email_user"])) {
+
+            echo '<script>
     
                     fncMatPreloader("on");
                     fncSweetAlert("loading", "procesando...", "");
     
                 </script>';
-    
-                if(preg_match('/^[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}$/',$_POST["name_user"]) &&
-                   preg_match('/^[.a-zA-Z0-9_]+([.][.a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/',$_POST["email_user"])){
-    
-                       /*=============================================
+
+            if (
+                preg_match('/^[A-Za-zñÑáéíóúÁÉÍÓÚ ]{1,}$/', $_POST["name_user"]) &&
+                preg_match('/^[.a-zA-Z0-9_]+([.][.a-zA-Z0-9_]+)*[@][a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,4}$/', $_POST["email_user"])
+            ) {
+
+                /*=============================================
                     Registro de Usuarios
-                    =============================================*/	
-                    $confirm_user = TemplateController::genPassword(20);
-                    
-                    $url = "users?register=true&suffix=user";
-                    $method = "POST";
-                    $fields = array(
-                        "name_user" => TemplateController::capitalize(trim($_POST["name_user"])),
-                        "email_user"  => $_POST["email_user"],
-                        "password_user" => $_POST["password_user"],
-                        "method_user" => "directo",
-                        "verification_user" => 0,
-                        "confirm_user" => $confirm_user,
-                        "date_created_user" => date("Y-m-d")
-                    );
-    
-                    $register = CurlController::request($url, $method, $fields);
-    
-                    if($register->status == 200){
-    
-                        /*=============================================
+                    =============================================*/
+                $confirm_user = TemplateController::genPassword(20);
+
+                $url = "users?register=true&suffix=user";
+                $method = "POST";
+                $fields = array(
+                    "name_user" => TemplateController::capitalize(trim($_POST["name_user"])),
+                    "email_user"  => $_POST["email_user"],
+                    "password_user" => $_POST["password_user"],
+                    "method_user" => "directo",
+                    "verification_user" => 0,
+                    "confirm_user" => $confirm_user,
+                    "date_created_user" => date("Y-m-d")
+                );
+
+                $register = CurlController::request($url, $method, $fields);
+
+                if ($register->status == 200) {
+
+                    /*=============================================
                         Enviamos correo de confirmación
-                        =============================================*/	
-                        $subject = 'Registro - Ecommerce';
-                        $email = $_POST["email_user"];
-                        $title ='CONFIRMAR CORREO ELECTRÓNICO';
-                        $message = '<h4 style="font-weight: 100; color:#999; padding:0px 20px">Dar clic en el siguiente botón para confirmar su correo electrónico y activar su cuenta</h4>';
-                        $link = TemplateController::path().'?confirm='.$confirm_user;
-    
-                        $sendEmail = TemplateController::sendEmail($subject, $email, $title, $message, $link);
-    
-                        if($sendEmail == "ok"){
-    
-                            echo '<script>
+                        =============================================*/
+                    $subject = 'Registro - Ecommerce';
+                    $email = $_POST["email_user"];
+                    $title = 'CONFIRMAR CORREO ELECTRÓNICO';
+                    $message = '<h4 style="font-weight: 100; color:#999; padding:0px 20px">Dar clic en el siguiente botón para confirmar su correo electrónico y activar su cuenta</h4>';
+                    $link = TemplateController::path() . '?confirm=' . $confirm_user;
+
+                    $sendEmail = TemplateController::sendEmail($subject, $email, $title, $message, $link);
+
+                    if ($sendEmail == "ok") {
+
+                        echo '<script>
     
                                     fncFormatInputs();
                                     fncMatPreloader("off");
@@ -62,25 +66,21 @@ class UsersController {
     
                                 </script>
                             ';
-    
-                        }else{
-    
-                            echo '<script>
+                    } else {
+
+                        echo '<script>
     
                                 fncFormatInputs();
                                 fncMatPreloader("off");
-                                fncNotie("error", "'.$sendEmail.'");
+                                fncNotie("error", "' . $sendEmail . '");
     
                                 </script>
                             ';
-    
-                        }
-    
                     }
-    
-                }else{
-    
-                    echo '<div class="alert alert-danger mt-3">Error de sintaxis en los campos</div>
+                }
+            } else {
+
+                echo '<div class="alert alert-danger mt-3">Error de sintaxis en los campos</div>
     
                     <script>
     
@@ -91,13 +91,72 @@ class UsersController {
                     </script>
     
                     ';
-    
-    
-                }
-    
-    
             }
-    
-    
         }
+    }
+
+    /*============================================
+        Ingreso de usuarios
+        =============================================*/
+
+    public function login()
+    {
+
+        if (isset($_POST["login_email_user"])) {
+
+            echo '<script>
+
+                fncMatPreloader("on");
+                fncSweetAlert("loading", "procesando...", "");
+            
+            </script>';
+
+            if (preg_match('/^[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{2,}$/', $_POST["login_email_user"])) {
+
+                $url = "users?login=true&suffix=user";
+                $method = "POST";
+                $fields = array(
+
+                    "email_user" => $_POST["login_email_user"],
+                    "password_user" => $_POST["login_password_user"]
+
+                );
+
+                $login = CurlController::request($url, $method, $fields);
+
+                if ($login->status == 200) {
+
+                    $_SESSION["user"] = $login->results[0];
+
+                    echo '<script>
+                
+                    localStorage.setItem("token-user", "' . $login->results[0]->token_user . '")
+                    window.location="' . TemplateController::urlRedirect() . '";
+
+                    </script>';
+                } else {
+
+                    $error = null;
+
+                    if ($login->results == "Wrong email") {
+
+                        $error = "Correo mal escrito";
+                    } else {
+
+                        $error = "Contraseña mal escrita";
+                    }
+
+                    echo '<div class="alert alert-danger mt-3">Error al ingresar: ' . $error . '</div>
+
+                    <script>
+
+                    fncToastr("error","Error al ingresar: ' . $error . '");
+                        fncMatPreloader("off");
+                        fncFormatInputs();
+
+                    </script>';
+                }
+            }
+        }
+    }
 }

@@ -48,39 +48,79 @@ if ($socials->status == 200) {
 
             </div>
 
-            <div class="p-2">
+            <?php if (isset($_SESSION["user"])): ?>
 
-                <div class="d-flex justify-content-center small">
+                <div class="p-2">
 
-                    <div class="p-2">
+                    <div class="d-flex justify-content-center small">
 
-                        <a href="#login" class="text-white" data-bs-toggle="modal">
+                        <div class="p-2">
 
-                            Ingresar
+                            <a href="/perfil" class="text-white">
 
-                        </a>
+                                Hola, <?php echo $_SESSION[ "user"]->name_user ?>
 
-                    </div>
+                            </a>
 
-                    <div class="p-2">
+                        </div>
 
-                        |
+                        <div class="p-2">
 
-                    </div>
+                            |
 
-                    <div class="p-2">
+                        </div>
 
-                        <a href="#register" class="text-white" data-bs-toggle="modal">
+                        <div class="p-2">
 
-                            Crear cuenta
+                            <a href="/salir" class="text-white">
 
-                        </a>
+                                Salir
+
+                            </a>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-            </div>
+            <?php else: ?>
+
+                <div class="p-2">
+
+                    <div class="d-flex justify-content-center small">
+
+                        <div class="p-2">
+
+                            <a href="#login" class="text-white" data-bs-toggle="modal">
+
+                                Ingresar
+
+                            </a>
+
+                        </div>
+
+                        <div class="p-2">
+
+                            |
+
+                        </div>
+
+                        <div class="p-2">
+
+                            <a href="#register" class="text-white" data-bs-toggle="modal">
+
+                                Crear cuenta
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <?php endif ?>
 
         </div>
 

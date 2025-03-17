@@ -132,9 +132,9 @@ Modal crear cuenta
 
                     <?php
 
-                       require_once "controllers/users.controller.php"; 
-                       $register =  new UsersController();
-                       $register -> register();
+                    require_once "controllers/users.controller.php";
+                    $register =  new UsersController();
+                    $register->register();
                     ?>
 
 
@@ -230,7 +230,7 @@ Modal Ingreso al Sistema
                             class="form-control"
                             name="login_email_user"
                             placeholder="Correo Electronico"
-                            onchange="validateDataRepeat(event, 'email')"
+                            onchange="validateJS(event, 'email')"
                             require>
 
                         <div class="valid-feedback">Válido.</div>
@@ -262,6 +262,13 @@ Modal Ingreso al Sistema
 
                     <button class="btn btn-block bg-default templateColor">Ingresar</button>
 
+                    <?php
+
+                    require_once "controllers/users.controller.php";
+                    $login = new UsersController();
+                    $login->login();
+
+                    ?>
 
                 </form>
 

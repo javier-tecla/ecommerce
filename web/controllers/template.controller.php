@@ -280,4 +280,20 @@ class TemplateController
 
             return $password;
         }
+
+        /*=================================================
+        Función para redireccionar al mismo lugar
+        ===============================================*/
+
+        public static function urlRedirect(){
+
+            if (!empty($_SERVER["HTTPS"]) && ("on" == $_SERVER["HTTPS"])) {
+
+                return "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            } else {
+    
+                return "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+            }
+
+        }
 }
