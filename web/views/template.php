@@ -308,8 +308,14 @@ if(isset($_GET["confirm"])){
 
       if($verification->status == 200){
 
+        if(isset($_SESSION["user"])){
+
+          $_SESSION["user"]->verification_user = 1;       
+        
+        }
+
         echo '<script>
-        fncToastr("success", "Felicidades su cuenta ha sido verificada,ya puede ingresar al sistema y utilizar todas las funciones");
+        fncToastr("success", "Felicidades su cuenta ha sido verificada, ya puede ingresar al sistema y utilizar todas las funciones");
         </script>';
       }
     }
@@ -339,6 +345,7 @@ if(isset($_GET["confirm"])){
     =============================================*/
 
     if($routesArray[0] == "admin" ||
+       $routesArray[0] == "perfil" ||
        $routesArray[0] == "salir" ||
        $routesArray[0] == "no-found"){
 

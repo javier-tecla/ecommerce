@@ -159,4 +159,65 @@ class UsersController
             }
         }
     }
+
+    /*============================================
+        Volver a enviar Verificación de usuario
+        =============================================*/
+
+    public function verification()
+    {
+        if (isset($_POST["new_verification"]) && $_POST["new_verification"] == "yes") {
+
+            echo '<script>
+    
+                    fncMatPreloader("on");
+                    fncSweetAlert("loading", "procesando...", "");
+    
+                </script>';
+
+            $confirm_user = TemplateController::genPassword(20);
+
+            $url = "users?id=" . $_SESSION["user"]->id_user . "&nameId=id_user&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
+            $method = "PUT";
+            $fields = "confirm_user=" . $confirm_user;
+
+            $verification = CurlController::request($url, $method, $fields);
+
+            if ($verification->status == 200) {
+
+                /*=============================================
+                        Enviamos correo de confirmación
+                        =============================================*/
+                $subject = 'Verificación - Ecommerce';
+                $email = $_SESSION["user"]->email_user;
+                $title = 'CONFIRMAR CORREO ELECTRÓNICO';
+                $message = '<h4 style="font-weight: 100; color:#999; padding:0px 20px">Dar clic en el siguiente botón para confirmar su correo electrónico y activar su cuenta</h4>';
+                $link = TemplateController::path() . '?confirm=' . $confirm_user;
+
+                $sendEmail = TemplateController::sendEmail($subject, $email, $title, $message, $link);
+
+                if ($sendEmail == "ok") {
+
+                    echo '<script>
+        
+                                        fncFormatInputs();
+                                        fncMatPreloader("off");
+                                        fncToastr("success", "Se ha enviado nuevamente un correo electrónico para activar tu cuenta");
+        
+                                    </script>
+                                ';
+                } else {
+
+                    echo '<script>
+        
+                                    fncFormatInputs();
+                                    fncMatPreloader("off");
+                                    fncNotie("error", "' . $sendEmail . '");
+        
+                                    </script>
+                                ';
+                }
+            }
+        }
+    }
 }
