@@ -113,16 +113,32 @@
 
                         <div class="mb-3 mt-3">
 
-                            <label for="text" class="form-label">País:</label>
+                            <?php
 
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="country"
-                                value="<?php echo $_SESSION["user"]->country_user ?>"
+                            $data = file_get_contents("views/assets/json/countries.json");
+                            $countries = json_decode($data, true);
+
+                            ?>
+
+                            <label for="country" class="form-label">País:</label>
+
+                            <select
                                 name="country_user"
-                                onchange="validateJs(event, 'text')"
-                                required>
+                                id="country"
+                                class="form-control"
+                                onchange="changeCountry(event)"
+                                >
+
+                                <option value="">Seleccionar País</option>
+
+                                <?php foreach ($countries as $key => $value): ?>
+
+                                    <option value="<?php echo $value["name"] ?>_<?php echo $value["dial_code"] ?>"><?php echo $value["name"] ?></option>
+
+                                <?php endforeach ?>
+
+                            </select>
+
 
                             <div class="valid-feedback">Válido.</div>
                             <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
@@ -173,18 +189,24 @@
 
                             <label for="text" class="form-label">Número celular:</label>
 
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="phone"
-                                value="<?php echo $_SESSION["user"]->phone_user ?>"
-                                name="phone_user"
-                                required
-                                onchange="validateJs(event, 'text')"
-                                required>
+                            <div class="input-group">
 
-                            <div class="valid-feedback">Válido.</div>
-                            <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
+                                <span class="input-group-text dialCode">+00</span>
+
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="phone"
+                                    value="<?php echo $_SESSION["user"]->phone_user ?>"
+                                    name="phone_user"
+                                    required
+                                    onchange="validateJs(event, 'text')"
+                                    required>
+
+                                <div class="valid-feedback">Válido.</div>
+                                <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
+
+                            </div>
 
                         </div>
 
@@ -229,3 +251,4 @@
 
 </div>
 
+<script src="<?php echo $path ?>views/assets/js/forms/forms.js"></script>
