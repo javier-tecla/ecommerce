@@ -153,6 +153,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Preload -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/preload/preload.css">
 
+  <!-- Select2 -->
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/select2/select2.min.css">
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/select2/select2-bootstrap4.min.css">
+
   <!-- Theme style -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/adminlte/adminlte.min.css">
 
@@ -279,6 +283,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Preload -->
   <!-- https://codepen.io/tutorialesatualcance/pen/oNqObGL -->
   <script src="<?php echo $path ?>views/assets/js/plugins/preload/preload.js"></script>
+
+  <!-- Select2 -->
+  <!-- https://github.com/select2/select2 -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/select2/select2.full.min.js"></script>
 
 </head>
 

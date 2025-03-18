@@ -125,7 +125,7 @@
                             <select
                                 name="country_user"
                                 id="country"
-                                class="form-control"
+                                class="form-control select2"
                                 onchange="changeCountry(event)"
                                 >
 
