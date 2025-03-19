@@ -201,7 +201,10 @@
                                     name="phone_user"
                                     required
                                     onchange="validateJs(event, 'text')"
-                                    required>
+                                    required
+                                    data-inputmask="'mask': ['999-999-9999']" 
+                                    data-mask
+                                    >
 
                                 <div class="valid-feedback">Válido.</div>
                                 <div class="invalid-feedback">Por favor llena este campo correctamente.</div>

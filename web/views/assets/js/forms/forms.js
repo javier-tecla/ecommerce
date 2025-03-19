@@ -985,10 +985,8 @@ if($('.select2').length > 0){
 Activar Input Mask
 =============================================*/
 
-
 if($('[data-mask]').length > 0){
 
-   $('[data-mask]').inputmask()
+  $('[data-mask]').inputmask()
 }
-
 

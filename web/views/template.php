@@ -288,6 +288,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- https://github.com/select2/select2 -->
   <script src="<?php echo $path ?>views/assets/js/plugins/select2/select2.full.min.js"></script>
 
+  <!-- InputMask -->
+  <!-- https://github.com/RobinHerbots/Inputmask -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/input-mask/moment.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/plugins/input-mask/jquery.inputmask.min.js"></script>
+
 </head>
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
