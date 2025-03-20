@@ -256,7 +256,7 @@ Modal Ingreso al Sistema
                     </div>
 
                     <p class="mb-3 text-center">
-                        <a href="#resetPass" data-bs-toggle="modal">¿Olvisate la Contraseña? Haz clic aquí</a>
+                        <a href="#resetPasswordUser" data-bs-toggle="modal">¿Olvisate la Contraseña? Haz clic aquí</a>
 
                     </p>
 
@@ -279,6 +279,73 @@ Modal Ingreso al Sistema
 
                 <div>¿No tienes una cuenta? <a href="#register" class="ml-1 btn btn-dark btn-sm text-white" data-bs-toggle="modal" style="color:white !important">Crear Cuenta</a></div>
 
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- The Modal -->
+<div class="modal" id="resetPasswordUser">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">Recuperar la contraseña</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+
+                <p class="login-box-msg">¿Olvidaste tu contraseña? Aquí puedes solicitar una nueva.</p>
+
+                <form method="post">
+
+                    <div class="input-group mb-3">
+
+                        <input 
+                        onchange="validateJS(event,'email')" 
+                        type="email" class="form-control" 
+                        placeholder="Email" 
+                        name="resetPassword" 
+                        required>
+                        
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-envelope"></span>
+                            </div>
+                        </div>
+
+                        <div class="valid-feedback">Válido</div>
+                        <div class="invalid-feedback">Campo inválido</div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12">
+
+                            <button type="submit" class="btn btn-default templateColor btn-block py-2">
+                                Recibir nueva contraseña
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <?php  
+                    
+                      require_once "controllers/users.controller.php" ;
+                      $reset = new UsersController();
+                      $reset -> resetPassword();
+                    
+                    ?>
+
+                </form>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Cerrar</button>
             </div>
 
         </div>
