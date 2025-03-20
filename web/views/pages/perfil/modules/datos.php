@@ -1,256 +1,281 @@
 <div class="container py-3">
+	
+	<form method="post" class="needs-validation" novalidate>
+		
+		 <div class="row mb-3">
+		 	
+		 	<div class="col-12 col-lg-6 text-center text-lg-left">
 
-    <form method="post">
+	          	<h4 class="mt-3">Editar Datos</h4>
 
-        <div class="row mb-3">
+	      	</div>  
 
-            <div class="col-12 col-lg-6 text-center text-lg-left">
+	      	<div class="col-12 col-lg-6 mt-2 d-none d-lg-block">
+	      		
+	      		  <button type="submit" class="btn border-0 templateColor float-right py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
 
-                <h4 class="mt-3">Editar Datos</h4>
+	      	</div>
 
-            </div>
+	      	 <div class="col-12 text-center d-flex justify-content-center mt-2 d-block d-lg-none">
+	      	 	
+	      	 	<div> 
+	      	 		<button type="submit" class="btn border-0 templateColor py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
+	      	 	</div>
 
-            <div class="col-12 col-lg-6 mt-2 d-none d-lg-block">
+	      	 </div>
 
-                <button type="submit" class="btn border-0 templateColor float-right py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
+		 </div>
 
-            </div>
+		<?php 
 
-            <div class="col-12 text-center d-flex justify-content-center mt-2 d-block d-lg-none">
+		 require_once "controllers/users.controller.php";
+		 $modify = new UsersController();
+		 $modify->modify();
 
-                <div>
-                    <button type="submit" class="btn border-0 templateColor py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
-                </div>
+		?>
 
-            </div>
-        </div>
 
-        <div class="row row-cols-1 row-cols-md-2">
 
+		 <div class="row row-cols-1 row-cols-md-2"> 
 
-            <div class="col">
+		 	<div class="col">
+		 		
+		 		 <div class="card">
+		 		 	
+		 		 	<div class="card-body">
+		 		 		
+		 		 		<div class="mb-3 mt-3">
+		 		 			
+		 		 			 <label for="text" class="form-label">Nombre:</label>
 
-                <div class="card">
+		 		 			 <input 
+		 		 			 type="text"
+		 		 			 class="form-control" 
+		 		 			 id="text"
+		 		 			 value="<?php echo $_SESSION["user"]->name_user ?>"
+		 		 			 name="name_user"
+		 		 			 onchange="validateJS(event,'text')"
+		 		 			 required
+		 		 			 >
 
-                    <div class="card-body">
+		 		 			 <div class="valid-feedback">Válido.</div>
+              				<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
-                        <div class="mb-3 mt-3">
+		 		 		</div>
 
-                            <label for="text" class="form-label">Nombre:</label>
+		 		 		<div class="mb-3 mt-3">
 
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="text"
-                                value="<?php echo $_SESSION["user"]->name_user ?>"
-                                name="name_user"
-                                onchange="validateJs(event, 'text')"
-                                required>
+		 		 			<label for="email" class="form-label">Email:</label>
 
-                            <div class="valid-feedback">Válido.</div>
-                            <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
+		 		 			<input 
+		 		 			type="email" 
+		 		 			class="form-control" 
+		 		 			id="email" 
+		 		 			value="<?php echo $_SESSION["user"]->email_user ?>" 
+		 		 			readonly>
 
-                        </div>
+		 		 		</div>
 
-                        <div class="mb-3 mt-3">
+		 		 		<?php if ($_SESSION["user"]->method_user == "directo"): ?>    
 
-                            <label for="email" class="form-label">Email:</label>
+		 		 			<div class="mb-3">
 
-                            <input
-                                type="email"
-                                class="form-control"
-                                id="email"
-                                value="<?php echo $_SESSION["user"]->email_user ?>"
-                                readonly>
-                        </div>
+		 		 				<label for="pwd" class="form-label">Password:</label>
 
-                        <?php if ($_SESSION["user"]->method_user == "directo"): ?>
+		 		 				<input 
+		 		 				type="password" 
+		 		 				class="form-control" 
+		 		 				id="pwd"
+		 		 				placeholder="Modificar contraseña"
+		 		 				onchange="validateJS(event,'password')"
+		 		 				name="password_user">
 
-                            <div class="mb-3">
+		 		 				<div class="valid-feedback">Válido.</div>
+		 		 				<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
-                                <label for="pwd" class="form-label">Password</label>
+		 		 			</div>
 
-                                <input
-                                    type="password"
-                                    class="form-control"
-                                    id="pwd"
-                                    placeholder="Modificar contraseña"
-                                    onchange="validateJs(event, 'password')"
-                                    name="password_user">
+		 		 		<?php endif ?>
 
-                                <div class="valid-feedback">Válido.</div>
-                                <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
+		 		 		<div class="mb-3 mt-3">
 
-                            </div>
+			              <label for="mehtod" class="form-label">Método de registro:</label>
+			              
+			              <input 
+			              type="text" 
+			              class="form-control" 
+			              id="mehtod" 
+			              value="<?php echo $_SESSION["user"]->method_user ?>" 
+			              readonly>
 
+			            </div>
 
-                        <?php endif ?>
+		 		 	</div>
 
-                        <div class="mb-3 mt-3">
 
-                            <label for="text" class="form-label">Método de registro:</label>
+		 		 </div>
 
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="mehtod"
-                                value="<?php echo $_SESSION["user"]->method_user ?>"
-                                readonly>
+		 	</div>
 
-                        </div>
+		 	<div class="col">
+		 		
+		 		 <div class="card">
+		 		 	
+		 		 	<div class="card-body">
+		 		 		
+		 		 		<div class="mb-3 mt-3">
 
-                    </div>
+		 		 			<?php 
 
-                </div>
+		 		 			$data = file_get_contents("views/assets/json/countries.json");
+		 		 			$countries = json_decode($data, true);
+		 		 			
 
-            </div>
+		 		 			?>
+		 		 			
+		 		 			 <label for="country" class="form-label">País:</label>
 
-            <div class="col">
+		 		 			 <select 
+		 		 			 id="country"
+		 		 			 class="form-control select2"
+		 		 			 name="country_user"
+		 		 			  onchange="changeCountry(event)">
 
-                <div class="card">
+		 		 			  <?php if ($_SESSION["user"]->country_user != null): ?>
 
-                    <div class="card-body">
+		 		 			  	<option value="<?php echo $_SESSION["user"]->country_user ?>_<?php echo explode("_", $_SESSION["user"]->phone_user)[0] ?>"><?php echo $_SESSION["user"]->country_user ?></option>
+		 		 			  
+		 		 			  <?php else: ?>
 
-                        <div class="mb-3 mt-3">
+	 		 			  		<option value="">Seleccionar País</option>
 
-                            <?php
+		 		 			 	<?php foreach ($countries as $key => $value): ?>
 
-                            $data = file_get_contents("views/assets/json/countries.json");
-                            $countries = json_decode($data, true);
+		 		 			 		<option value="<?php echo $value["name"] ?>_<?php echo $value["dial_code"] ?>"><?php echo $value["name"] ?></option>
+		 		 			 		
+		 		 			 	<?php endforeach ?>
+		 		 			  	
+		 		 			  <?php endif ?>
 
-                            ?>
+		 		 			 </select>
 
-                            <label for="country" class="form-label">País:</label>
+		 		 			<div class="valid-feedback">Válido.</div>
+              				<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
-                            <select
-                                name="country_user"
-                                id="country"
-                                class="form-control select2"
-                                onchange="changeCountry(event)"
-                                >
+		 		 		</div>
 
-                                <option value="">Seleccionar País</option>
+		 		 		<div class="mb-3 mt-3">
+		 		 			
+		 		 			 <label for="department" class="form-label">Estado:</label>
 
-                                <?php foreach ($countries as $key => $value): ?>
+		 		 			 <input 
+		 		 			 type="text"
+		 		 			 class="form-control" 
+		 		 			 id="department"
+		 		 			 value="<?php echo $_SESSION["user"]->department_user ?>"
+		 		 			 name="department_user"
+		 		 			 onchange="validateJS(event,'text')"
+		 		 			 required
+		 		 			 >
 
-                                    <option value="<?php echo $value["name"] ?>_<?php echo $value["dial_code"] ?>"><?php echo $value["name"] ?></option>
+		 		 			 <div class="valid-feedback">Válido.</div>
+              				<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
-                                <?php endforeach ?>
+		 		 		</div>
 
-                            </select>
+		 		 		<div class="mb-3 mt-3">
+		 		 			
+		 		 			 <label for="city" class="form-label">Ciudad:</label>
 
+		 		 			 <input 
+		 		 			 type="text"
+		 		 			 class="form-control" 
+		 		 			 id="city"
+		 		 			 value="<?php echo $_SESSION["user"]->city_user ?>"
+		 		 			 name="city_user"
+		 		 			 onchange="validateJS(event,'text')"
+		 		 			 required
+		 		 			 >
 
-                            <div class="valid-feedback">Válido.</div>
-                            <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
+		 		 			 <div class="valid-feedback">Válido.</div>
+              				<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
-                        </div>
+		 		 		</div>
 
-                        <div class="mb-3 mt-3">
+		 		 		<div class="mb-3 mt-3">
+		 		 			
+		 		 			 <label for="phone" class="form-label">Número celular:</label>
 
-                            <label for="department" class="form-label">Estado:</label>
+		 		 			 <div class="input-group">
 
-                            <input
-                                type="text"
-                                class="form-control"
-                                id="department"
-                                value="<?php echo $_SESSION["user"]->department_user ?>"
-                                name="department_user"
-                                onchange="validateJS(event, 'text')"
-                                required>
+		 		 			 	<?php if ($_SESSION["user"]->phone_user != null): ?>
 
-                            <div class="valid-feedback">Válido.</div>
-                            <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
-                        </div>
+		 		 			 		<span class="input-group-text dialCode">+<?php echo explode("_", $_SESSION["user"]->phone_user)[0] ?></span>
 
-                        <?php if ($_SESSION["user"]->method_user == "directo"): ?>
+		 		 			 	<?php else: ?>
 
-                            <div class="mb-3 mt-3">
+		 		 			 		<span class="input-group-text dialCode">+00</span>
+		 		 			 		
+		 		 			 	<?php endif ?>
 
-                                <label for="city" class="form-label">Ciudad:</label>
+			 		 			<input 
+			 		 			 type="text"
+			 		 			 class="form-control" 
+			 		 			 id="phone"
+			 		 			 value="<?php if($_SESSION["user"]->phone_user != null){ echo explode("_", $_SESSION["user"]->phone_user)[1]; }?>"
+			 		 			 name="phone_user"
+			 		 			 required
+			 		 			 data-inputmask="'mask': ['999-999-9999']"
+			 		 			 data-mask
+			 		 			 >
 
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="city"
-                                    value="<?php echo $_SESSION["user"]->city_user ?>"
-                                    name="city_user"
-                                    onchange="validateJS(event, 'text')"
-                                    required>
+			 		 			<div class="valid-feedback">Válido.</div>
+	              				<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
 
-                                <div class="valid-feedback">Válido.</div>
-                                <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
+              				</div>
 
-                            </div>
+		 		 		</div>
+ 	
 
+		 		 	</div>
 
-                        <?php endif ?>
 
-                        <div class="mb-3 mt-3">
+		 		 </div>
 
-                            <label for="text" class="form-label">Número celular:</label>
+		 	</div>
 
-                            <div class="input-group">
+		 </div>
 
-                                <span class="input-group-text dialCode">+00</span>
+		 <div class="row">
 
-                                <input
-                                    type="text"
-                                    class="form-control"
-                                    id="phone"
-                                    value="<?php echo $_SESSION["user"]->phone_user ?>"
-                                    name="phone_user"
-                                    required
-                                    onchange="validateJs(event, 'text')"
-                                    required
-                                    data-inputmask="'mask': ['999-999-9999']" 
-                                    data-mask
-                                    >
+		 	<div class="col">
 
-                                <div class="valid-feedback">Válido.</div>
-                                <div class="invalid-feedback">Por favor llena este campo correctamente.</div>
+		 		<div class="card">
 
-                            </div>
+		 			<div class="card-body">
 
-                        </div>
+		 				<div class="mb-3 mt-3">
 
-                    </div>
+		 					<label for="address" class="form-label">Dirección:</label>
 
-                </div>
+		 					<textarea 
+		 					class="form-control p-2"
+		 					id="address"
+		 					rows="5" 
+		 					onchange="validateJS(event,'complete')"
+		 					name="address_user"><?php echo $_SESSION["user"]->address_user ?></textarea>
 
-            </div>
-        </div>
+		 				</div>
 
-        <div class="row">
+		 			</div>
 
-            <div class="col">
+		 		</div>
 
-                <div class="card">
+		 	</div>
 
-                    <div class="card-body">
+		 </div>
 
-                        <div class="mb-3 mt-3">
-
-                            <label for="address" class="form-label">Dirección:</label>
-
-                            <textarea
-                                class="form-control p-2"
-                                id="address"
-                                rows="5"
-                                onchange="validateJS(event,'complete')"
-                                name="address_user"><?php echo $_SESSION["user"]->address_user ?></textarea>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-
-    </form>
+	</form>
 
 </div>
 

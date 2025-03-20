@@ -284,3 +284,5 @@ Modal Ingreso al Sistema
         </div>
     </div>
 </div>
+
+<script src="<?php echo $path ?>views/assets/js/forms/forms.js"></script>
