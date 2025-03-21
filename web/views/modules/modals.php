@@ -26,7 +26,7 @@ Modal crear cuenta
                  Registro Facebook
                 =================================================-->
 
-                    <div class="col-sm-6 col-xs-12 text-center p-0 rounded-0">
+                    <!-- <div class="col-sm-6 col-xs-12 text-center p-0 rounded-0">
 
                         <a href="#">
 
@@ -37,13 +37,13 @@ Modal crear cuenta
 
                         </a>
 
-                    </div>
+                    </div> -->
 
                     <!--=================================================
                 Registro con Google
                 =================================================-->
 
-                    <div class="col-sm-6 col-xs-12 text-center p-0 rounded-0">
+                    <!-- <div class="col-sm-6 col-xs-12 text-center p-0 rounded-0">
 
                         <a href="#">
 
@@ -54,7 +54,7 @@ Modal crear cuenta
 
                         </a>
 
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -181,7 +181,7 @@ Modal Ingreso al Sistema
                  Ingreso Facebook
                 =================================================-->
 
-                    <div class="col-sm-6 col-xs-12 text-center p-0 rounded-0">
+                    <!-- <div class="col-sm-6 col-xs-12 text-center p-0 rounded-0">
 
                         <a href="#">
 
@@ -192,13 +192,13 @@ Modal Ingreso al Sistema
 
                         </a>
 
-                    </div>
+                    </div> -->
 
                     <!--=================================================
                 Ingreso con Google
                 =================================================-->
 
-                    <div class="col-sm-6 col-xs-12 text-center p-0 rounded-0">
+                    <!-- <div class="col-sm-6 col-xs-12 text-center p-0 rounded-0">
 
                         <a href="#">
 
@@ -209,7 +209,7 @@ Modal Ingreso al Sistema
 
                         </a>
 
-                    </div>
+                    </div> -->
 
                 </div>
 
