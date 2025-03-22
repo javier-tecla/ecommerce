@@ -8,53 +8,77 @@ ob_start();
 session_start();
 
 /*=============================================
+Validar si el token está expirado
+=============================================*/
+
+if (isset($_SESSION["user"])) {
+
+  $url = "users?id=" . $_SESSION["user"]->id_user . "&nameId=id_user&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
+  $method = "PUT";
+  $fields = "date_updated_user=" . date("Y-m-d G:i:s");
+
+  $update = CurlController::request($url, $method, $fields);
+
+  if ($update->status == 303) {
+
+    session_destroy();
+
+    echo '<script>
+
+      window.location = "/";
+
+      </script>';
+
+      return;
+  }
+}
+
+/*=============================================
 Variable Path
-=============================================*/ 
+=============================================*/
 
 $path = TemplateController::path();
 
 /*=============================================
 Capturar las rutas de la URL
-=============================================*/ 
+=============================================*/
 
-$routesArray = explode("/",$_SERVER["REQUEST_URI"]);
+$routesArray = explode("/", $_SERVER["REQUEST_URI"]);
 array_shift($routesArray);
 
-foreach ($routesArray as $key => $value) { 
-  $routesArray[$key] = explode("?",$value)[0];
+foreach ($routesArray as $key => $value) {
+  $routesArray[$key] = explode("?", $value)[0];
 }
 
 
 /*=============================================
 Solicitud GET de Template
-=============================================*/ 
+=============================================*/
 
 $url = "templates?linkTo=active_template&equalTo=ok";
 $method = "GET";
 $fields = array();
 
-$template = CurlController::request($url,$method,$fields);
+$template = CurlController::request($url, $method, $fields);
 
-if($template->status == 200){
+if ($template->status == 200) {
 
   $template = $template->results[0];
-  
-}else{
+} else {
 
   echo '<!DOCTYPE html>
         <html lang="en">
         <head>
-        <link rel="stylesheet" href="'.$path.'views/assets/css/plugins/adminlte/adminlte.min.css">
+        <link rel="stylesheet" href="' . $path . 'views/assets/css/plugins/adminlte/adminlte.min.css">
         </head>
         <body class="hold-transition sidebar-collapse layout-top-nav">
         <div class="wrapper">';
-        include "pages/500/500.php";
+  include "pages/500/500.php";
   echo '</div>
         </body>
         </html>';
 
   return;
-
 }
 
 
@@ -65,9 +89,8 @@ Datos en Arreglo
 $keywords = null;
 
 foreach (json_decode($template->keywords_template, true) as $key => $value) {
- 
-  $keywords .= $value.", ";
-  
+
+  $keywords .= $value . ", ";
 }
 
 $keywords = substr($keywords, 0, -2);
@@ -95,8 +118,9 @@ This is a starter template page. Use this page to start your new project from
 scratch. This page gets rid of all links and provides the needed markup only.
 -->
 <html lang="en">
+
 <head>
-  
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><?php echo $template->title_template ?></title>
@@ -129,7 +153,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- Material Preloader -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/material-preloader/material-preloader.css">
 
-   <!-- Tags Input -->
+  <!-- Tags Input -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/tags-input/tags-input.css">
 
   <!-- DataTables -->
@@ -138,13 +162,13 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
   <!-- Summernote -->
-  <link  rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/summernote/summernote-bs4.min.css">
-  <link  rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/summernote/emoji.css">
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/summernote/summernote-bs4.min.css">
+  <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/summernote/emoji.css">
 
   <!-- Codemirror -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/codemirror/codemirror.min.css">
 
-   <!-- Dropzone -->
+  <!-- Dropzone -->
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/plugins/dropzone/dropzone.css">
 
   <!-- FlexSlider -->
@@ -165,26 +189,27 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <link rel="stylesheet" href="<?php echo $path ?>views/assets/css/products/products.css">
 
   <style>
-    
-    body{
+    body {
       font-family: '<?php echo $fontBody ?>', sans-serif;
     }
 
-    .slideOpt h1, .slideOpt h2, .slideOpt h3{   
+    .slideOpt h1,
+    .slideOpt h2,
+    .slideOpt h3 {
       font-family: '<?php echo $fontSlide ?>', sans-serif;
     }
 
-    .topColor{
-      background: <?php echo $topColor->background ?>; 
+    .topColor {
+      background: <?php echo $topColor->background ?>;
       color: <?php echo $topColor->color ?>;
     }
 
-    .templateColor, .templateColor:hover, a.templateColor{
-      background: <?php echo $templateColor->background ?> !important; 
-      color:<?php echo $templateColor->color ?> !important;
+    .templateColor,
+    .templateColor:hover,
+    a.templateColor {
+      background: <?php echo $templateColor->background ?> !important;
+      color: <?php echo $templateColor->color ?> !important;
     }
-
-
   </style>
 
   <!-- JS -->
@@ -192,20 +217,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- jQuery -->
   <script src="<?php echo $path ?>views/assets/js/plugins/jquery/jquery.min.js"></script>
 
-  <?php if (!empty($routesArray[0]) && $routesArray[0] == "admin" &&
-            !empty($routesArray[1]) && $routesArray[1] == "productos" &&
-            !empty($routesArray[2]) && $routesArray[2] == "gestion"): ?>
+  <?php if (
+    !empty($routesArray[0]) && $routesArray[0] == "admin" &&
+    !empty($routesArray[1]) && $routesArray[1] == "productos" &&
+    !empty($routesArray[2]) && $routesArray[2] == "gestion"
+  ): ?>
 
-      <!-- Bootstrap 4 -->
-      <script src="<?php echo $path ?>views/assets/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script> 
+    <!-- Bootstrap 4 -->
+    <script src="<?php echo $path ?>views/assets/js/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <?php else: ?>  
+  <?php else: ?>
 
     <!-- Bootstrap 5 -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>   
-    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+
   <?php endif ?>
-  
+
   <!-- JDSlider 
   https://www.jqueryscript.net/slider/Carousel-Slideshow-jdSlider.html -->
   <script src="<?php echo $path ?>views/assets/js/plugins/jdSlider/jdSlider.js"></script>
@@ -230,7 +257,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- https://www.jqueryscript.net/demo/Google-Inbox-Style-Linear-Preloader-Plugin-with-jQuery-CSS3/ -->
   <script src="<?php echo $path ?>views/assets/js/plugins/material-preloader/material-preloader.js"></script>
 
-   <!-- Tags-Input -->
+  <!-- Tags-Input -->
   <!-- https://bootstrap-tagsinput.github.io/bootstrap-tagsinput/examples/ -->
   <script src="<?php echo $path ?>views/assets/js/plugins/tags-input/tags-input.js"></script>
 
@@ -279,7 +306,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <!-- sticky -->
   <!-- https://rgalus.github.io/sticky-js/ -->
   <script src="<?php echo $path ?>views/assets/js/plugins/sticky/sticky.min.js"></script>
-  
+
   <!-- Preload -->
   <!-- https://codepen.io/tutorialesatualcance/pen/oNqObGL -->
   <script src="<?php echo $path ?>views/assets/js/plugins/preload/preload.js"></script>
@@ -297,34 +324,33 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
 <body class="hold-transition sidebar-collapse layout-top-nav">
 
-<?php
+  <?php
 
-/*===========================================
+  /*===========================================
 Verificación de usuarios
 =============================================*/
 
-if(isset($_GET["confirm"])){
+  if (isset($_GET["confirm"])) {
 
-    $url = "users?linkTo=confirm_user&equalTo=".$_GET["confirm"];
+    $url = "users?linkTo=confirm_user&equalTo=" . $_GET["confirm"];
     $method = "GET";
     $fields = array();
 
-    $confirm = CurlController::request($url,$method,$fields);
+    $confirm = CurlController::request($url, $method, $fields);
 
-    if($confirm->status == 200){
+    if ($confirm->status == 200) {
 
-      $url = "users?id=".$confirm->results[0]->id_user."&nameId=id_user&token=no&except=verification_user";
+      $url = "users?id=" . $confirm->results[0]->id_user . "&nameId=id_user&token=no&except=verification_user";
       $method = "PUT";
       $fields = "verification_user=1";
 
-      $verification = CurlController::request($url,$method,$fields);
+      $verification = CurlController::request($url, $method, $fields);
 
-      if($verification->status == 200){
+      if ($verification->status == 200) {
 
-        if(isset($_SESSION["user"])){
+        if (isset($_SESSION["user"])) {
 
-          $_SESSION["user"]->verification_user = 1;       
-        
+          $_SESSION["user"]->verification_user = 1;
         }
 
         echo '<script>
@@ -332,153 +358,147 @@ if(isset($_GET["confirm"])){
         </script>';
       }
     }
-}
-
-
-?>
-
-  <input type="hidden" id="urlPath" value="<?php echo $path ?>">
-<div class="wrapper">
-
-	<?php 
-
-  include "modules/top.php"; 
-  include "modules/navbar.php"; 
-
-  if (isset($_SESSION["admin"])){
-    include "modules/sidebar.php"; 
   }
 
-  
-
-  if(!empty($routesArray[0])) {
-
-    /*=============================================
-    Filtro de lista blanca
-    =============================================*/
-
-    if($routesArray[0] == "admin" ||
-       $routesArray[0] == "perfil" ||
-       $routesArray[0] == "salir" ||
-       $routesArray[0] == "no-found"){
-
-      include "pages/".$routesArray[0]."/".$routesArray[0].".php";
-
-    }else{
-
-      /*=============================================
-      Buscar coincidencia url - producto
-      =============================================*/
-
-      $url = "products?linkTo=url_product&equalTo=".$routesArray[0]."&select=url_product";
-      $product = CurlController::request($url,$method,$fields);
-      
-      if($product->status == 200){
-
-        include "pages/product/product.php";
-
-      }else{
-
-        /*=============================================
-        Buscar coincidencia url - categoría
-        =============================================*/
-
-        $url = "categories?linkTo=url_category&equalTo=".$routesArray[0]."&select=url_category";
-        $category = CurlController::request($url,$method,$fields);
-        
-        if($category->status == 200){
-
-          include "pages/products/products.php";
-
-        }else{
-
-          /*=============================================
-          Buscar coincidencia url - subcategoría
-          =============================================*/
-
-          $url = "subcategories?linkTo=url_subcategory&equalTo=".$routesArray[0]."&select=url_subcategory";
-          $subcategory = CurlController::request($url,$method,$fields);
-          
-          if($subcategory->status == 200){
-
-            include "pages/products/products.php";
-
-          }else{
-
-            /*=============================================
-            Filtro de productos gratuitos y demás
-            =============================================*/
-          
-            if($routesArray[0] == "free" ||
-               $routesArray[0] == "most-seen" ||
-               $routesArray[0] == "most-sold"){
-
-                include "pages/products/products.php";
-
-            }else{
-
-              /*=============================================
-              Filtro de búsqueda
-              =============================================*/
-              
-              $linkTo = ["name_product","keywords_product","name_category","keywords_category","name_subcategory","keywords_subcategory"];
-              $totalSearch = 0;
-
-              foreach ($linkTo as $key => $value) {
-
-                $totalSearch++;
-                
-                $url = "relations?rel=products,subcategories,categories&type=product,subcategory,category&linkTo=".$value."&search=".$routesArray[0]."&select=id_product";
-                $search = CurlController::request($url,$method,$fields);
-
-                if($search->status == 200){
-   
-                  include "pages/products/products.php";
-                 
-                  break;
-
-                }//Finaliza Filtro de búsqueda
-
-              }
-
-              if($totalSearch == count($linkTo)){
-
-                include "pages/404/404.php";
-
-              }
-                
-            }//Finaliza Filtro de productos gratuitos y demás
-
-          }//Finaliza Filtro de url subcategorías
-
-        }//Finaliza Filtro de url categorías
-
-      }//Finaliza Filtro de url productos
-
-    }//Finaliza Filtro de lista blanca
-
-  }else{
-
-    include "pages/home/home.php";
-  
-  }
-
-  include "modules/footer.php"; 
-  include "modules/modals.php"; 
 
   ?>
 
-</div>
-<!-- ./wrapper -->
+  <input type="hidden" id="urlPath" value="<?php echo $path ?>">
+  <div class="wrapper">
 
-<!-- REQUIRED SCRIPTS -->
+    <?php
 
-<!-- AdminLTE App -->
-<script src="<?php echo $path ?>views/assets/js/plugins/adminlte/adminlte.min.js"></script>
-<script src="<?php echo $path ?>views/assets/js/products/products.js"></script>
+    include "modules/top.php";
+    include "modules/navbar.php";
+
+    if (isset($_SESSION["admin"])) {
+      include "modules/sidebar.php";
+    }
+
+
+
+    if (!empty($routesArray[0])) {
+
+      /*=============================================
+    Filtro de lista blanca
+    =============================================*/
+
+      if (
+        $routesArray[0] == "admin" ||
+        $routesArray[0] == "perfil" ||
+        $routesArray[0] == "salir" ||
+        $routesArray[0] == "no-found"
+      ) {
+
+        include "pages/" . $routesArray[0] . "/" . $routesArray[0] . ".php";
+      } else {
+
+        /*=============================================
+      Buscar coincidencia url - producto
+      =============================================*/
+
+        $url = "products?linkTo=url_product&equalTo=" . $routesArray[0] . "&select=url_product";
+        $product = CurlController::request($url, $method, $fields);
+
+        if ($product->status == 200) {
+
+          include "pages/product/product.php";
+        } else {
+
+          /*=============================================
+        Buscar coincidencia url - categoría
+        =============================================*/
+
+          $url = "categories?linkTo=url_category&equalTo=" . $routesArray[0] . "&select=url_category";
+          $category = CurlController::request($url, $method, $fields);
+
+          if ($category->status == 200) {
+
+            include "pages/products/products.php";
+          } else {
+
+            /*=============================================
+          Buscar coincidencia url - subcategoría
+          =============================================*/
+
+            $url = "subcategories?linkTo=url_subcategory&equalTo=" . $routesArray[0] . "&select=url_subcategory";
+            $subcategory = CurlController::request($url, $method, $fields);
+
+            if ($subcategory->status == 200) {
+
+              include "pages/products/products.php";
+            } else {
+
+              /*=============================================
+            Filtro de productos gratuitos y demás
+            =============================================*/
+
+              if (
+                $routesArray[0] == "free" ||
+                $routesArray[0] == "most-seen" ||
+                $routesArray[0] == "most-sold"
+              ) {
+
+                include "pages/products/products.php";
+              } else {
+
+                /*=============================================
+              Filtro de búsqueda
+              =============================================*/
+
+                $linkTo = ["name_product", "keywords_product", "name_category", "keywords_category", "name_subcategory", "keywords_subcategory"];
+                $totalSearch = 0;
+
+                foreach ($linkTo as $key => $value) {
+
+                  $totalSearch++;
+
+                  $url = "relations?rel=products,subcategories,categories&type=product,subcategory,category&linkTo=" . $value . "&search=" . $routesArray[0] . "&select=id_product";
+                  $search = CurlController::request($url, $method, $fields);
+
+                  if ($search->status == 200) {
+
+                    include "pages/products/products.php";
+
+                    break;
+                  } //Finaliza Filtro de búsqueda
+
+                }
+
+                if ($totalSearch == count($linkTo)) {
+
+                  include "pages/404/404.php";
+                }
+              } //Finaliza Filtro de productos gratuitos y demás
+
+            } //Finaliza Filtro de url subcategorías
+
+          } //Finaliza Filtro de url categorías
+
+        } //Finaliza Filtro de url productos
+
+      } //Finaliza Filtro de lista blanca
+
+    } else {
+
+      include "pages/home/home.php";
+    }
+
+    include "modules/footer.php";
+    include "modules/modals.php";
+
+    ?>
+
+  </div>
+  <!-- ./wrapper -->
+
+  <!-- REQUIRED SCRIPTS -->
+
+  <!-- AdminLTE App -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/adminlte/adminlte.min.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/products/products.js"></script>
 
 
 </body>
+
 </html>
-
-
