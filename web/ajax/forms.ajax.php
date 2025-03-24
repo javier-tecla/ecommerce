@@ -54,19 +54,18 @@ class FormsController
     public $idProduct;
     public $token;
 
-    public function addFavorites()
-    {
+    public function addFavorites(){
 
         $select = "id_user";
-        $url =  "users?linkTo=token_user&equalTo=" . $this->token . "&select=" . $select;
+        $url = "users?linkTo=token_user&equalTo=".$this->token."&select=".$select; 
         $method = "GET";
         $fields = array();
 
-        $data = CurlController::request($url, $method, $fields);
+        $data = CurlController::request($url, $method, $fields); 
+        
+        if($data->status == 200){
 
-        if ($data->status == 200) {
-
-            $url = "favorites?token=" . $this->token . "&table=users&suffix=user";
+            $url = "favorites?token=".$this->token."&table=users&suffix=user";
             $method = "POST";
             $fields = array(
                 "id_user_favorite" => $data->results[0]->id_user,
@@ -74,13 +73,34 @@ class FormsController
                 "date_created_favorite" => date("Y-m-d")
             );
 
-            $addFavorite = CurlController::request($url, $method, $fields);
-
-            if ($addFavorite->status == 200) {
+            $addFavorite = CurlController::request($url, $method, $fields); 
+            
+            if($addFavorite->status == 200){
                 echo json_encode($addFavorite->results);
-            }
+            }   
+
         }
+
     }
+
+     /*=======================================
+    Remover favoritos en base de datos
+    ========================================*/
+
+    public $idFavorite;
+
+    public function remFavorite(){
+
+        $url = "favorites?id=".$this->idFavorite."&nameId=id_favorite&token=".$this->token."&table=users&suffix=user";
+        $method = "DELETE";
+        $fields = array();
+
+        $remFavorite = CurlController::request($url, $method, $fields);
+
+        echo $remFavorite->status;
+    }
+
+
 }
 
 if (isset($_POST["table"])) {
@@ -106,3 +126,12 @@ if (isset($_POST["idProduct"])) {
     $addFavorites->idProduct = $_POST["idProduct"];
     $addFavorites->addFavorites();
 }
+
+if(isset($_POST["idFavorite"])){
+
+    $remFavorites = new FormsController();
+    $remFavorites -> token = $_POST["token"];
+    $remFavorites -> idFavorite = $_POST["idFavorite"];
+    $remFavorites -> remFavorite();
+}
+

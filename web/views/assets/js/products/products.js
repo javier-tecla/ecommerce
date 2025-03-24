@@ -131,18 +131,58 @@ $(".inputSearch").keyup(function (event) {
 Adicionar a favoritos
 ==============================================*/
 
-$(document).on("click",".addFavorite", function(){
+$(document).on("click",".addFavorite",function(){
 
-    let idProduct = $(this).attr("idProduct");
+	var idProduct = $(this).attr("idProduct");
+	var elem = $(this);
+	$(elem).children("i").css({"color":"#dc3545"})
+	
+	var data = new FormData();
+	data.append("token", localStorage.getItem("token-user"));
+	data.append("idProduct", idProduct);
+
+	$.ajax({
+
+		url:"/ajax/forms.ajax.php",
+		method: "POST",
+        data: data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (response){ 
+        	
+        	if(JSON.parse(response).comment == "The process was successful"){
+
+        		$(elem).attr("idFavorite",JSON.parse(response).lastId);
+        		$(elem).removeClass("addFavorite");
+        		$(elem).addClass("remFavorite");
+
+        		fncToastr("success","El producto ha sido agregado a su lista de favoritos");
+        	}
+
+        }
+
+	})
+
+})
+
+/*============================================
+Quitar de favoritos
+==============================================*/
+
+$(document).on("click", ".remFavorite", function () {
+
+    let idFavorite = $(this).attr("idFavorite");
     let elem = $(this);
-    
+    $(elem).children("i").css({ "color": "#000" })
+
     let data = new FormData();
     data.append("token", localStorage.getItem("token-user"));
-    data.append("idProduct", idProduct);
+    data.append("idFavorite", idFavorite);
 
     $.ajax({
 
-        url:"/ajax/forms.ajax.php",
+        url: "/ajax/forms.ajax.php",
         method: "POST",
         data: data,
         contentType: false,
@@ -150,13 +190,15 @@ $(document).on("click",".addFavorite", function(){
         processData: false,
         success: function (response) {
 
-            if(JSON.parse(response).comment == "The process was successful"){
+            if(response == 200){
 
-                $(elem).attr("idFavorite",JSON.parse(response).lastId);
-                $(elem).removeClass("addFavorite");
-                $(elem).children("i").css({"color":"#dc3545"})
-                fncToastr("success", "El prodcuto ha sido agregado a su lista de favoritos");
-            };
+                $(elem).addClass("addFavorite");
+                $(elem).removeClass("remFavorite");
+                
+
+                fncToastr("success","El producto ha sido removido de su lista de favoritos");
+            }
+
         }
     })
 })
