@@ -413,9 +413,20 @@ if (!empty($products) && !isset($products[0]->check_variant)) {
 
                             <div class="btn-group btn-group-sm">
 
-                                <button type="button" class="btn btn-light border">
+                            <!--=====================================
+                             Favoritos
+                            =========================================-->
+
+                                <button 
+                                    type="button" 
+                                    class="btn btn-light border 
+                                    <?php if (isset($_SESSION["user"])): ?> addFavorite <?php endif ?>"
+                                    <?php if (!isset($_SESSION["user"])): ?> data-bs-toggle="modal" data-bs-target="#login" <?php endif ?>
+                                    idProduct="<?php echo $value->id_product ?>"
+                                >
                                     <i class="fas fa-heart"></i>
                                 </button>
+
 
                                 <button type="button" class="btn btn-light border" onclick="location.href='/<?php echo $value->url_product ?>'">
                                     <i class="fas fa-eye"></i>

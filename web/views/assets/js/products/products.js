@@ -126,3 +126,37 @@ $(".inputSearch").keyup(function (event) {
         window.location = "/" + value;
     }
 })
+
+/*============================================
+Adicionar a favoritos
+==============================================*/
+
+$(document).on("click",".addFavorite", function(){
+
+    let idProduct = $(this).attr("idProduct");
+    let elem = $(this);
+    
+    let data = new FormData();
+    data.append("token", localStorage.getItem("token-user"));
+    data.append("idProduct", idProduct);
+
+    $.ajax({
+
+        url:"/ajax/forms.ajax.php",
+        method: "POST",
+        data: data,
+        contentType: false,
+        cache: false,
+        processData: false,
+        success: function (response) {
+
+            if(JSON.parse(response).comment == "The process was successful"){
+
+                $(elem).attr("idFavorite",JSON.parse(response).lastId);
+                $(elem).removeClass("addFavorite");
+                $(elem).children("i").css({"color":"#dc3545"})
+                fncToastr("success", "El prodcuto ha sido agregado a su lista de favoritos");
+            };
+        }
+    })
+})
