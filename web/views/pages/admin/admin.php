@@ -2,35 +2,6 @@
 
 <?php
 
-/*=============================================
-Validar si el token está expirado
-=============================================*/
-
-if (isset($_SESSION["user"])) {
-
-    date_default_timezone_set("America/Argentina/Buenos_Aires");
-  
-    $url = "users?id=" . $_SESSION["user"]->id_user . "&nameId=id_user&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
-    $method = "PUT";
-    $fields = "date_updated_user=" . date("Y-m-d G:i:s");
-  
-    $update = CurlController::request($url, $method, $fields);
-  
-    if ($update->status == 303) {
-  
-      session_destroy();
-  
-      echo '<script>
-  
-        window.location = "/";
-  
-        </script>';
-  
-        return;
-    }
-  }
-  
-
 if (!isset($_SESSION["admin"])) {
 
     include "login/login.php";

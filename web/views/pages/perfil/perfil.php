@@ -1,37 +1,68 @@
-<?php if ($_SESSION["user"]->verification_user == 0): ?>
+<?php
 
-<div class="container my-5">
+if (!isset($_SESSION["user"])) {
 
-   <div class="jumbotron bg-white shadow-lg text-center">
+    echo '<script>
+        window.location = "' . $path . '404";
+    </script>';
+}
 
-    <h3>¡Tu cuenta aún no está verificada!</h3>
-    <p class="lead">Revisa tu correo electrónico en bandeja de entrada o carpeta SPAM (no deseados) para verificar tu cuenta</p>
+?>
 
-    <hr class="my-4">
+<!--=====================================
+Breadcrumb
+======================================-->
 
-    <p>Si aún no has recibido el correo electrónico de verificación haz clic en el siguiente botón</p>
+<div class="container-fluid bg-light border mb-2">
 
-    <form method="post">
+    <div class="container py-3">
 
-        <input type="hidden" value="yes" name="new_verification">
+        <div class="d-flex flex-row-reverse lead small">
 
-        <button type="submit" class="btn btn-dafault templateColor border-0">Enviar nuevamente el correo</button>
+            <div class="px-1 font-weight-bold">Perfil</div>
+            <div class="px-1">/</div>
+            <div class="px-1"><a href="/">Inicio</a></div>
 
-        <?php
+        </div>
 
-            require_once "controllers/users.controller.php";
-            $verification = new UsersController();
-            $verification -> verification();
-
-        ?>
-
-    </form>
-
-   </div>
-
-    <h1>Soy el prefil</h1>
+    </div>
 
 </div>
+
+<?php if ($_SESSION["user"]->verification_user == 0): ?>
+
+    <div class="container my-5">
+
+        <div class="jumbotron bg-white shadow-lg text-center">
+
+            <h3>¡Tu cuenta aún no está verificada!</h3>
+            <p class="lead">Revisa tu correo electrónico en bandeja de entrada o carpeta SPAM (no deseados) para verificar tu cuenta</p>
+
+            <hr class="my-4">
+
+            <p>Si aún no has recibido el correo electrónico de verificación haz clic en el siguiente botón</p>
+
+            <form method="post">
+
+                <input type="hidden" value="yes" name="new_verification">
+
+                <button type="submit" class="btn btn-dafault templateColor border-0">Enviar nuevamente el correo</button>
+
+                <?php
+
+                require_once "controllers/users.controller.php";
+                $verification = new UsersController();
+                $verification->verification();
+
+                ?>
+
+            </form>
+
+        </div>
+
+        <h1>Soy el prefil</h1>
+
+    </div>
 
 <?php else: ?>
 
