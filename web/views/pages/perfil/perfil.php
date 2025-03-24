@@ -87,7 +87,7 @@ Breadcrumb
             </div>
 
             <div class="tab-pane container fade" id="favorite">
-                Acá van los productos favoritos
+            <?php include "modules/favoritos.php" ?>
             </div>
 
             <div class="tab-pane container fade" id="shopping">
