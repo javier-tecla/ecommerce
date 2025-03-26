@@ -89,7 +89,7 @@ if ($totalProducts->status == 200) {
                 </script>';
                 }
 
-                $select = "name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
+                $select = "id_product,name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
                 $url = "relations?rel=variants,products&type=variant,product&linkTo=price_variant&equalTo=0&startAt=" . $startAt . "&endAt=" . $endAt . "&orderBy=id_variant&orderMode=DESC&select=" . $select;
                 $method = "GET";
                 $fields = array();
@@ -126,7 +126,7 @@ if ($totalProducts->status == 200) {
                 </script>';
                 }
 
-                $select = "name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
+                $select = "id_product,name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
                 $url = "relations?rel=variants,products&type=variant,product&linkTo=views_product&between1=1&between2=1000&startAt=" . $startAt . "&endAt=" . $endAt . "&orderBy=id_variant&orderMode=DESC&select=" . $select;
                 $method = "GET";
                 $fields = array();
@@ -159,7 +159,7 @@ if ($totalProducts->status == 200) {
                 </script>';
                 }
 
-                $select = "name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
+                $select = "id_product,name_product,url_product,type_variant,media_variant,date_created_product,stock_variant,description_product,offer_variant,price_variant";
                 $url = "relations?rel=variants,products&type=variant,product&linkTo=sales_product&between1=1&between2=1000&startAt=" . $startAt . "&endAt=" . $endAt . "&orderBy=id_variant&orderMode=DESC&select=" . $select;
                 $method = "GET";
                 $fields = array();

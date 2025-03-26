@@ -133,11 +133,11 @@ Adicionar a favoritos
 
 $(document).on("click", ".addFavorite", function () {
 
-    var idProduct = $(this).attr("idProduct");
-    var elem = $(this);
+    let idProduct = $(this).attr("idProduct");
+    let elem = $(this);
     $(elem).children("i").css({ "color": "#dc3545" })
 
-    var data = new FormData();
+    let data = new FormData();
     data.append("token", localStorage.getItem("token-user"));
     data.append("idProduct", idProduct);
 
