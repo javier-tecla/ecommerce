@@ -131,38 +131,38 @@ $(".inputSearch").keyup(function (event) {
 Adicionar a favoritos
 ==============================================*/
 
-$(document).on("click",".addFavorite",function(){
+$(document).on("click", ".addFavorite", function () {
 
-	var idProduct = $(this).attr("idProduct");
-	var elem = $(this);
-	$(elem).children("i").css({"color":"#dc3545"})
-	
-	var data = new FormData();
-	data.append("token", localStorage.getItem("token-user"));
-	data.append("idProduct", idProduct);
+    var idProduct = $(this).attr("idProduct");
+    var elem = $(this);
+    $(elem).children("i").css({ "color": "#dc3545" })
 
-	$.ajax({
+    var data = new FormData();
+    data.append("token", localStorage.getItem("token-user"));
+    data.append("idProduct", idProduct);
 
-		url:"/ajax/forms.ajax.php",
-		method: "POST",
+    $.ajax({
+
+        url: "/ajax/forms.ajax.php",
+        method: "POST",
         data: data,
         contentType: false,
         cache: false,
         processData: false,
-        success: function (response){ 
-        	
-        	if(JSON.parse(response).comment == "The process was successful"){
+        success: function (response) {
 
-        		$(elem).attr("idFavorite",JSON.parse(response).lastId);
-        		$(elem).removeClass("addFavorite");
-        		$(elem).addClass("remFavorite");
+            if (JSON.parse(response).comment == "The process was successful") {
 
-        		fncToastr("success","El producto ha sido agregado a su lista de favoritos");
-        	}
+                $(elem).attr("idFavorite", JSON.parse(response).lastId);
+                $(elem).removeClass("addFavorite");
+                $(elem).addClass("remFavorite");
+
+                fncToastr("success", "El producto ha sido agregado a su lista de favoritos");
+            }
 
         }
 
-	})
+    })
 
 })
 
@@ -175,6 +175,13 @@ $(document).on("click", ".remFavorite", function () {
     let idFavorite = $(this).attr("idFavorite");
     let elem = $(this);
     $(elem).children("i").css({ "color": "#000" })
+
+    let pageFavorite = $(this).attr("pageFavorite");
+
+    if (pageFavorite == "yes") {
+
+        $(this).parent().parent().parent().parent().parent().remove();
+    }
 
     let data = new FormData();
     data.append("token", localStorage.getItem("token-user"));
@@ -190,13 +197,49 @@ $(document).on("click", ".remFavorite", function () {
         processData: false,
         success: function (response) {
 
-            if(response == 200){
+            if (response == 200) {
+
+                if ($('.remFavorite').length == 0 && pageFavorite == "yes") {
+
+                    $("#favorite").html(`
+                        <div class="login-page page-error bg-white">
+
+    <div class="login-box bg-white d-flex justify-content-center">
+        <!-- /.login-logo  -->
+
+        <section class="content pb-5">
+
+            <div class="error-page">
+                <h2 class="headline text-default templateColor rounded">
+                    <i class="fas fa-shopping-cart px-4 text-white"></i>
+                </h2>
+
+                <div class="error-content">
+                    <h3>
+                        <i class="fas fa-exclamation-triangle text-default bg-light p-1"></i>Oops! No hay productos por ahora.
+                    </h3>
+
+                    <p>
+                        No pudimos encontrar los productos que estás buscando.
+                        <a href="/"><strong>Regresa a la página de inicio</strong></a>
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+        <!-- /.card -->
+
+    </div>
+
+</div>`)
+                }
 
                 $(elem).addClass("addFavorite");
                 $(elem).removeClass("remFavorite");
-                
 
-                fncToastr("success","El producto ha sido removido de su lista de favoritos");
+
+                fncToastr("success", "El producto ha sido removido de su lista de favoritos");
             }
 
         }

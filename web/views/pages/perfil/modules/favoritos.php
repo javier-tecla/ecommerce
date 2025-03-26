@@ -132,6 +132,7 @@ if ($favorites->status == 200) {
                                     type="button"
                                     class="btn btn-light border-0 remFavorite"
                                     idFavorite="<?php echo $value->id_favorite ?>"
+                                    pageFavorite="yes"
                                 > 
                                     Quitar de favoritos
                                 </button>
