@@ -54,18 +54,19 @@ class FormsController
     public $idProduct;
     public $token;
 
-    public function addFavorites(){
+    public function addFavorites()
+    {
 
         $select = "id_user";
-        $url = "users?linkTo=token_user&equalTo=".$this->token."&select=".$select; 
+        $url = "users?linkTo=token_user&equalTo=" . $this->token . "&select=" . $select;
         $method = "GET";
         $fields = array();
 
-        $data = CurlController::request($url, $method, $fields); 
-        
-        if($data->status == 200){
+        $data = CurlController::request($url, $method, $fields);
 
-            $url = "favorites?token=".$this->token."&table=users&suffix=user";
+        if ($data->status == 200) {
+
+            $url = "favorites?token=" . $this->token . "&table=users&suffix=user";
             $method = "POST";
             $fields = array(
                 "id_user_favorite" => $data->results[0]->id_user,
@@ -73,25 +74,24 @@ class FormsController
                 "date_created_favorite" => date("Y-m-d")
             );
 
-            $addFavorite = CurlController::request($url, $method, $fields); 
-            
-            if($addFavorite->status == 200){
+            $addFavorite = CurlController::request($url, $method, $fields);
+
+            if ($addFavorite->status == 200) {
                 echo json_encode($addFavorite->results);
-            }   
-
+            }
         }
-
     }
 
-     /*=======================================
-    Remover favoritos en base de datos
-    ========================================*/
+    /*=======================================
+     Remover favoritos en base de datos
+     ========================================*/
 
     public $idFavorite;
 
-    public function remFavorite(){
+    public function remFavorite()
+    {
 
-        $url = "favorites?id=".$this->idFavorite."&nameId=id_favorite&token=".$this->token."&table=users&suffix=user";
+        $url = "favorites?id=" . $this->idFavorite . "&nameId=id_favorite&token=" . $this->token . "&table=users&suffix=user";
         $method = "DELETE";
         $fields = array();
 
@@ -100,7 +100,42 @@ class FormsController
         echo $remFavorite->status;
     }
 
+    /*===============================================
+        Adicionar al carrito de compras en base de datos
+        ================================================*/
 
+    public $idProductCart;
+    public $idVariantCart;
+    public $quantityCart;
+
+    public function addCart()
+    {
+
+        $select = "id_user";
+        $url = "users?linkTo=token_user&equalTo=" . $this->token . "&select=" . $select;
+        $method = "GET";
+        $fields = array();
+
+        $data = CurlController::request($url, $method, $fields);
+
+        if ($data->status == 200) {
+
+            $url = "carts?token=".$this->token."&table=users&suffix=user";
+            $method = "POST";
+            $fields = array(
+                "id_user_cart" => $data->results[0]->id_user,
+                "id_product_cart" => $this->idProductCart,
+                "id_variant_cart" => $this->idVariantCart,
+                "quantity_cart" => $this->quantityCart,
+                "date_created_cart" => date("Y-m-d")
+            );
+
+            $addCart = CurlController::request($url, $method, $fields);
+
+            echo $addCart->status;
+
+        }
+    }
 }
 
 if (isset($_POST["table"])) {
@@ -127,11 +162,20 @@ if (isset($_POST["idProduct"])) {
     $addFavorites->addFavorites();
 }
 
-if(isset($_POST["idFavorite"])){
+if (isset($_POST["idFavorite"])) {
 
     $remFavorites = new FormsController();
-    $remFavorites -> token = $_POST["token"];
-    $remFavorites -> idFavorite = $_POST["idFavorite"];
-    $remFavorites -> remFavorite();
+    $remFavorites->token = $_POST["token"];
+    $remFavorites->idFavorite = $_POST["idFavorite"];
+    $remFavorites->remFavorite();
 }
 
+if (isset($_POST["idProductCart"])) {
+
+    $addCart = new FormsController();
+    $addCart->token = $_POST["token"];
+    $addCart->idProductCart = $_POST["idProductCart"];
+    $addCart->idVariantCart = $_POST["idVariantCart"];
+    $addCart->quantityCart = $_POST["quantityCart"];
+    $addCart->addCart();
+}

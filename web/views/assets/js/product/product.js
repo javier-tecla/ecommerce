@@ -2,7 +2,7 @@
 FlexSlider
 =============================================*/
 
-function activateFlexSlider(){
+function activateFlexSlider() {
 
 	$('#carousel').flexslider({
 		animation: "slide",
@@ -34,20 +34,20 @@ activateFlexSlider();
 Cambiar variante
 =============================================*/
 
-$(document).on("change",".changeVariant", function(){
+$(document).on("change", ".changeVariant", function () {
 
 	let variant = JSON.parse($(this).attr("variant"));
 	// console.log("variant", variant);
-	 let url = $(this).attr("url");
-	
-	/*=============================================
-    Cambiar la galeria de imagenes
-    =============================================*/
+	let url = $(this).attr("url");
 
-	if(variant.type_variant == "gallery"){
+	/*=============================================
+	Cambiar la galeria de imagenes
+	=============================================*/
+
+	if (variant.type_variant == "gallery") {
 
 		$(".blockQuantity").show();
-	  $(".pulseAnimation").parent().addClass("col-md-9");
+		$(".pulseAnimation").parent().addClass("col-md-9");
 
 		$(".blockMedia").html(`
 
@@ -62,7 +62,7 @@ $(document).on("change",".changeVariant", function(){
 
 		let count = 0;
 
-		JSON.parse(variant.media_variant).forEach((e,i)=>{
+		JSON.parse(variant.media_variant).forEach((e, i) => {
 
 			count++;
 
@@ -78,43 +78,43 @@ $(document).on("change",".changeVariant", function(){
 
       `)
 
-      if(JSON.parse(variant.media_variant).length == count){
+			if (JSON.parse(variant.media_variant).length == count) {
 
-      	activateFlexSlider();
+				activateFlexSlider();
 
-    	}
-		
+			}
+
 		})
 
 	}
 
-	 /*=============================================
-    Cambiar el video
-    =============================================*/
+	/*=============================================
+   Cambiar el video
+   =============================================*/
 
-	  if(variant.type_variant == "video"){
+	if (variant.type_variant == "video") {
 
-	  		$(".blockQuantity").hide();
-	  		$(".pulseAnimation").parent().removeClass("col-md-9");
+		$(".blockQuantity").hide();
+		$(".pulseAnimation").parent().removeClass("col-md-9");
 
-        let idVideo = variant.media_variant.split("/").pop();
+		let idVideo = variant.media_variant.split("/").pop();
 
-        $(".blockMedia").html(`
+		$(".blockMedia").html(`
 
             <iframe width="100%" height="315" src="https://www.youtube.com/embed/${idVideo}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 
         `)
 
-    }
+	}
 
 
 	/*=============================================
   Cambiar precio
   =============================================*/
 
-  if(variant.offer_variant > 0){
+	if (variant.offer_variant > 0) {
 
-  	$(".blockPrice").html(`
+		$(".blockPrice").html(`
 
   		<h5 class="my-3 text-center font-weight-bold text-danger">¡Aprovecha la PROMO y llévalo a un increíble precio!<br>↓↓↓</h5>
 
@@ -126,55 +126,61 @@ $(document).on("change",".changeVariant", function(){
 				<span class="text-success pt-4">AHORA ${Number(variant.offer_variant).toFixed(2)}</span>
 				<span class="ml-2 px-2 p-1 small rounded-pill" 
 				style="font-size: 16px; position:relative; top:-4px; border:2px solid #000 !important">
-					AHORRE $${(Number(variant.offer_variant)-Number(variant.price_variant)).toFixed(2)}			
+					AHORRE $${(Number(variant.offer_variant) - Number(variant.price_variant)).toFixed(2)}			
 				</span>
 			</h3>
 
   	`)
 
-  }else{
+	} else {
 
-  	 $(".blockPrice").html(`
+		$(".blockPrice").html(`
 
         <h2 class="text-center"><span class="text-success pt-4">$${Number(variant.price_variant).toFixed(2)}</span></h2>  
      `)
 
-  }
+	}
 
-  /*=============================================
-  Cambiar fecha de finalización oferta
-  =============================================*/
+	/*=============================================
+	Cambiar fecha de finalización oferta
+	=============================================*/
 
-  if(variant.offer_variant > 0){
+	if (variant.offer_variant > 0) {
 
-  	$(".countdown").show();
+		$(".countdown").show();
 
-  	 if(variant.end_offer_variant != "0000-00-00"){
+		if (variant.end_offer_variant != "0000-00-00") {
 
-  	 		$(".countdown").attr("ddate", variant.end_offer_variant);
+			$(".countdown").attr("ddate", variant.end_offer_variant);
 
-  	 		countDown();
+			countDown();
 
-  	 }else{
+		} else {
 
-  	 		$(".countdown").attr("ddate", new Date().getFullYear()+"-"+new Date().getMonth()+"-"+new Date().getDay());
+			let day = new Date().getDate();
+			day = ("0" + day).slice(-2);
 
-  	 		countDown();
-  	 }
+			let month = new Date().getMonth() + 1;
+			month = ("0" + month).slice(-2);
 
-  }else{
+			$(".countdown").attr("ddate", new Date().getFullYear() + "-" + month + "-" + day);
 
-  	$(".countdown").hide();
+			countDown();
+		}
 
-  }
+	} else {
 
- 	/*=============================================
-  Cambiar stock
-  =============================================*/
+		$(".countdown").hide();
 
-  if(variant.stock_variant > 0){
+	}
 
-  	$(".blockStock").html(`
+	/*=============================================
+Cambiar stock
+=============================================*/
+
+	if (variant.stock_variant > 0) {
+
+		$(".blockStock").html(`
 
   			<p class="text-center lead font-weight-bold">🔥 ¡Sólo ${variant.stock_variant} unidades disponibles! 🔥</p>
 
@@ -184,42 +190,42 @@ $(document).on("change",".changeVariant", function(){
 
 	  `)
 
-  }else{
+	} else {
 
-  	function numeroAleatorio(min, max){
+		function numeroAleatorio(min, max) {
 
-  		return Math.round(Math.random() * (max - min) + min);
+			return Math.round(Math.random() * (max - min) + min);
 
-  	}
+		}
 
-  	let sales = numeroAleatorio(300, 500);
-  	let stock = numeroAleatorio(10, 20);
+		let sales = numeroAleatorio(300, 500);
+		let stock = numeroAleatorio(10, 20);
 
-  	$(".blockStock").html(`
+		$(".blockStock").html(`
 
 				<p class="text-center lead font-weight-bold">
 					
 				🔥 ¡${sales} vendidos - Sólo ${stock} unidades disponibles! 🔥 </p>
 
 				<div class="progress">
-			  		<div class="progress-bar bg-danger" style="width:${stock*100/(sales/5)}%"></div>
+			  		<div class="progress-bar bg-danger" style="width:${stock * 100 / (sales / 5)}%"></div>
 				</div>
 
 		`)
 
-  }
+	}
 
-  /*=============================================
-	Agregar ID de variante al boton addCart
-	=============================================*/
+	/*=============================================
+	  Agregar ID de variante al boton addCart
+	  =============================================*/
 
-	if($(".addCart").length > 0){
+	if ($(".addCart").length > 0) {
 
 		let addCart = $(".addCart");
 
-		addCart.each((i)=>{
+		addCart.each((i) => {
 
-			$(addCart[i]).attr("idVariant",variant.id_variant);
+			$(addCart[i]).attr("idVariant", variant.id_variant);
 
 		})
 	}
@@ -230,63 +236,63 @@ $(document).on("change",".changeVariant", function(){
 Aplicar Sticky al bloque Media
 =============================================*/
 
-if(window.matchMedia("(min-width:768px)").matches){
+if (window.matchMedia("(min-width:768px)").matches) {
 
 	let sticky = new Sticky(".blockMedia");
 	let topMedia = $(".blockMedia").offset().top;
 
-	$(window).scroll(function(event) {
+	$(window).scroll(function (event) {
 
 		let scrollTop = $(window).scrollTop();
 
 		let footerTop = $(".footerBlock").offset().top;
 
-		let blockMedia = $(".blockMedia").height();		
-		
-		if(scrollTop > (footerTop - blockMedia)){
+		let blockMedia = $(".blockMedia").height();
+
+		if (scrollTop > (footerTop - blockMedia)) {
 
 			$(".blockMedia")[0].sticky.active = false;
 
-			$(".blockMedia").css({"position":"relative","left":"0px","top":footerTop-(blockMedia+topMedia)+"px"})
+			$(".blockMedia").css({ "position": "relative", "left": "0px", "top": footerTop - (blockMedia + topMedia) + "px" })
 
-		}else{
+		} else {
 
 			$(".blockMedia")[0].sticky.active = true;
 
 		}
 
 	})
-	
+
 }
 
 /*=============================================
 Aumentar y disminuir la cantidad
 =============================================*/
 
-$(".btnInc").click(function(){
+$(".btnInc").click(function () {
 
-	if($(this).attr("type") == "btnMin"){
+	if ($(this).attr("type") == "btnMin") {
 
-		if(Number($(".showQuantity").val()) > 1){
+		if (Number($(".showQuantity").val()) > 1) {
 
-			$(".showQuantity").val(Number($(".showQuantity").val())-1);
+			$(".showQuantity").val(Number($(".showQuantity").val()) - 1);
 
 		}
 	}
 
-	if($(this).attr("type") == "btnMax"){
+	if ($(this).attr("type") == "btnMax") {
 
-		$(".showQuantity").val(Number($(".showQuantity").val())+1);
+		$(".showQuantity").val(Number($(".showQuantity").val()) + 1);
 
 	}
 
-	if($(".addCart").length > 0){
+	if ($(".addCart").length > 0) {
 
 		let addCart = $(".addCart");
 
-		addCart.each((i)=>{
+		addCart.each((i) => {
 
-			$(addCart[i]).attr("quantity",$(".showQuantity").val());
+			$(addCart[i]).attr("quantity", $(".showQuantity").val());
 		})
 	}
 })
@@ -295,13 +301,36 @@ $(".btnInc").click(function(){
 Agregar al carrito de compras
 =============================================*/
 
-$(document).on("click",".addCart",(function(){
+$(document).on("click", ".addCart", function () {
 
 	let idProduct = $(this).attr("idProduct");
-	console.log("idProduct", idProduct);
 	let idVariant = $(this).attr("idVariant");
-	console.log("idVariant", idVariant);
-	let quantity =  $(this).attr("quantity");
-	console.log("quantity", quantity);
+	let quantity = $(this).attr("quantity");
+	let priceVariant = $(this).attr("priceVariant");
 
-}))
+	let data = new FormData();
+	data.append("token", localStorage.getItem("token-user"));
+	data.append("idProductCart", idProduct);
+	data.append("idVariantCart", idVariant);
+	data.append("quantityCart", quantity);
+
+	$.ajax({
+
+		url: "/ajax/forms.ajax.php",
+		method: "POST",
+		data: data,
+		contentType: false,
+		cache: false,
+		processData: false,
+		success: function (response) {
+
+			if (response == 200) {
+
+				fncToastr("success", "El producto ha sido agregado al carrito de compras");
+			}
+
+		}
+
+	})
+
+})
