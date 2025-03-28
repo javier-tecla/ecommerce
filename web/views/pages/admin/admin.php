@@ -14,7 +14,7 @@ Validar si el token está expirado
 
 date_default_timezone_set("America/Argentina/Buenos_Aires");
   
-$url = "admins?id=" . $_SESSION["admin"]->id_admin . "&nameId=id_admin&token=" . $_SESSION["admin"]->token_user . "&table=admins&suffix=admin";
+$url = "admins?id=" . $_SESSION["admin"]->id_admin . "&nameId=id_admin&token=" . $_SESSION["admin"]->token_admin . "&table=admins&suffix=admin";
 $method = "PUT";
 $fields = "date_updated_admin=" . date("Y-m-d G:i:s");
 

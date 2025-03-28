@@ -37,7 +37,7 @@ Cambiar variante
 $(document).on("change",".changeVariant", function(){
 
 	let variant = JSON.parse($(this).attr("variant"));
-	console.log("variant", variant);
+	// console.log("variant", variant);
 	 let url = $(this).attr("url");
 	
 	/*=============================================
@@ -209,6 +209,21 @@ $(document).on("change",".changeVariant", function(){
 
   }
 
+  /*=============================================
+	Agregar ID de variante al boton addCart
+	=============================================*/
+
+	if($(".addCart").length > 0){
+
+		let addCart = $(".addCart");
+
+		addCart.each((i)=>{
+
+			$(addCart[i]).attr("idVariant",variant.id_variant);
+
+		})
+	}
+
 })
 
 /*=============================================
@@ -265,5 +280,28 @@ $(".btnInc").click(function(){
 
 	}
 
+	if($(".addCart").length > 0){
 
+		let addCart = $(".addCart");
+
+		addCart.each((i)=>{
+
+			$(addCart[i]).attr("quantity",$(".showQuantity").val());
+		})
+	}
 })
+
+/*=============================================
+Agregar al carrito de compras
+=============================================*/
+
+$(document).on("click",".addCart",(function(){
+
+	let idProduct = $(this).attr("idProduct");
+	console.log("idProduct", idProduct);
+	let idVariant = $(this).attr("idVariant");
+	console.log("idVariant", idVariant);
+	let quantity =  $(this).attr("quantity");
+	console.log("quantity", quantity);
+
+}))
