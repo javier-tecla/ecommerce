@@ -4,9 +4,9 @@ Formatear envío de formulario lado servidor
 
 function fncFormatInputs() {
 
-    if (window.history.replaceState) {
-        window.history.replaceState(null, null, window.location.href);
-    }
+	if (window.history.replaceState) {
+		window.history.replaceState(null, null, window.location.href);
+	}
 }
 
 /*===========================================
@@ -15,128 +15,140 @@ Alerta Notie
 
 function fncNotie(type, text) {
 
-    notie.alert({
+	notie.alert({
 
-        type: type,
-        text: text,
-        time: 10
+		type: type,
+		text: text,
+		time: 10
 
-    })
+	})
 }
 
 /*===========================================
 Alerta SweetAlert
 =============================================*/
 
-function fncSweetAlert(type, text, url){
+function fncSweetAlert(type, text, url) {
 
 	switch (type) {
 
 		case "error":
 
-		if(url == ""){
+			if (url == "") {
 
-			Swal.fire({
+				Swal.fire({
 
-				icon: "error",
-				title: "Error",
-				text: text
+					icon: "error",
+					title: "Error",
+					text: text
 
-			})
+				})
 
-		}else{
+			} else {
 
-			Swal.fire({
+				Swal.fire({
 
-				icon: "error",
-				title: "Error",
-				text: text
+					icon: "error",
+					title: "Error",
+					text: text
 
-			}).then((result) =>{
+				}).then((result) => {
 
-				if (result.value){ 
+					if (result.value) {
 
-					window.open(url, "_top");
+						window.open(url, "_top");
 
-				}
-			
-			})
+					}
 
-		}
+				})
 
-		break;
+			}
+
+			break;
 
 		case "success":
 
-		if(url == ""){
+			if (url == "") {
 
-			Swal.fire({
+				Swal.fire({
 
-				icon: "success",
-				title: "Correcto",
-				text: text
+					icon: "success",
+					title: "Correcto",
+					text: text
 
-			})
+				})
 
-		}else{
+			} else {
 
-			Swal.fire({
+				Swal.fire({
 
-				icon: "success",
-				title: "Correcto",
-				text: text
+					icon: "success",
+					title: "Correcto",
+					text: text
 
-			}).then((result) =>{
+				}).then((result) => {
 
-				if (result.value){ 
+					if (result.value) {
 
-					window.open(url, "_top");
+						window.open(url, "_top");
 
-				}
-			
-			})
+					}
 
-		}
+				})
 
-		break;
+			}
+
+			break;
 
 		case "loading":
 
 			Swal.fire({
-            	allowOutsideClick: false,
-            	icon: 'info',
-            	text:text
-          	})
-          	Swal.showLoading()
+				allowOutsideClick: false,
+				icon: 'info',
+				text: text
+			})
+			Swal.showLoading()
 
-		break;
+			break;
 
 		case "confirm":
 
-			return new Promise(resolve=>{ 
+			return new Promise(resolve => {
 
-		 		Swal.fire({
-		 			text: text,
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    cancelButtonText: 'No',
-                    confirmButtonText: 'Si, continuar!'
-		 		}).then(function(result){
-         
-                    resolve(result.value);
-               
-                })
+				Swal.fire({
+					text: text,
+					icon: 'warning',
+					showCancelButton: true,
+					confirmButtonColor: '#3085d6',
+					cancelButtonColor: '#d33',
+					cancelButtonText: 'No',
+					confirmButtonText: 'Si, continuar!'
+				}).then(function (result) {
 
-		 	})
-		break;
+					resolve(result.value);
+
+				})
+
+			})
+			break;
 
 		case "close":
 
-		 	Swal.close()
-		 	
-		break;
+			Swal.close()
+
+			break;
+
+		case "footer":
+
+			Swal.fire({
+				icon: "success",
+				title: text,
+				confirmButtonText: "¡Continuar comprando!",
+				footer: '<a href="' + url + '">Ir al carrito de compras</a>'
+			});
+
+
+			break;
 
 	}
 
@@ -149,24 +161,24 @@ Alerta Toast
 
 function fncToastr(type, text) {
 
-    var Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 6000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
+	var Toast = Swal.mixin({
+		toast: true,
+		position: 'top-end',
+		showConfirmButton: false,
+		timer: 6000,
+		timerProgressBar: true,
+		didOpen: (toast) => {
+			toast.addEventListener('mouseenter', Swal.stopTimer)
+			toast.addEventListener('mouseleave', Swal.resumeTimer)
 
-        }
+		}
 
-    })
+	})
 
-    Toast.fire({
-        icon: type,
-        title: text
-    })
+	Toast.fire({
+		icon: type,
+		title: text
+	})
 }
 
 /*===========================================
@@ -175,25 +187,25 @@ Alerta Linea Precarga
 
 function fncMatPreloader(type) {
 
-    let preloader = new $.materialPreloader({
-        position: 'top',
-        height: '5px',
-        col_1: '#159756',
-        col_2: '#da4733',
-        col_3: '#3b78e7',
-        col_4: '#fdba2c',
-        fadeIn: 200,
-        fadeOut: 200
+	let preloader = new $.materialPreloader({
+		position: 'top',
+		height: '5px',
+		col_1: '#159756',
+		col_2: '#da4733',
+		col_3: '#3b78e7',
+		col_4: '#fdba2c',
+		fadeIn: 200,
+		fadeOut: 200
 
-    })
+	})
 
-    if (type == "on") {
+	if (type == "on") {
 
-        preloader.on();
-    }
+		preloader.on();
+	}
 
-    if (type == "off") {
+	if (type == "off") {
 
-        $(".load-bar-container").remove();
-    }
+		$(".load-bar-container").remove();
+	}
 }

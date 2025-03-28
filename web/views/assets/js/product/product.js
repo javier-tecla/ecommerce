@@ -326,7 +326,7 @@ $(document).on("click", ".addCart", function () {
 
 			if (response == 200) {
 
-				fncToastr("success", "El producto ha sido agregado al carrito de compras");
+				fncSweetAlert("footer", "Producto agregado a tu carrito de compras", "/carrito")
 			}
 
 		}
