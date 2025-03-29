@@ -199,7 +199,7 @@
                  
                  ?>
 
-                     TU CESTA <span>0</span><br> ARS $<span>0</span>
+                     TU CESTA <span id="shoppingBasket"><?php echo $shoppingBasket ?></span><br> ARS $<span id="totalShop"><?php echo number_format($totalShop,2) ?></span>
                  </div>
 
              </div>

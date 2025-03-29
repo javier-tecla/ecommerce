@@ -227,6 +227,15 @@ Cambiar stock
 
 			$(addCart[i]).attr("idVariant", variant.id_variant);
 
+			if (variant.offer_variant > 0) {
+
+				$(addCart[i]).attr("priceVariant", variant.offer_variant);
+
+			} else {
+
+				$(addCart[i]).attr("priceVariant", variant.price_variant);
+			}
+
 		})
 	}
 
@@ -325,6 +334,12 @@ $(document).on("click", ".addCart", function () {
 		success: function (response) {
 
 			if (response == 200) {
+
+				let shoppingBasket = $("#shoppingBasket").html();
+				let totalShop = $("#totalShop").html();
+
+				$("#shoppingBasket").html(Number(shoppingBasket) + Number(quantity));
+				$("#totalShop").html((Number(totalShop) + (Number(quantity) * Number(priceVariant))).toFixed(2));
 
 				fncSweetAlert("footer", "Producto agregado a tu carrito de compras", "/carrito")
 			}
