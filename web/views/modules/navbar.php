@@ -1,4 +1,9 @@
  <?php
+
+ /*=================================================
+    Categorías
+   =================================================-*/
+
     $select = "id_category,name_category,url_category,icon_category";
     $url = "categories?select=" . $select;
     $method = "GET";
@@ -13,6 +18,36 @@
 
         $dataCategories = array();
     }
+
+    
+    /*=================================================
+    Carrito de compras
+   =================================================-*/
+
+    if(isset($_SESSION["user"])){
+
+        $select = "*";
+        $url = "relations?rel=carts,variants,products&type=cart,variant,product&linkTo=id_user_cart&equalTo=".$_SESSION["user"]->id_user."&select=".$select;
+        $method = "GET";
+        $fields = array();
+
+        $carts = CurlController::request($url,$method,$fields);
+
+        if($carts->status == 200){
+
+            $carts = $carts->results;
+
+        }else{
+
+            $carts = array();
+        }
+    } else {
+
+        $carts = array();
+
+    }
+
+   
 
     ?>
 
@@ -139,6 +174,30 @@
                  </a>
 
                  <div class="small border float-start ps-2 pe-5 w-100">
+
+                 <?php
+                 
+                 $shoppingBasket = 0;
+                 $totalShop = 0;
+
+                 if(!empty($carts)){
+
+                    foreach ($carts as $key => $value) {
+
+                        $shoppingBasket+=$value->quantity_cart;
+
+                        if($value->offer_variant > 0){
+
+                            $totalShop += $value->quantity_cart*$value->offer_variant;
+
+                        }else{
+
+                            $totalShop += $value->quantity_cart*$value->price_variant;
+                        }
+                    }
+                 }
+                 
+                 ?>
 
                      TU CESTA <span>0</span><br> ARS $<span>0</span>
                  </div>
