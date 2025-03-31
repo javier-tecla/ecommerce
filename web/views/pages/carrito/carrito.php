@@ -42,19 +42,20 @@ Carrito de compras
 
         </div>
 
-        <?php if (!empty($carts)): ?>
+        <?php if (!empty($carts)): $totalCart = 0 ?>
 
             <div class="card-body">
 
                 <?php foreach ($carts as $key => $value): ?>
 
-                    <div class="row py-1">
+                    <?php if ($key > 0): ?>
 
-                        <?php if ($key > 0): ?>
+                        <hr class="d-block d-lg-none my-4 mx-auto w-75" style="border:1px solid #aaa">
 
-                            <hr class="d-block d-lg-none my-4 mx-auto w-75" style="border:1px solid #aaa">
-                            
-                        <?php endif ?>
+                    <?php endif ?>
+
+
+                    <div class="row py-1" style="position: relative;">
 
 
                         <!--=====================================
@@ -105,13 +106,13 @@ Carrito de compras
 
                                 <div class="blockQuantity d-flex justify-content-center">
 
-                                    <div class="input-group mb-3 mt-2">
+                                    <div class="input-group mb-3 mt-2" style="width:120px">
 
                                         <span class="input-group-text btnInc" type="btnMin">
                                             <i class="fas fa-minus"></i>
                                         </span>
 
-                                        <input type="number" class="form-control text-center showQuantity" onwheel="return false;" value="1">
+                                        <input type="number" class="form-control text-center showQuantity" onwheel="return false;" value="<?php echo $value->quantity_cart ?>">
 
                                         <span class="input-group-text btnInc" type="btnMax">
                                             <i class="fas fa-plus"></i>
@@ -172,9 +173,61 @@ Carrito de compras
                         </div>
 
 
+                        <!--=====================================
+                    QUITAR ELEMENTOS
+                    ======================================-->
+
+                        <div class="d-none d-lg-block col-lg-1 text-center mt-3">
+
+                            <button class="btn btn-light btn-sm border"><i class="fas fa-times"></i></button>
+
+                        </div>
+
+                        <div class="d-block d-lg-none" style="position: absolute; top:0px; left:100%; margin-left:-12%">
+
+                            <button class="btn btn-light btn-sm border"><i class="fas fa-times"></i></button>
+
+                        </div>
+
+
                     </div>
 
+                    <?php
+
+                    if ($value->offer_variant > 0) {
+
+                        $totalCart += $value->quantity_cart * $value->offer_variant;
+                    } else {
+
+                        $totalCart += $value->quantity_cart * $value->price_variant;
+                    }
+
+
+                    ?>
+
+
                 <?php endforeach ?>
+
+            </div>
+
+            <!--=====================================
+                TOTAL
+                ======================================-->
+
+
+            <div class="card-footer bg-light">
+
+                <div class="row">
+
+                    <div class="col-3 col-lg-9 text-right font-weight-bold">TOTAL:</div>
+                    <div class="col-3 col-lg-2 text-center font-weight-bold">
+                        $<span><?php echo number_format($totalCart, 2) ?></span>
+                    </div>
+                    <div class="col-6 col-lg-1 text-center">
+                        <a href="/checkout" class="btn btn-default templateColor border-0 px-3 pulseAnimation">Pagar</a>
+                    </div>
+
+                </div>
 
             </div>
 

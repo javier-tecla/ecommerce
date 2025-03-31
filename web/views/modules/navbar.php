@@ -26,7 +26,7 @@
 
     if(isset($_SESSION["user"])){
 
-        $select = "*";
+        $select = "url_product,type_variant,media_variant,name_product,description_variant,quantity_cart,offer_variant,price_variant";
         $url = "relations?rel=carts,variants,products&type=cart,variant,product&linkTo=id_user_cart&equalTo=".$_SESSION["user"]->id_user."&select=".$select;
         $method = "GET";
         $fields = array();
@@ -163,7 +163,7 @@
 
              <div class="my-2 my-lg-0 d-flex justify-content-center">
 
-                 <a href="#">
+                 <a href="/carrito">
 
                      <button class="bt btn-default float-start rounded-0 border-0 py-2 px-3 templateColor">
 
