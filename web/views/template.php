@@ -389,6 +389,7 @@ Verificación de usuarios
         $routesArray[0] == "admin" ||
         $routesArray[0] == "perfil" ||
         $routesArray[0] == "salir" ||
+        $routesArray[0] == "carrito" ||
         $routesArray[0] == "no-found"
       ) {
 

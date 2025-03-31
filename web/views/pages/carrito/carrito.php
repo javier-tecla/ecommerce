@@ -1,0 +1,191 @@
+<link rel="stylesheet" href="<?php echo $path ?>views/assets/css/product/product.css">
+
+<!--=====================================
+Breadcrumb
+======================================-->
+
+<div class="container-fluid bg-light border mb-2">
+
+    <div class="container py-3">
+
+        <div class="d-flex flex-row-reverse lead small">
+
+            <div class="px-1 font-weight-bold">Carrito de Compras</div>
+            <div class="px-1">/</div>
+            <div class="px-1"><a href="/">Inicio</a></div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--=====================================
+Carrito de compras
+======================================-->
+
+<div class="container my-4">
+
+    <div class="card">
+
+        <div class="card-header bg-light">
+
+            <div class="row">
+
+                <div class="d-none d-lg-block col-lg-5 text-center">PRODUCTO</div>
+                <div class="d-none d-lg-block col-lg-2 text-center">CANTIDAD</div>
+                <div class="d-none d-lg-block col-lg-2 text-center">PRECIO</div>
+                <div class="d-none d-lg-block col-lg-2 text-center">SUBTOTAL</div>
+                <div class="d-none d-lg-block col-lg-1 text-center"></div>
+
+            </div>
+
+        </div>
+
+        <?php if (!empty($carts)): ?>
+
+            <div class="card-body">
+
+                <?php foreach ($carts as $key => $value): ?>
+
+                    <div class="row py-1">
+
+                        <?php if ($key > 0): ?>
+
+                            <hr class="d-block d-lg-none my-4 mx-auto w-75" style="border:1px solid #aaa">
+                            
+                        <?php endif ?>
+
+
+                        <!--=====================================
+                    PRODUCTO
+                    ======================================-->
+
+                        <div class="col-12 col-lg-5 text-left">
+
+                            <a href="/<?php echo $value->url_product ?>">
+
+                                <div class="media">
+
+                                    <figure class="imgProduct">
+
+                                        <?php if ($value->type_variant == "gallery"): ?>
+
+                                            <img src="<?php echo $path ?>views/assets/img/products/<?php echo $value->url_product ?>/<?php echo json_decode($value->media_variant)[0] ?>" class="img-thumbnail mr-3" style="width:80px">
+
+                                        <?php else: $arrayYT = explode("/", $value->media_variant) ?>
+
+                                            <img src="http://img.youtube.com/vi/<?php echo end($arrayYT) ?>/maxresdefault.jpg" class="img-thumbnail mr-3" style="width:80px">
+
+                                        <?php endif ?>
+
+                                    </figure>
+
+                                    <div class="media-body">
+
+                                        <p class="m-0 font-weight-bold"><?php echo $value->name_product ?></p>
+                                        <small class="m-0"><?php echo $value->description_variant ?></small>
+
+                                    </div>
+
+                                </div>
+
+                            </a>
+
+                        </div>
+
+                        <!--=====================================
+                    CANTIDAD
+                    ======================================-->
+
+                        <div class="col-12 col-lg-2 text-left">
+
+                            <?php if ($value->type_variant == "gallery"): ?>
+
+
+                                <div class="blockQuantity d-flex justify-content-center">
+
+                                    <div class="input-group mb-3 mt-2">
+
+                                        <span class="input-group-text btnInc" type="btnMin">
+                                            <i class="fas fa-minus"></i>
+                                        </span>
+
+                                        <input type="number" class="form-control text-center showQuantity" onwheel="return false;" value="1">
+
+                                        <span class="input-group-text btnInc" type="btnMax">
+                                            <i class="fas fa-plus"></i>
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            <?php endif ?>
+
+                        </div>
+
+                        <!--=====================================
+                    PRECIO
+                    ======================================-->
+
+                        <div class="col-6 col-lg-2 text-center mt-3">
+
+                            <?php if ($value->type_variant == "gallery"): ?>
+
+                                <span class="d-block d-lg-none">Precio:</span>
+                                $<span class="priceCart">
+                                    <?php
+
+                                    if ($value->offer_variant > 0) {
+                                        echo number_format($value->offer_variant, 2);
+                                    } else {
+                                        echo number_format($value->price_variant, 2);
+                                    }
+
+                                    ?>
+                                </span>
+
+                            <?php endif ?>
+
+                        </div>
+
+                        <!--=====================================
+                    SUBTOTAL
+                    ======================================-->
+
+                        <div class="col-6 col-lg-2 text-center mt-3">
+
+                            <span class="d-block d-lg-none">Subtotal:</span>
+                            <span class="subtotalCart">
+                                <?php
+                                if ($value->offer_variant > 0) {
+                                    echo number_format(($value->quantity_cart * $value->offer_variant), 2);
+                                } else {
+                                    echo number_format(($value->quantity_cart * $value->price_variant), 2);
+                                }
+
+                                ?>
+
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                <?php endforeach ?>
+
+            </div>
+
+        <?php else: ?>
+
+            <div class="card-body">
+                <?php include "views/pages/no-found/no-found.php" ?>
+            </div>
+
+        <?php endif ?>
+
+    </div>
+
+</div>

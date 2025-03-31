@@ -29,6 +29,10 @@ Breadcrumb
 
 </div>
 
+<!--=====================================
+Perfil
+======================================-->
+
 <?php if ($_SESSION["user"]->verification_user == 0): ?>
 
     <div class="container my-5">
