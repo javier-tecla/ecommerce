@@ -136,6 +136,28 @@ class FormsController
 
         }
     }
+
+    /*=============================================
+    Actualizar Cantidad carrito de compras en base de datos
+    =============================================*/
+
+    public $idCartUpdate;
+    public $quantityCartUpdate;
+
+    public function updateCart(){
+      
+        $url = "carts?id=".$this->idCartUpdate."&nameId=id_cart&token=".$this->token."&table=users&suffix=user";
+      
+        $method = "PUT";
+        $fields = "quantity_cart=".$this->quantityCartUpdate;
+
+        $updateCart = CurlController::request($url, $method, $fields);
+
+        echo $updateCart->status;         
+
+    }
+
+
 }
 
 if (isset($_POST["table"])) {
@@ -179,3 +201,13 @@ if (isset($_POST["idProductCart"])) {
     $addCart->quantityCart = $_POST["quantityCart"];
     $addCart->addCart();
 }
+
+if(isset($_POST["idCartUpdate"])){
+
+    $updateCart = new FormsController();
+    $updateCart -> token = $_POST["token"];
+    $updateCart -> idCartUpdate = $_POST["idCartUpdate"];
+    $updateCart -> quantityCartUpdate = $_POST["quantityCartUpdate"];
+    $updateCart -> updateCart();
+}
+

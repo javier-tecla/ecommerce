@@ -26,7 +26,7 @@
 
     if(isset($_SESSION["user"])){
 
-        $select = "url_product,type_variant,media_variant,name_product,description_variant,quantity_cart,offer_variant,price_variant";
+        $select = "id_cart,url_product,type_variant,media_variant,name_product,description_variant,quantity_cart,offer_variant,price_variant";
         $url = "relations?rel=carts,variants,products&type=cart,variant,product&linkTo=id_user_cart&equalTo=".$_SESSION["user"]->id_user."&select=".$select;
         $method = "GET";
         $fields = array();

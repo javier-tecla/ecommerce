@@ -103,24 +103,27 @@ Carrito de compras
 
                             <?php if ($value->type_variant == "gallery"): ?>
 
-
                                 <div class="blockQuantity d-flex justify-content-center">
 
-                                    <div class="input-group mb-3 mt-2" style="width:120px">
+                                    <div class="input-group mb-3 mt-2" style="width:130px">
 
-                                        <span class="input-group-text btnInc" type="btnMin">
+                                        <span class="input-group-text btnInc" type="btnMin" key="<?php echo $key ?>" idCart="<?php echo $value->id_cart ?>">
                                             <i class="fas fa-minus"></i>
                                         </span>
 
-                                        <input type="number" class="form-control text-center showQuantity" onwheel="return false;" value="<?php echo $value->quantity_cart ?>">
+                                        <input type="number" class="form-control text-center showQuantity_<?php echo $key ?> showQuantity" onwheel="return false;" value="<?php echo $value->quantity_cart ?>">
 
-                                        <span class="input-group-text btnInc" type="btnMax">
+                                        <span class="input-group-text btnInc" type="btnMax" key="<?php echo $key ?>" idCart="<?php echo $value->id_cart ?>">
                                             <i class="fas fa-plus"></i>
                                         </span>
 
                                     </div>
 
                                 </div>
+
+                            <?php else: ?>
+
+                                <input type="hidden" class="form-control text-center showQuantity" value="<?php echo $value->quantity_cart ?>">
 
                             <?php endif ?>
 
@@ -135,7 +138,8 @@ Carrito de compras
                             <?php if ($value->type_variant == "gallery"): ?>
 
                                 <span class="d-block d-lg-none">Precio:</span>
-                                $<span class="priceCart">
+
+                                $<span class="priceCart_<?php echo $key ?>">
                                     <?php
 
                                     if ($value->offer_variant > 0) {
@@ -143,7 +147,6 @@ Carrito de compras
                                     } else {
                                         echo number_format($value->price_variant, 2);
                                     }
-
                                     ?>
                                 </span>
 
@@ -158,8 +161,10 @@ Carrito de compras
                         <div class="col-6 col-lg-2 text-center mt-3">
 
                             <span class="d-block d-lg-none">Subtotal:</span>
-                            <span class="subtotalCart">
+                            $<span class="subtotalCart_<?php echo $key ?> subtotalCart">
+
                                 <?php
+
                                 if ($value->offer_variant > 0) {
                                     echo number_format(($value->quantity_cart * $value->offer_variant), 2);
                                 } else {
@@ -179,16 +184,15 @@ Carrito de compras
 
                         <div class="d-none d-lg-block col-lg-1 text-center mt-3">
 
-                            <button class="btn btn-light btn-sm border"><i class="fas fa-times"></i></button>
+                            <button class="btn btn-light btn-sm border remCart" key="<?php echo $key ?>" idCart="<?php echo $value->id_cart ?>"><i class="fas fa-times"></i></button>
 
                         </div>
 
-                        <div class="d-block d-lg-none" style="position: absolute; top:0px; left:100%; margin-left:-12%">
+                        <div class="d-block d-lg-none">
 
-                            <button class="btn btn-light btn-sm border"><i class="fas fa-times"></i></button>
+                            <button class="btn btn-light btn-sm border remCart" key="<?php echo $key ?>" idCart="<?php echo $value->id_cart ?>" style="position:absolute; top:0px; right:0px"><i class="fas fa-times"></i></button>
 
                         </div>
-
 
                     </div>
 
@@ -202,13 +206,12 @@ Carrito de compras
                         $totalCart += $value->quantity_cart * $value->price_variant;
                     }
 
-
                     ?>
-
 
                 <?php endforeach ?>
 
             </div>
+
 
             <!--=====================================
                 TOTAL
@@ -221,7 +224,7 @@ Carrito de compras
 
                     <div class="col-3 col-lg-9 text-right font-weight-bold">TOTAL:</div>
                     <div class="col-3 col-lg-2 text-center font-weight-bold">
-                        $<span><?php echo number_format($totalCart, 2) ?></span>
+                        $<span class="totalCart"><?php echo number_format($totalCart, 2)  ?></span>
                     </div>
                     <div class="col-6 col-lg-1 text-center">
                         <a href="/checkout" class="btn btn-default templateColor border-0 px-3 pulseAnimation">Pagar</a>
@@ -233,7 +236,7 @@ Carrito de compras
 
         <?php else: ?>
 
-            <div class="card-body">
+            <div class="card-body ">
                 <?php include "views/pages/no-found/no-found.php" ?>
             </div>
 
@@ -241,4 +244,7 @@ Carrito de compras
 
     </div>
 
+
 </div>
+
+<script src="<?php echo $path ?>views/assets/js/carts/carts.js"></script>
