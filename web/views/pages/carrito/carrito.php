@@ -50,7 +50,7 @@ Carrito de compras
 
                     <?php if ($key > 0): ?>
 
-                        <hr class="d-block d-lg-none my-4 mx-auto w-75" style="border:1px solid #aaa">
+                        <hr class="d-block d-lg-none my-4 mx-auto w-75 hr_<?php echo $key ?>" style="border:1px solid #aaa">
 
                     <?php endif ?>
 

@@ -120,7 +120,7 @@ class FormsController
 
         if ($data->status == 200) {
 
-            $url = "carts?token=".$this->token."&table=users&suffix=user";
+            $url = "carts?token=" . $this->token . "&table=users&suffix=user";
             $method = "POST";
             $fields = array(
                 "id_user_cart" => $data->results[0]->id_user,
@@ -133,7 +133,6 @@ class FormsController
             $addCart = CurlController::request($url, $method, $fields);
 
             echo $addCart->status;
-
         }
     }
 
@@ -144,21 +143,38 @@ class FormsController
     public $idCartUpdate;
     public $quantityCartUpdate;
 
-    public function updateCart(){
-      
-        $url = "carts?id=".$this->idCartUpdate."&nameId=id_cart&token=".$this->token."&table=users&suffix=user";
-      
+    public function updateCart()
+    {
+
+        $url = "carts?id=" . $this->idCartUpdate . "&nameId=id_cart&token=" . $this->token . "&table=users&suffix=user";
+
         $method = "PUT";
-        $fields = "quantity_cart=".$this->quantityCartUpdate;
+        $fields = "quantity_cart=" . $this->quantityCartUpdate;
 
         $updateCart = CurlController::request($url, $method, $fields);
 
-        echo $updateCart->status;         
-
+        echo $updateCart->status;
     }
 
+    /*=============================================
+    Remover carrito en base de datos
+    =============================================*/
 
+    public $idCartDelete;
+
+    public function remCart()
+    {
+
+        $url = "carts?id=" . $this->idCartDelete . "&nameId=id_cart&token=" . $this->token . "&table=users&suffix=user";
+        $method = "DELETE";
+        $fields = array();
+
+        $remCart = CurlController::request($url, $method, $fields);
+
+        echo $remCart->status;
+    }
 }
+
 
 if (isset($_POST["table"])) {
 
@@ -202,12 +218,19 @@ if (isset($_POST["idProductCart"])) {
     $addCart->addCart();
 }
 
-if(isset($_POST["idCartUpdate"])){
+if (isset($_POST["idCartUpdate"])) {
 
     $updateCart = new FormsController();
-    $updateCart -> token = $_POST["token"];
-    $updateCart -> idCartUpdate = $_POST["idCartUpdate"];
-    $updateCart -> quantityCartUpdate = $_POST["quantityCartUpdate"];
-    $updateCart -> updateCart();
+    $updateCart->token = $_POST["token"];
+    $updateCart->idCartUpdate = $_POST["idCartUpdate"];
+    $updateCart->quantityCartUpdate = $_POST["quantityCartUpdate"];
+    $updateCart->updateCart();
 }
 
+if (isset($_POST["idCartDelete"])) {
+
+    $remCart = new FormsController();
+    $remCart->token = $_POST["token"];
+    $remCart->idCartDelete = $_POST["idCartDelete"];
+    $remCart->remCart();
+}
