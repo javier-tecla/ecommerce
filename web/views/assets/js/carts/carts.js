@@ -2,7 +2,7 @@
 Aumentar y disminuir la cantidad
 =============================================*/
 
-$(".btnInc").click(function () {
+$(document).on("click",".btnInc", function() {
 
     let key = $(this).attr("key");
 
@@ -95,3 +95,52 @@ $(".btnInc").click(function () {
 	 })
 
 })
+
+ /*=============================================
+Quitar del carrito de compras
+=============================================*/
+
+$(document).on("click",".remCart", function(){
+
+	fncSweetAlert("confirm","¿Está seguro de borrar este item?","").then(resp=>{
+
+		if(resp){
+
+			let key = $(this).attr("key");
+
+			$(".hr_"+key).remove();
+
+			$(this).parent().parent().remove();
+
+			let idCart = $(this).attr("idCart");	
+
+			let data = new FormData();
+
+			data.append("token", localStorage.getItem("token-user"));
+		    data.append("idCartDelete", idCart);
+
+		     $.ajax({
+		    
+		        url:"/ajax/forms.ajax.php",
+		        method: "POST",
+		        data: data,
+		        contentType: false,
+		        cache: false,
+		        processData: false,
+		        success: function (response){
+		        	
+		        	if(response == 200){
+
+		        		let total = 0;
+
+		        	}
+
+		        }
+
+		    })
+
+		}
+
+	})
+
+})						
