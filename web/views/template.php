@@ -390,6 +390,7 @@ Verificación de usuarios
         $routesArray[0] == "perfil" ||
         $routesArray[0] == "salir" ||
         $routesArray[0] == "carrito" ||
+        $routesArray[0] == "checkout" ||
         $routesArray[0] == "no-found"
       ) {
 
