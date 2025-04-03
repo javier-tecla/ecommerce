@@ -264,36 +264,48 @@ class TemplateController
 
             return "error";
         }
-
     }
 
-     /*=================================================
-        Función para generar texto aleatorio
-        ===============================================*/
+    /*=============================================
+	Función para generar códigos alfanuméricos aleatorios
+	=============================================*/
 
-        public static function genPassword($length){
+    public static function genPassword($length)
+    {
 
-            $password = "";
-            $chain = "0123456789abcdefghijklmnopqrstuvwxyz";
+        $password = "";
+        $chain = "0123456789abcdefghijklmnopqrstuvwxyz";
 
-            $password = substr(str_shuffle($chain),0,$length);
+        $password = substr(str_shuffle($chain), 0, $length);
 
-            return $password;
-        }
+        return $password;
+    }
 
-        /*=================================================
+    /*=================================================
         Función para redireccionar al mismo lugar
         ===============================================*/
 
-        public static function urlRedirect(){
+    public static function urlRedirect()
+    {
 
-            if (!empty($_SERVER["HTTPS"]) && ("on" == $_SERVER["HTTPS"])) {
+        if (!empty($_SERVER["HTTPS"]) && ("on" == $_SERVER["HTTPS"])) {
 
-                return "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-            } else {
-    
-                return "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
-            }
+            return "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
+        } else {
 
+            return "http://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];
         }
+    }
+
+    /*=============================================
+	Función para generar códigos numéricos aleatorios
+	=============================================*/
+
+    static public function genCodec($length)
+    {
+
+        $codec = rand(1 * $length, (10 * $length) - 1) . Time();
+
+        return $codec;
+    }
 }
