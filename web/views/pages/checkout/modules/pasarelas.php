@@ -59,7 +59,13 @@
 
 		<button type="submit" class="btn btn-default btn-block templateColor border-0 rounded py-2">Proceder al pago</button>
 
-		
+		<?php 
+
+            require_once "controllers/payments.controller.php";
+            $payment = new PaymentsController();
+            $payment -> payment();
+
+        ?>
 
 	</div>
 
