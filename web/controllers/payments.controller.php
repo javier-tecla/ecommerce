@@ -58,11 +58,19 @@ class PaymentsController
 						}
 					}
 
-					echo '<pre>';
-					print_r($totalCart);
-					echo '</pre>';
 					$ref = TemplateController::genCodec(1000);
 
+					/*=============================================
+					Notificación por email al vendedor
+					=============================================*/
+
+					$subject = "Recibirá un pago de $" . number_format($totalCart, 2) . " a través de" . $_POST["optradio"];
+					$email = null;
+					$title = "Referencia del pago " . $ref;
+					$message = "<h4>¡Recibirá un pago de $" . number_format($totalCart, 2) . "!</4><h5>De " . TemplateController::capitalize(trim($_POST["name_user"])) . ", celular: " . str_replace("+", "", explode("_", $_POST["country_user"])[1]) . "_" . str_replace("-", "", $_POST["phone_user"]) . ", " . TemplateController::capitalize(trim($_POST["city_user"])) . " - " . TemplateController::capitalize(trim($_POST["department_user"])) . ". Del producto: " . $carts[0]->name_product . "</h5>";
+					$link = TemplateController::path() . 'thanks?ref=' . $ref;
+
+					TemplateController::sendEmail($subject, $email, $title, $message, $link);
 
 					/*=============================================
 					Pasarela de pagos de PayPal
@@ -70,13 +78,58 @@ class PaymentsController
 
 					if ($_POST["optradio"] == "paypal") {
 
-						echo '<script>
+						$url = "v2/checkout/orders";
+						$method = "POST";
+						$fields = '{
+						  "intent": "CAPTURE",
+						  "purchase_units": [
+						    {
+						      "reference_id": "' . $ref . '",
+						      "amount": {
+						        "currency_code": "USD",
+						        "value": "' . $totalCart . '"
+						      }
+						    }
+						  ],
+						  "payment_source": {
+						    "paypal": {
+						      "experience_context": {
+						        "payment_method_preference": "IMMEDIATE_PAYMENT_REQUIRED",
+						        "user_action": "PAY_NOW",
+						        "return_url": "' . TemplateController::path() . 'thanks?ref=' . $ref . '",
+						        "cancel_url": "' . TemplateController::path() . 'checkout"
+						      }
+						    }
+						  }
+						}';
 
-							window.location ="' . TemplateController::path(). 'thanks?ref='.$ref.'"
+						$paypal = CurlController::paypal($url, $method, $fields);
 
-						</script>';
+						if ($paypal->status == "PAYER_ACTION_REQUIRED") {
+
+							$count = 0;
+
+							foreach ($carts as $key => $value) {
+
+								$url = "carts?id=" . $value->id_cart . "&nameId=id_cart&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
+								$method = "PUT";
+								$fields = "ref_cart=" . $ref . "&order_cart=" . $paypal->id . "&method_cart=" . $_POST["optradio"];
+
+								$updateCart = CurlController::request($url, $method, $fields);
+
+								$count++;
+
+								if ($count == count($carts)) {
+
+									echo '<script>
+
+										window.location ="' . $paypal->links[1]->href . '"
+
+									</script>';
+								}
+							}
+						}
 					}
-
 
 					/*=============================================
 					Pasarela de pagos de D-Local Go
@@ -84,11 +137,41 @@ class PaymentsController
 
 					if ($_POST["optradio"] == "dlocal") {
 
-						echo '<script>
+						$url = "v1/payments";
+						$method = "POST";
+						$fields = '{
+						    "amount": ' . $totalCart . ',
+						    "currency" : "USD",
+						    "success_url":"' . TemplateController::path() . 'thanks?ref=' . $ref . '",
+						    "back_url": "' . TemplateController::path() . 'checkout"
+						}';
 
-							window.location ="' . TemplateController::path(). 'thanks?ref='.$ref.'"
+						$dlocal = CurlController::dlocal($url, $method, $fields);
 
-						</script>';
+						if ($dlocal->status == "PENDING") {
+
+							$count = 0;
+
+							foreach ($carts as $key => $value) {
+
+								$url = "carts?id=" . $value->id_cart . "&nameId=id_cart&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
+								$method = "PUT";
+								$fields = "ref_cart=" . $ref . "&order_cart=" . $dlocal->id . "&method_cart=" . $_POST["optradio"];
+
+								$updateCart = CurlController::request($url, $method, $fields);
+
+								$count++;
+
+								if ($count == count($carts)) {
+
+									echo '<script>
+
+										window.location ="' . $dlocal->redirect_url . '"
+
+									</script>';
+								}
+							}
+						}
 					}
 
 					/*=============================================
@@ -97,11 +180,54 @@ class PaymentsController
 
 					if ($_POST["optradio"] == "mercado_pago") {
 
-						echo '<script>
+						$url = "checkout/preferences";
+						$method = "POST";
+						$fields = '{
+						   "auto_return":"approved",
+						    "back_urls": {
+						    "success":"' . TemplateController::path() . 'thanks?ref=' . $ref . '",
+						    "pending":"' . TemplateController::path() . 'thanks?ref=' . $ref . '",
+						    "failure":"' . TemplateController::path() . 'checkout"
+						    },
+						    "expires": false,
+						    "items": [
+						        {
+						        "title": "Pago en Ecommerce",
+						        "quantity": 1,
+						        "currency_id": "ARS",
+						        "unit_price": ' . round(TemplateController::exchange("currency") * $totalCart) . '
+						        }
+						    ],
+						    "notification_url":"' . TemplateController::path() . 'thanks"
 
-							window.location ="' . TemplateController::path(). 'thanks?ref='.$ref.'"
+						}';
 
-						</script>';
+						$mercadoPago = CurlController::mercadoPago($url, $method, $fields);
+
+						if ($mercadoPago->auto_return == "approved") {
+
+							$count = 0;
+
+							foreach ($carts as $key => $value) {
+
+								$url = "carts?id=" . $value->id_cart . "&nameId=id_cart&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
+								$method = "PUT";
+								$fields = "ref_cart=" . $ref . "&order_cart=" . null . "&method_cart=" . $_POST["optradio"];
+
+								$updateCart = CurlController::request($url, $method, $fields);
+
+								$count++;
+
+								if ($count == count($carts)) {
+
+									echo '<script>
+
+										window.location ="' . $mercadoPago->init_point . '"
+
+									</script>';
+								}
+							}
+						}
 					}
 				}
 			}

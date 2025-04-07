@@ -308,4 +308,43 @@ class TemplateController
 
         return $codec;
     }
+
+    /*=============================================
+	Convertidor de moneda
+	=============================================*/
+
+    static public function exchange($type){
+
+		$data = file_get_contents("http://www.geoplugin.net/json.gp");
+
+		if(json_decode($data)->geoplugin_status == 200){
+
+			if($type == "currency"){
+
+				return json_decode($data)->geoplugin_currencyConverter; 
+			}
+
+			if($type == "country"){
+
+				return json_decode($data)->geoplugin_countryName;
+			}
+
+			if($type == "ip"){
+
+				return json_decode($data)->geoplugin_request;
+			}
+
+			if($type == "timezone"){
+
+				return json_decode($data)->geoplugin_timezone;
+			}
+
+		}else{
+
+			return "error";
+		}
+
+	}
+
+    
 }
