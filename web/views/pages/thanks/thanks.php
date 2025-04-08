@@ -35,8 +35,77 @@ if (isset($_GET["ref"])) {
         $status = "ok";
       }
     }
-  }
 
+    /*=============================================
+    Validar el pago con DLocal
+    =============================================*/
+
+    if ($carts[0]->method_cart == "dlocal") {
+
+      $url = "v1/payments/" . $carts[0]->order_cart;
+      $dlocal = CurlController::dlocal($url, $method, $fields);
+
+      if ($dlocal->status == "PAID") {
+
+        $status = "ok";
+      }
+    }
+
+    /*=============================================
+    Validar el pago con Mercado Pago
+    =============================================*/
+
+    if ($carts[0]->method_cart == "mercado_pago") {
+
+      if ($carts[0]->order_cart == "") {
+
+        if (isset($_GET["payment_id"])) {
+
+          $count = 0;
+
+          foreach ($carts as $key => $value) {
+
+            $url = "carts?id=" . $value->id_cart . "&nameId=id_cart&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
+            $method = "PUT";
+            $fields = "order_cart=" . $_GET["payment_id"];
+
+            $updateCart = CurlController::request($url, $method, $fields);
+
+            if ($count == count($carts)) {
+
+              $url = "v1/payments/" . $_GET["payment_id"];
+              $method = 'GET';
+              $fields = array();
+
+              $mercadoPago = CurlController::mercadoPago($url, $method, $fields);
+
+              if ($mercadoPago->status == "approved") {
+
+                $status = "ok";
+              }
+            }
+          }
+        }
+      } else {
+
+        $url = "v1/payments/" . $carts[0]->order_cart;
+        $method = 'GET';
+        $fields = array();
+
+        $mercadoPago = CurlController::mercadoPago($url, $method, $fields);
+
+        if ($mercadoPago->status == "approved") {
+
+          $status = "ok";
+        }
+      }
+    }
+
+  
+
+    
+
+  }
 } else {
 
   echo '<script>
@@ -97,4 +166,3 @@ Thanks
   </div>
 
 </div>
-
