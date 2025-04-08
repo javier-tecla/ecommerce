@@ -5,7 +5,7 @@
 		
 			
 			
-			<div class="form-check border px-2 clearfix mb-3">
+			<!-- <div class="form-check border px-2 clearfix mb-3">
 			
 				<input type="radio" class="form-check-input mt-2 ml-1" id="radio1" name="optradio" value="paypal" checked>
 
@@ -18,11 +18,11 @@
 
 				</label>
 
-			</div>
+			</div> -->
 
 		
 
-		<div class="form-check border px-2 clearfix mb-3">
+		<!-- <div class="form-check border px-2 clearfix mb-3">
 		
 			<input type="radio" class="form-check-input mt-2 ml-1" id="radio2" name="optradio" value="dlocal">
 
@@ -35,13 +35,13 @@
 
 			</label>
 
-		</div>
+		</div> -->
 
 		
 			
 			<div class="form-check border px-2 clearfix mb-3">
 			
-				<input type="radio" class="form-check-input mt-2 ml-1" id="radio3" name="optradio" value="mercado_pago">
+				<input type="radio" class="form-check-input mt-2 ml-1" id="radio3" name="optradio" value="mercado_pago" checked>
 
 				<label for="radio3" class="form-check-label float-right">
 					

@@ -25,31 +25,31 @@ if (isset($_GET["ref"])) {
     Validar el pago con PayPal
     =============================================*/
 
-    if ($carts[0]->method_cart == "paypal") {
+    // if ($carts[0]->method_cart == "paypal") {
 
-      $url = "v2/checkout/orders/" . $carts[0]->order_cart;
-      $paypal = CurlController::paypal($url, $method, $fields);
+    //   $url = "v2/checkout/orders/" . $carts[0]->order_cart;
+    //   $paypal = CurlController::paypal($url, $method, $fields);
 
-      if ($paypal->status == "APPROVED") {
+    //   if ($paypal->status == "APPROVED") {
 
-        $status = "ok";
-      }
-    }
+    //     $status = "ok";
+    //   }
+    // }
 
     /*=============================================
     Validar el pago con DLocal
     =============================================*/
 
-    if ($carts[0]->method_cart == "dlocal") {
+    // if ($carts[0]->method_cart == "dlocal") {
 
-      $url = "v1/payments/" . $carts[0]->order_cart;
-      $dlocal = CurlController::dlocal($url, $method, $fields);
+    //   $url = "v1/payments/" . $carts[0]->order_cart;
+    //   $dlocal = CurlController::dlocal($url, $method, $fields);
 
-      if ($dlocal->status == "PAID") {
+    //   if ($dlocal->status == "PAID") {
 
-        $status = "ok";
-      }
-    }
+    //     $status = "ok";
+    //   }
+    // }
 
     /*=============================================
     Validar el pago con Mercado Pago
