@@ -115,40 +115,40 @@ if($shopping->status == 200){
 			                Línea de tiempo
 			                ===========================================--> 
 
-			                <div class="container">
+                            <div class="container">
 			                	
 			                	<ul class="timeline-3">
 
 			                		<li>
 			                			<p class="font-weight-bold float-start">Creando guía de seguimiento</p>
-			                			<p class="float-end"><?php echo $value->start_date_order ?></p>
+			                			<p class="float-end"><?php echo TemplateController::formatDate(1, $value->start_date_order) ?></p>
 			                			<div class="clearfix"></div>
 			                		</li>
 
 			                		<li
-                                    class="<?php if ($value->track_order > 0): ?> text-dark <?php else: ?> text-light<?php endif ?>"
-                                    >
-			                			<p class="font-weight-bold float-start">En reparto</p>         			
-                                        <?php if ($value->process_order > 0 && $value->track_order != ""): ?>
+			                		class="<?php if ($value->process_order > 0): ?> text-dark <?php else: ?> text-light<?php endif ?>"
+			                		>
+			                			<p class="font-weight-bold float-start">En reparto</p>
 
-			                			<p class="float-end"><?php echo $value->medium_date_order ?></p>
+			                			<?php if ($value->process_order > 0 && $value->track_order != ""): ?>
+			                			
+			                			<p class="float-end"><?php echo TemplateController::formatDate(1, $value->medium_date_order) ?></p>
 
 			                			<span class="ml-2 badge badge-pill badge-primary">
-			                				<small class="mt-2">Guía de seguimiento <?php echo $value->track_order ?> </small>
+			                				<small class="mt-2">Guía de seguimiento <?php echo $value->track_order ?></small>
 			                			</span>
 
-                                        <?php endif ?>
+			                			<?php endif ?>
 			                			<div class="clearfix"></div>
 			                		</li>
 
 			                		<li
-                                    class="<?php if ($value->process_order > 1): ?> text-dark <?php else: ?> text-light<?php endif ?>"
-                                    >
+			                		class="<?php if ($value->process_order > 1): ?> text-dark <?php else: ?> text-light<?php endif ?>"
+			                		>
 			                			<p class="font-weight-bold float-start">Entregado <i class="far fa-check-circle fa-lg"></i></p>
-                                        <?php if ($value->process_order > 1 && $value->track_order != ""): ?>
-
-			                			<p class="float-end"><?php echo  $value->end_date_order ?></p>
-                                        <?php endif ?>
+			                			<?php if ($value->process_order > 1 && $value->track_order != ""): ?>
+			                			<p class="float-end"><?php echo TemplateController::formatDate(1, $value->end_date_order) ?></p>
+			                			<?php endif ?>
 			                			<div class="clearfix"></div>
 			                		</li>
 			                		

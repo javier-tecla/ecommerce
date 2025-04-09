@@ -313,38 +313,74 @@ class TemplateController
 	Convertidor de moneda
 	=============================================*/
 
-    static public function exchange($type){
+    static public function exchange($type)
+    {
 
-		$data = file_get_contents("http://www.geoplugin.net/json.gp");
+        $data = file_get_contents("http://www.geoplugin.net/json.gp");
 
-		if(json_decode($data)->geoplugin_status == 200){
+        if (json_decode($data)->geoplugin_status == 200) {
 
-			if($type == "currency"){
+            if ($type == "currency") {
 
-				return json_decode($data)->geoplugin_currencyConverter; 
-			}
+                return json_decode($data)->geoplugin_currencyConverter;
+            }
 
-			if($type == "country"){
+            if ($type == "country") {
 
-				return json_decode($data)->geoplugin_countryName;
-			}
+                return json_decode($data)->geoplugin_countryName;
+            }
 
-			if($type == "ip"){
+            if ($type == "ip") {
 
-				return json_decode($data)->geoplugin_request;
-			}
+                return json_decode($data)->geoplugin_request;
+            }
 
-			if($type == "timezone"){
+            if ($type == "timezone") {
 
-				return json_decode($data)->geoplugin_timezone;
-			}
+                return json_decode($data)->geoplugin_timezone;
+            }
+        } else {
 
-		}else{
+            return "error";
+        }
+    }
 
-			return "error";
-		}
+    /*=============================================
+	Función para dar formato a las fechas
+	=============================================*/
 
-	}
+    static public function formatDate($type, $value)
+    {
+        // Configurar timezone una sola vez, idealmente fuera de esta función
+        date_default_timezone_set(TemplateController::exchange("timezone"));
 
-    
+        try {
+            // Validar y crear objeto DateTime
+            $date = new DateTime($value);
+
+            // Configurar para español
+            $formatter = new IntlDateFormatter(
+                'es_ES',
+                IntlDateFormatter::FULL,
+                IntlDateFormatter::NONE
+            );
+
+            switch ($type) {
+                case 1:
+                    return $date->format('d') . ' de ' .
+                        ucfirst($formatter->formatObject($date, 'MMMM')) . ', ' .
+                        $date->format('Y');
+                case 2:
+                    return ucfirst($formatter->formatObject($date, 'MMM')) . ' ' .
+                        $date->format('Y');
+                case 3:
+                    return $date->format('d - m - Y');
+                default:
+                    return $date->format('Y-m-d'); // Valor predeterminado
+            }
+        } catch (Exception $e) {
+            // Manejar error de formato de fecha
+            return "Formato de fecha inválido";
+        }
+    }
 }
