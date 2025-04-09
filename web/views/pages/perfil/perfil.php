@@ -57,7 +57,7 @@ Perfil
                 require_once "controllers/users.controller.php";
                 $verification = new UsersController();
                 $verification->verification();
-
+                
                 ?>
 
             </form>
@@ -74,19 +74,19 @@ Perfil
 
         <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
-                <a class="nav-link active" data-bs-toggle="tab" href="#data">Datos</a>
+                <a class="nav-link <?php if (!isset($routesArray[1])): ?> active <?php endif ?> " data-bs-toggle="tab" href="#data">Datos</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#favorite">Productos Favoritos</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#shopping">Mis compras</a>
+                <a class="nav-link <?php if (isset($routesArray[1]) && $routesArray[1] == "shopping"): ?> active <?php endif ?>" data-bs-toggle="tab" href="#shopping">Mis compras</a>
             </li>
         </ul>
 
         <div class="tab-content border-bottom border-left border-right">
 
-            <div class="tab-pane container active" id="data">
+            <div class="tab-pane container <?php if (!isset($routesArray[1])): ?> active <?php else: ?> fade <?php endif ?>" id="data">
                 <?php include "modules/datos.php" ?>
             </div>
 
@@ -94,8 +94,10 @@ Perfil
             <?php include "modules/favoritos.php" ?>
             </div>
 
-            <div class="tab-pane container fade" id="shopping">
-                Acá van los productos comprados
+            <div class="tab-pane container <?php if (isset($routesArray[1]) && $routesArray[1] == "shopping" ): ?> active <?php else: ?> fade <?php endif ?>" id="shopping">
+                
+                <?php include "modules/compras.php" ?>
+                
             </div>
 
         </div>
