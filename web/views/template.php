@@ -396,6 +396,7 @@ Verificación de usuarios
         $routesArray[0] == "carrito" ||
         $routesArray[0] == "checkout" ||
         $routesArray[0] == "thanks" ||
+        $routesArray[0] == "aprendizaje" ||
         $routesArray[0] == "no-found"
       ) {
 
