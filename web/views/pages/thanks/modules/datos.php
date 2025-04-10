@@ -1,6 +1,16 @@
 <?php
 
-$url = "users?linkTo=id_user&equalTo=" . $_SESSION["user"]->id_user;
+if (isset($carts[0]->id_user_cart)) {
+
+	$idUser = $carts[0]->id_user_cart;
+
+} else {
+
+	$idUser = $carts[0]->id_user_order;
+}
+
+
+$url = "users?linkTo=id_user&equalTo=" .$idUser;
 $method = "GET";
 $fields = array();
 
@@ -65,10 +75,8 @@ $user = CurlController::request($url, $method, $fields)->results[0];
 
 				$methodCart = $carts[0]->method_order;
 			}
-			
 
 			?>
-
 
 			<p class="small m-0 p-0"><strong>Método de pago</strong></p>
 			<p class="small m-0 p-0">Pasarela de pagos <span class="text-uppercase"><?php echo $methodCart ?></span></p>

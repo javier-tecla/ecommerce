@@ -4,12 +4,10 @@ if (isset($_GET["ref"])) {
 
   $status = "pending";
 
-
   /*=============================================
   Consultar referencia
   =============================================*/
-
-  // $url = "carts?linkTo=ref_cart&equalTo=".$_GET["ref"];
+  
   $url = "relations?rel=carts,variants,products&type=cart,variant,product&linkTo=ref_cart&equalTo=" . $_GET["ref"];
   $method = "GET";
   $fields = array();
@@ -25,101 +23,94 @@ if (isset($_GET["ref"])) {
     Validar el pago con PayPal
     =============================================*/
 
-    // if ($carts[0]->method_cart == "paypal") {
+    if ($carts[0]->method_cart == "paypal") {
 
-    //   $url = "v2/checkout/orders/" . $carts[0]->order_cart;
-    //   $paypal = CurlController::paypal($url, $method, $fields);
+      $url = "v2/checkout/orders/" . $carts[0]->order_cart;
+      $paypal = CurlController::paypal($url, $method, $fields);
 
-    //   if ($paypal->status == "APPROVED") {
+      if ($paypal->status == "APPROVED") {
 
-    //     $status = "ok";
-    //   }
-    // }
+        $status = "ok";
+      }
+    }
 
     /*=============================================
     Validar el pago con DLocal
     =============================================*/
 
-    // if ($carts[0]->method_cart == "dlocal") {
+    if ($carts[0]->method_cart == "dlocal") {
 
-    //   $url = "v1/payments/" . $carts[0]->order_cart;
-    //   $dlocal = CurlController::dlocal($url, $method, $fields);
+      $url = "v1/payments/" . $carts[0]->order_cart;
+      $dlocal = CurlController::dlocal($url, $method, $fields);
 
-    //   if ($dlocal->status == "PAID") {
+      if ($dlocal->status == "PAID") {
 
-    //     $status = "ok";
-    //   }
-    // }
+        $status = "ok";
+      }
+    }
 
     /*=============================================
     Validar el pago con Mercado Pago
     =============================================*/
 
-    if($carts[0]->method_cart == "mercado_pago"){
+    if ($carts[0]->method_cart == "mercado_pago") {
 
-      if($carts[0]->order_cart == ""){
+      if ($carts[0]->order_cart == "") {
 
-        if(isset($_GET["payment_id"])){
+        if (isset($_GET["payment_id"])) {
 
           $count = 0;
 
           foreach ($carts as $key => $value) {
-            
-            $url = "carts?id=".$value->id_cart."&nameId=id_cart&token=".$_SESSION["user"]->token_user."&table=users&suffix=user";
+
+            $url = "carts?id=" . $value->id_cart . "&nameId=id_cart&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
             $method = "PUT";
-            $fields = "order_cart=".$_GET["payment_id"];
+            $fields = "order_cart=" . $_GET["payment_id"];
 
             $updateCart = CurlController::request($url, $method, $fields);
 
-            if($count == count($carts)){
+            if ($count == count($carts)) {
 
-              $url = "v1/payments/".$_GET["payment_id"];
+              $url = "v1/payments/" . $_GET["payment_id"];
               $method = 'GET';
               $fields = array();
 
-              $mercadoPago = CurlController::mercadoPago($url,$method,$fields);
+              $mercadoPago = CurlController::mercadoPago($url, $method, $fields);
 
-              if($mercadoPago->status == "approved"){
+              if ($mercadoPago->status == "approved") {
 
                 $status = "ok";
-             
               }
-            
             }
-          
           }
-
         }
+      } else {
 
-      }else{
-
-        $url = "v1/payments/".$carts[0]->order_cart;
+        $url = "v1/payments/" . $carts[0]->order_cart;
         $method = 'GET';
         $fields = array();
 
-        $mercadoPago = CurlController::mercadoPago($url,$method,$fields);
+        $mercadoPago = CurlController::mercadoPago($url, $method, $fields);
 
-        if($mercadoPago->status == "approved"){
+        if ($mercadoPago->status == "approved") {
 
           $status = "ok";
-       
         }
-
       }
-
     }
 
     /*=============================================
     Crear órdenes de compra y eliminar datos del carrito
     =============================================*/
 
-    if($status == "ok"){
+
+    if ($status == "ok") {
 
       $count = 0;
 
       foreach ($carts as $key => $value) {
 
-        $url = "orders?token=".$_SESSION["user"]->token_user."&table=users&suffix=user";
+        $url = "orders?token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
         $method = 'POST';
         $fields = array(
           "id_user_order" => $value->id_user_cart,
@@ -135,44 +126,32 @@ if (isset($_GET["ref"])) {
 
         );
 
-        $orders = CurlController::request($url,$method,$fields);
+        $orders = CurlController::request($url, $method, $fields);
 
-        if($orders->status == 200){
+        if ($orders->status == 200) {
 
-          $url = "carts?id=".$value->id_cart."&nameId=id_cart&token=".$_SESSION["user"]->token_user."&table=users&suffix=user";
+          $url = "carts?id=" . $value->id_cart . "&nameId=id_cart&token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
           $method = "DELETE";
           $fields = array();
           $deleteCart = CurlController::request($url, $method, $fields);
 
           $count++;
 
-          if($count == count($carts)){
+          if ($count == count($carts)) {
 
             /*=============================================
             Enviamos correo electrónico de confirmación del pedido
             =============================================*/
-
-            $subject = "Su compra con la tienda Ecommerce ha sido confirmada";
-            $email = $_SESSION["user"]->email_user;
-            $title = "Referencia del pago ".$_GET["ref"];
-            $message = "<h4>La compra del producto ".$carts[0]->name_product." ha sido confirmada y comenzará el proceso de envío</h4>";
-            $link = TemplateController::path().'thanks?ref='.$_GET["ref"];
-
-            TemplateController::sendEmail($subject, $email, $title, $message, $link);
-
           }
-
         }
-
       }
-
     }
+  } else {
 
-  }else{
-
-    /*=============================================
+     /*=============================================
     Traer órdenes de compra
     =============================================*/
+
     $url = "relations?rel=orders,variants,products&type=order,variant,product&linkTo=ref_order&equalTo=".$_GET["ref"];
     $method = "GET";
     $fields = array();
@@ -193,12 +172,12 @@ if (isset($_GET["ref"])) {
 
     }
 
+  
   }
-
-}else{
+} else {
 
   echo '<script>
-     window.location = "'.$path.'404";
+     window.location = "' . $path . '404";
   </script>';
 }
 
@@ -209,11 +188,11 @@ Breadcrumb
 ===========================================-->
 
 <div class="container-fluid bg-light border mb-2">
-  
+
   <div class="container py-3">
 
     <div class="d-flex flex-row-reverse lead small">
-      
+
       <div class="px-1 font-weight-bold">¡Gracias por su compra!</div>
       <div class="px-1">/</div>
       <div class="px-1"><a href="/">Inicio</a></div>
@@ -235,15 +214,15 @@ Thanks
     <div class="card-body bg-light">
 
       <div class="row row-cols-1 row-cols-lg-2">
-          
+
         <div class="col">
-          
+
           <?php include "modules/datos.php" ?>
 
         </div>
 
         <div class="col">
-          
+
           <?php include "modules/carrito.php" ?>
 
         </div>
@@ -255,4 +234,3 @@ Thanks
   </div>
 
 </div>
-

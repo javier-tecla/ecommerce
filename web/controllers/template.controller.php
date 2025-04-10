@@ -53,6 +53,11 @@ class TemplateController
 
         $mail->setFrom("noreply@ecommerce.com", "Ecommerce");
 
+        if($email == null){
+
+            $email = "admin@correo.com";
+        }
+
         $mail->Subject = $subject;
 
         $mail->addAddress($email);
