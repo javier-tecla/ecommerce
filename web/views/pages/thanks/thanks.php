@@ -7,7 +7,7 @@ if (isset($_GET["ref"])) {
   /*=============================================
   Consultar referencia
   =============================================*/
-  
+
   $url = "relations?rel=carts,variants,products&type=cart,variant,product&linkTo=ref_cart&equalTo=" . $_GET["ref"];
   $method = "GET";
   $fields = array();
@@ -142,37 +142,41 @@ if (isset($_GET["ref"])) {
             /*=============================================
             Enviamos correo electrónico de confirmación del pedido
             =============================================*/
+
+            $subject = "Su compra con la tienda Ecommerce ha sido confirmada";
+            $email = $_SESSION["user"]->email_user;
+            $title = "Referencia del pago " . $_GET["ref"];
+            $message = "<h4>La compra del producto " . $carts[0]->name_product . " ha sido confirmada y comenzára el proceso de envío</h4>";
+            $link = TemplateController::path() . 'thanks?ref=' . $_GET["ref"];
+
+            TemplateController::sendEmail($subject, $email, $title, $message, $link);
           }
         }
       }
     }
   } else {
 
-     /*=============================================
+    /*=============================================
     Traer órdenes de compra
     =============================================*/
 
-    $url = "relations?rel=orders,variants,products&type=order,variant,product&linkTo=ref_order&equalTo=".$_GET["ref"];
+    $url = "relations?rel=orders,variants,products&type=order,variant,product&linkTo=ref_order&equalTo=" . $_GET["ref"];
     $method = "GET";
     $fields = array();
 
-    $carts = CurlController::request($url,$method,$fields);
+    $carts = CurlController::request($url, $method, $fields);
 
-    if($carts->status == 200){
+    if ($carts->status == 200) {
 
       $carts = $carts->results;
 
       $status = "ok";
-    
-    }else{
+    } else {
 
       echo '<script>
-         window.location = "'.$path.'404";
+         window.location = "' . $path . '404";
       </script>';
-
     }
-
-  
   }
 } else {
 
