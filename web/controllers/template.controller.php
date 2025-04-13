@@ -53,7 +53,7 @@ class TemplateController
 
         $mail->setFrom("noreply@ecommerce.com", "Ecommerce");
 
-        if($email == null){
+        if ($email == null) {
 
             $email = "admin@correo.com";
         }
@@ -89,8 +89,6 @@ class TemplateController
                 <hr style="border: 1px solid #ccc; width: 80%;">
 
                 <h5 style="font-weight: 100; color: #999;">Si no solicitó el envío de este correo, comuniquese con nosotros de inmediato.</h5>
-
-
 
             </center>
 

@@ -88,14 +88,7 @@ if ($template->status == 200) {
 Datos en Arreglo
 =============================================*/
 
-$keywords = null;
-
-foreach (json_decode($template->keywords_template, true) as $key => $value) {
-
-  $keywords .= $value . ", ";
-}
-
-$keywords = substr($keywords, 0, -2);
+  $keywords = $template->keywords_template;
 
 /*=============================================
 Datos en Objeto

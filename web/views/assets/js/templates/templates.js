@@ -49,3 +49,20 @@ $(document).on("change",".changeTemplate", function(){
 	})
 
 })
+
+/*=============================================
+Codificar HTML de Google Fonts
+=============================================*/
+
+if($("#fontFamily").length > 0){
+
+	$("input[name='fontFamily']").val(encodeURIComponent($("#fontFamily").val()))
+}
+
+
+$(document).on("change","#fontFamily",function(){
+
+	$("input[name='fontFamily']").val(encodeURIComponent($(this).val()))
+
+})
+
