@@ -19,6 +19,10 @@ class DeleteController
             return;
         }
 
+        /*=============================================
+        Borrar categorias
+        =============================================*/
+
         if ($this->table == "categories") {
 
             $select = "url_category,image_category,subcategories_category";
@@ -50,6 +54,10 @@ class DeleteController
 
             rmdir("../views/assets/img/categories/" . $dataItem->url_category);
         }
+
+        /*=============================================
+        Borrar subcategorias
+        =============================================*/
 
         if ($this->table == "subcategories") {
 
@@ -99,6 +107,10 @@ class DeleteController
 
             $updateCategory = CurlController::request($url, $method, $fields);
         }
+
+        /*=============================================
+        Borrar productos
+        =============================================*/
 
         if ($this->table == "products") {
 
@@ -156,6 +168,10 @@ class DeleteController
             $updateSubcategory = CurlController::request($url, $method, $fields);
         }
 
+        /*=============================================
+        Borrar variantes
+        =============================================*/
+
 
         if ($this->table == "variants") {
 
@@ -178,6 +194,53 @@ class DeleteController
                 }
             }
         }
+
+        /*=============================================
+        Borrar plantillas
+        =============================================*/
+
+        if ($this->table == "templates") {
+
+            $url = "templates?select=id_template";
+            $method = "GET";
+            $fields = array();
+
+            $totalTemplates = CurlController::request($url, $method, $fields)->total;
+
+            if ($totalTemplates == 1) {
+
+                echo "no-borrar";
+                return;
+            }
+
+            $select = "id_template,logo_template,icon_template,cover_template,active_template";
+            $url = "templates?linkTo=id_template&equalTo=" . base64_decode($this->id) . "&select=" . $select;
+            $method = "GET";
+            $fields = array();
+
+            $dataItem = CurlController::request($url, $method, $fields)->results[0];
+
+            if ($dataItem->active_template == "ok") {
+
+                echo "no-borrar";
+                return;
+            }
+
+            /*=============================================
+            Borrar Imagenes
+            =============================================*/
+
+            unlink("../views/assets/img/template/" . $dataItem->id_template . "/" . $dataItem->logo_template);
+            unlink("../views/assets/img/template/" . $dataItem->id_template . "/" . $dataItem->icon_template);
+            unlink("../views/assets/img/template/" . $dataItem->id_template . "/" . $dataItem->cover_template);
+
+            /*=============================================
+            Borrar Directorio
+            =============================================*/
+
+            rmdir("../views/assets/img/template/" . $dataItem->id_template);
+        }
+
 
         $url = $this->table . "?id=" . base64_decode($this->id) . "&nameId=" . $this->nameId . "&token=" . $this->token . "&table=admins&suffix=admin";
         $method = "DELETE";
