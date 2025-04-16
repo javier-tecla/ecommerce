@@ -49,9 +49,9 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/integraciones" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "integraciones"): ?> active <?php endif ?>">
+                <a href="/admin/redes-sociales" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "redes-sociales"): ?> active <?php endif ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Integraciones</p>
+                  <p>Redes Sociales</p>
                 </a>
               </li>
             </ul>

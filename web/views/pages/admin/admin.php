@@ -43,7 +43,7 @@ Lista blanca de url permitidas en el dashboard
         if (
             $routesArray[1] == "administradores" ||
             $routesArray[1] == "plantillas" ||
-            $routesArray[1] == "integraciones" ||
+            $routesArray[1] == "redes-sociales" ||
             $routesArray[1] == "slides" ||
             $routesArray[1] == "banners" ||
             $routesArray[1] == "categorias" ||
