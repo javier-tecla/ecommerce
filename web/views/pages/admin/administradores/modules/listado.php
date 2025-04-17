@@ -29,7 +29,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
+                        <!-- <tr>
                             <td>1</td>
                             <td>Javier Borjas</td>
                             <td>admin@correo.com</td>
@@ -45,7 +45,7 @@
                                     </a>
                                 </div>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
 
                 </table>

@@ -28,38 +28,45 @@
                     </thead>
                     <tbody>
 
+                        <?php foreach ($socials as $key => $value): ?>
+
                             <tr>
-                                <td>1</td>
+                                <td><?php echo $key+1 ?></td>
 
                                 <td>
-                                    <p class="text-uppercase">Facebook</p>
+                                    <p class="text-uppercase"><?php echo $value->name_social ?></p>
                                 </td>
 
                                 <td>
-                                    <a href="https://facebook.com" target="_blank">https://facebook.com <i class="fas fa-external-link-alt ml-1"></i></a>
+                                    <a href="<?php echo $value->url_social ?>" target="_blank"><?php echo $value->url_social ?><i class="fas fa-external-link-alt ml-1"></i></a>
                                 </td>
 
                                 <td>
-                                    <span class="badge badge-light border rounded-pill text-white py-2 px-3" style="background:<?php echo $topColor->background ?>"><i class="fab fa-facebook-f text-white"></i></span>
+                                    <span class="badge badge-light border rounded-pill text-white py-2 px-3" style="background:<?php echo $topColor->background ?>"><i class="<?php echo $value->icon_social ?> <?php echo $value->color_social ?>"></i></span>
                                 </td>
 
                                 <td>
-                                    <h3 class="text-white"><i class="fas fa-square"></i></h3>
+                                    <h3 class="border <?php echo $value->color_social ?> rounded p-0 m-0 text-center" style="width:31px; height:31px"><i class="fas fa-square p-0"></i></h3>
                                 </td>
 
                                 <td>
                                     <div class="btn-group">
-                                        <button href="" class="btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3">
+                                        <button href="" class="btn bg-purple border-0 rounded-pill mr-2 btn-sm px-3 modalEditSocial" data-social='<?php echo json_encode($value) ?>'>
                                             <i class="fas fa-pencil-alt text-white"></i>
                                         </button>
-                                        <button href="" class="btn btn-dark border-0 rounded-pill mr-2 btn-sm px-3">
+                                        <button href="" class="btn btn-dark border-0 rounded-pill mr-2 btn-sm px-3 deleteItem" rol="admin" table="socials" column="social" idItem="<?php echo base64_encode($value->id_social) ?>">
                                             <i class="fas fa-trash-alt text-white"></i>
                                         </button>
                                     </div>
                                 </td>
                             </tr>
 
-                        
+
+
+                        <?php endforeach ?>
+
+
+
 
                     </tbody>
 
@@ -72,3 +79,4 @@
     </div>
 
 </div>
+
