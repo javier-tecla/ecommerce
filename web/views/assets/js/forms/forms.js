@@ -267,15 +267,17 @@ getEmail();
 Cambio de icono para la categoría
 =============================================*/
 
+
 function addIcon(event){
 
   $("#myIcon").show();
+  $("#mySocial").modal("hide");
 
   $(document).ready(function(){
 
     $(".myInputIcon").on("keyup", function(){
 
-       var value = $(this).val().toLowerCase();
+       let value = $(this).val().toLowerCase();
 
        $(".btnChangeIcon").filter(function(){
 
@@ -294,6 +296,7 @@ function addIcon(event){
       $(".iconView").html(`<i class="`+$(this).attr("mode")+`"></i>`)
       $(event.target).val($(this).attr("mode"))
       $("#myIcon").hide();    
+      $("#mySocial").modal("show"); 
 
    })
 
@@ -310,6 +313,7 @@ $(document).on("click",'[data-bs-dismiss="modal"]',function(){
     })
 
 })
+
 
 /*=============================================
 Tags Input

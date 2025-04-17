@@ -24,6 +24,7 @@
      ?>
 
     <!-- /.content -->
-
    
   </div>
+
+  <script src="<?php echo $path ?>views/assets/js/socials.js"></script>

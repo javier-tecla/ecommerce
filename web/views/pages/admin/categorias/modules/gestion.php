@@ -466,55 +466,58 @@ if (isset($_GET["category"])) {
 
 </div>
 
-<!--=================================================
-Modal con libreria de iconos
- =================================================-->
+<!--=====================================
+Modal con librería de iconos
+======================================-->
 
 <div class="modal" id="myIcon">
+	
+	<div class="modal-dialog modal-lg modal-dialog-centered ">
+		
+		<div class="modal-content">
+			
+			<div class="modal-header">
+				<h4 class="modal-title">Cambiar Icono</h4>
+				<button type="button" class="close"  data-bs-dismiss="modal">&times;</button>
+			</div>
 
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal-body mx-3">
 
-        <div class="modal-content">
+				<input type="text" class="form-control mt-4 mb-3 myInputIcon" placeholder="Buscar Icono">
+				
+				<?php 
 
-            <div class="modal-header">
-                <h4 class="modal-title">Cambiar Icono</h4>
-                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
-            </div>
+				$data = file_get_contents($path."views/assets/json/fontawesome.json");
+				$icons = json_decode($data);
+		
+				?>
 
-            <div class="modal-body mx-3">
+				<div 
+				class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-3"
+				style="overflow-y: scroll; overflow-x: hidden; height:500px"
+				>
+					
+					<?php foreach ($icons as $key => $value): ?>
 
-                <input type="text" class="form-control mt-4 mb-3 myInpuIcon" placeholder="Buscar Icono">
+						<div class="col text-center py-4 btn btnChangeIcon" mode="<?php echo $value  ?>">
+							<i class="<?php echo $value ?> fa-2x"></i>
+						</div>
+						
+					<?php endforeach ?>
 
-                <?php
+				</div>
 
-                $data = file_get_contents($path . "views/assets/json/fontawesome.json");
-                $icons = json_decode($data);
+			</div>
 
-                ?>
+			<div class="modal-footer">
 
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-3"
-                    style="overflow-y: scroll; overflow-x: hidden; height:350px">
+				<button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal">Salir</button>
 
-                    <?php foreach ($icons as $key => $value): ?>
+			</div>
 
-                        <div class="col text-center py-4 btn btnChangeIcon" mode="<?php echo $value ?>">
-                            <i class="<?php echo $value ?> fa-2x"></i>
-                        </div>
+		</div>
 
-                    <?php endforeach ?>
-
-                </div>
-
-            </div>
-
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal">Salir</button>
-
-            </div>
-
-        </div>
-
-    </div>
+	</div>
 
 </div>
+
