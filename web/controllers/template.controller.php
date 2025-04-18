@@ -378,6 +378,8 @@ class TemplateController
                         $date->format('Y');
                 case 3:
                     return $date->format('d - m - Y');
+                case 4:
+                    return $date->format('d/m/Y');
                 default:
                     return $date->format('Y-m-d'); // Valor predeterminado
             }

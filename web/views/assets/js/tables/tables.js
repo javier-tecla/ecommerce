@@ -4,9 +4,9 @@ Tabla para administradores
 
 if($(".adminsTable").length > 0){
 
-  let url = "/ajax/data-admins.ajax.php";
+  var url = "/ajax/data-admins.ajax.php";
 
-  let columns = [
+  var columns = [
      {"data":"id_admin"},
      {"data":"name_admin"},
      {"data":"email_admin"},
@@ -15,7 +15,7 @@ if($(".adminsTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  let order = [0,"desc"];
+  var order = [0,"desc"];
   
 
 }
@@ -26,9 +26,9 @@ Tabla para plantillas
 
 if($(".templatesTable").length > 0){
 
-  let url = "/ajax/data-templates.ajax.php";
+  var url = "/ajax/data-templates.ajax.php";
 
-  let columns = [
+  var columns = [
      {"data":"id_template"},
      {"data":"active_template"},
      {"data":"logo_template"},
@@ -39,7 +39,7 @@ if($(".templatesTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  let order = [0,"desc"];
+  var order = [0,"desc"];
 
 }
 
@@ -49,9 +49,9 @@ Tabla para categorias
 
 if($(".categoriesTable").length > 0){
 
-  let url = "/ajax/data-categories.ajax.php";
+  var url = "/ajax/data-categories.ajax.php";
 
-  let columns = [
+  var columns = [
      {"data":"id_category"},
      {"data":"status_category"},
      {"data":"name_category"},
@@ -66,7 +66,7 @@ if($(".categoriesTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  let order = [0,"desc"];
+  var order = [0,"desc"];
   
 }
 
@@ -76,9 +76,9 @@ Tabla para subcategorias
 
 if($(".subcategoriesTable").length > 0){
 
-  let url = "/ajax/data-subcategories.ajax.php";
+  var url = "/ajax/data-subcategories.ajax.php";
 
-  let columns = [
+  var columns = [
      {"data":"id_subcategory"},
      {"data":"status_subcategory"},
      {"data":"name_subcategory"},
@@ -93,7 +93,7 @@ if($(".subcategoriesTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  let order = [0,"desc"];
+  var order = [0,"desc"];
   
 }
 
@@ -103,9 +103,9 @@ Tabla para productos
 
 if($(".productsTable").length > 0){
 
-  let url = "/ajax/data-products.ajax.php";
+  var url = "/ajax/data-products.ajax.php";
 
-  let columns = [
+  var columns = [
      {"data":"id_product"},
      {"data":"status_product"},
      {"data":"name_product"},
@@ -120,7 +120,7 @@ if($(".productsTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  let order = [0,"desc"];
+  var order = [0,"desc"];
   
 }
 
@@ -130,9 +130,9 @@ Tabla para slides
 
 if($(".slidesTable").length > 0){
 
-  let url = "/ajax/data-slides.ajax.php";
+  var url = "/ajax/data-slides.ajax.php";
 
-  let columns = [
+  var columns = [
      {"data":"id_slide"},
      {"data":"status_slide"},
      {"data":"background_slide"},
@@ -142,7 +142,7 @@ if($(".slidesTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  let order = [0,"desc"];
+  var order = [0,"desc"];
   
 }
 
@@ -152,9 +152,9 @@ Tabla para banners
 
 if($(".bannersTable").length > 0){
 
-  let url = "/ajax/data-banners.ajax.php";
+  var url = "/ajax/data-banners.ajax.php";
 
-  let columns = [
+  var columns = [
      {"data":"id_banner"},
      {"data":"status_banner"},
      {"data":"location_banner"},
@@ -165,7 +165,7 @@ if($(".bannersTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  let order = [0,"desc"];
+  var order = [0,"desc"];
   
 }
 
@@ -175,12 +175,12 @@ Tabla para órdenes
 
 if($(".ordersTable").length > 0){
 
-  let url = "/ajax/data-orders.ajax.php";
+  var url = "/ajax/data-orders.ajax.php";
 
-  let columns = [
+  var columns = [
      {"data":"id_order"},
      {"data":"process_order"},
-     {"data":"media_letiant"},
+     {"data":"media_variant"},
      {"data":"name_product"},
      {"data":"quantity_order"},
      {"data":"price_order"},
@@ -193,9 +193,12 @@ if($(".ordersTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  let order = [0,"desc"];
+  var order = [0,"desc"];
   
 }
+
+
+
 
 /*=============================================
 Configuración global Datatable
@@ -235,8 +238,8 @@ $("#tables").DataTable({
         "sPrevious": "Anterior"
       },
       "oAria": {
-        "sSortAscending":  ": Actilet para ordenar la columna de manera ascendente",
-        "sSortDescending": ": Actilet para ordenar la columna de manera descendente"
+        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
       }
     }
 
@@ -246,12 +249,12 @@ $("#tables").DataTable({
 Eliminar item
 =============================================*/
 
-$(document).on("click",".deleteItem", function(){
+$(document).on("click",".devareItem", function(){
 
-  let idItem = $(this).attr("idItem");
-  let table = $(this).attr("table");
-  let column =  $(this).attr("column");
-  let rol =  $(this).attr("rol");
+  var idItem = $(this).attr("idItem");
+  var table = $(this).attr("table");
+  var column =  $(this).attr("column");
+  var rol =  $(this).attr("rol");
 
   fncSweetAlert("confirm","¿Está seguro de borrar este item?","").then(resp=>{
    
@@ -262,12 +265,12 @@ $(document).on("click",".deleteItem", function(){
 
       if(rol == "admin"){
 
-        let token = localStorage.getItem("token-admin");
-        let url = "/ajax/delete-admin.ajax.php";
+        var token = localStorage.getItem("token-admin");
+        var url = "/ajax/devare-admin.ajax.php";
       
       }
 
-      let data = new FormData();
+      var data = new FormData();
       data.append("token", token);
       data.append("table", table);
       data.append("id", idItem);
@@ -341,10 +344,10 @@ $("#tables").on("draw.dt", function(){
 
         onSwitchChange: function(event, state){
          
-          let idItem = $(event.target).attr("idItem");
-          let table = $(event.target).attr("table");
-          let column =  $(event.target).attr("column");
-          let status = 0;
+          var idItem = $(event.target).attr("idItem");
+          var table = $(event.target).attr("table");
+          var column =  $(event.target).attr("column");
+          var status = 0;
 
           if(state){
 
@@ -356,9 +359,9 @@ $("#tables").on("draw.dt", function(){
 
           }
 
-          let token = localStorage.getItem("token-admin");
+          var token = localStorage.getItem("token-admin");
 
-          let data = new FormData();
+          var data = new FormData();
           data.append("token", token);
           data.append("table", table);
           data.append("id", idItem);
@@ -401,3 +404,64 @@ $("#tables").on("draw.dt", function(){
     })
 
 })
+
+/*=============================================
+Rango de fechas
+=============================================*/
+
+$('#daterange-btn').daterangepicker(
+  {
+    "locale": {
+      "format": "YYYY-MM-DD",
+      "separator": " - ",
+      "applyLabel": "Aplicar",
+      "cancelLabel": "Cancelar",
+      "fromLabel": "Desde",
+      "toLabel": "Hasta",
+      "customRangeLabel": "Rango Personalizado",
+      "daysOfWeek": [
+          "Do",
+          "Lu",
+          "Ma",
+          "Mi",
+          "Ju",
+          "Vi",
+          "Sa"
+      ],
+      "monthNames": [
+          "Enero",
+          "Febrero",
+          "Marzo",
+          "Abril",
+          "Mayo",
+          "Junio",
+          "Julio",
+          "Agosto",
+          "Septiembre",
+          "Octubre",
+          "Noviembre",
+          "Diciembre"
+      ],
+      "firstDay": 1
+    },
+    ranges   : {
+      'Hoy'       : [moment(), moment()],
+      'Ayer'   : [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+      'Últimos 7 días' : [moment().subtract(6, 'days'), moment()],
+      'Últimos 30 días': [moment().subtract(29, 'days'), moment()],
+      'Este Mes'  : [moment().startOf('month'), moment().endOf('month')],
+      'Último Mes'  : [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')],
+      'Este Año': [moment().startOf('year'), moment().endOf('year')],
+      'Último Año'  : [moment().subtract(1, 'year').startOf('year'), moment().subtract(1, 'year').endOf('year')],
+    },
+    startDate: moment($("#between1").val()),
+    endDate  : moment($("#between2").val())
+  },
+  function (start, end) {
+
+    var page = $("#page").val();
+    window.location = "/"+page+"?start="+start.format('YYYY-MM-DD')+"&end="+end.format('YYYY-MM-DD');
+    
+  }
+
+)

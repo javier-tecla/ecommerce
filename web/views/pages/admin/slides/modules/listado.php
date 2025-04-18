@@ -31,7 +31,7 @@
 
                     <tbody>
 
-                        <tr>
+                        <!-- <tr>
 
                             <td>1</td>
 
@@ -57,7 +57,7 @@
                                     </a>
                                 </div>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
 
                 </table>

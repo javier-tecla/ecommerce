@@ -11,7 +11,7 @@ $(".jd-slider").jdSlider({
 ESCONDER EL SLIDE
 ==============================================================*/
 
-let toogle = false;
+var toogle = false;
 
 $(document).on("click", "#btnSlide", function () {
   if (!toogle) {
