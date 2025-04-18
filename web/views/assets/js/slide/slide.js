@@ -26,4 +26,34 @@ $(document).on("click", "#btnSlide", function () {
     toogle = false;
 
   }
-});
+
+})
+
+/*=============================================
+BLOQUE DE TEXTO
+=============================================*/
+
+$(document).on("change",".changeDirectionSlide", function(){
+
+	if($(this).val() == "opt1" || $(this).val() == "opt2"){
+
+		$(".blockDirectionSlide").show();
+
+		if($(this).val() == "opt1"){
+
+			$("#coord_img_slide").val("top:15%; right:10%; width:45%;");
+			$("#coord_text_slide").val("top:20%; left:10%; width:40%;");
+		}
+
+		if($(this).val() == "opt2"){
+
+			$("#coord_img_slide").val("bottom:0%; left:15%; width:28%;");
+			$("#coord_text_slide").val("top:20%; right:15%; width:40%;");
+		}
+	
+	}else{
+
+		$(".blockDirectionSlide").hide();
+	}
+
+})

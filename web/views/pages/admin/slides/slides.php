@@ -41,3 +41,5 @@
   ?>
  <!-- /.content -->
  </div>
+
+ <script src="<?php echo $path ?>views/assets/js/slide/slide.js"></script>
