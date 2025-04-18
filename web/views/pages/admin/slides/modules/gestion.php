@@ -85,9 +85,9 @@ if(isset($_GET["slide"])){
 
 					<?php 
 
-						// require_once "controllers/slides.controller.php";
-						// $manage = new SlidesController();
-						// $manage -> slidesManage();
+						require_once "controllers/slides.controller.php";
+						$manage = new SlidesController();
+						$manage -> slidesManage();
 					
 					?>
 					
