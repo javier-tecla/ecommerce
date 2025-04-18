@@ -27,4 +27,4 @@
    
   </div>
 
-  <script src="<?php echo $path ?>views/assets/js/socials.js"></script>
+  <script src="<?php echo $path ?>views/assets/js/socials/socials.js"></script>

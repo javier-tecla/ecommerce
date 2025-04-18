@@ -1,12 +1,11 @@
-
 <div class="content pb-5">
-	
+
 	<div class="container">
-		
+
 		<div class="card">
-			
+
 			<div class="card-header">
-				
+
 				<h3 class="card-title">
 					<button type="button" class="btn bg-default templateColor py-2 px-3 btn-sm rounded-pill" data-bs-toggle="modal" data-bs-target="#mySocial">Agregar Red Social</button>
 				</h3>
@@ -14,9 +13,9 @@
 			</div>
 
 			<div class="card-body">
-				
+
 				<table id="tablesStatic" class="table table-bordered table-striped">
-					
+
 					<thead>
 						<tr>
 							<th>#</th>
@@ -26,14 +25,14 @@
 							<th>Color</th>
 							<th>Acciones</th>
 						</tr>
-						
+
 					</thead>
 					<tbody>
 
 						<?php foreach ($socials as $key => $value): ?>
 
 							<tr>
-								<td><?php echo $key+1 ?></td>
+								<td><?php echo $key + 1 ?></td>
 
 								<td>
 									<p class="text-uppercase"><?php echo $value->name_social ?></p>
@@ -46,7 +45,7 @@
 								<td>
 									<span class="badge badge-light border rounded-pill text-white py-2 px-3" style="background:<?php echo $topColor->background ?>"><i class="<?php echo $value->icon_social ?> <?php echo $value->color_social ?>"></i></span>
 								</td>
-								
+
 								<td>
 									<h3 class="border <?php echo $value->color_social ?> rounded p-0 m-0 text-center" style="width:31px; height:31px"><i class="fas fa-square p-0"></i></h3>
 								</td>
@@ -62,10 +61,10 @@
 									</div>
 								</td>
 							</tr>
-							
+
 						<?php endforeach ?>
 
-						
+
 
 					</tbody>
 
@@ -94,36 +93,36 @@
 
 				<!-- Modal body -->
 				<div class="modal-body bodyMySocial">
-					
+
 					<div class="mb-3 mt-3">
-						
+
 						<label for="name_social" class="form-label">Nombre:</label>
-						
-						<input type="text" 
-						class="form-control" 
-						id="name_social" 
-						placeholder="Ej: Facebook" 
-						name="name_social" 
-						onchange="validateJS(event,'text')"
-						required>
+
+						<input type="text"
+							class="form-control"
+							id="name_social"
+							placeholder="Ej: Facebook"
+							name="name_social"
+							onchange="validateJS(event,'text')"
+							required>
 
 						<div class="valid-feedback">Válido.</div>
 						<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
-					
+
 					</div>
 
 					<div class="mb-3 mt-3">
 
 						<label for="url_social" class="form-label">Url:</label>
-						
-						<input 
-						type="text" 
-						class="form-control" 
-						id="url_social" 
-						placeholder="Ej: https://facebook.com/" 
-						name="url_social" 
-						onchange="validateJS(event,'complete')"
-						required>
+
+						<input
+							type="text"
+							class="form-control"
+							id="url_social"
+							placeholder="Ej: https://facebook.com/"
+							name="url_social"
+							onchange="validateJS(event,'complete')"
+							required>
 
 						<div class="valid-feedback">Válido.</div>
 						<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
@@ -133,7 +132,7 @@
 					<div class="row">
 
 						<label class="form-label">Icono y color:</label>
-						
+
 						<div class="col">
 
 							<div class="input-group">
@@ -142,15 +141,14 @@
 									<i class="fas fa-shopping-bag"></i>
 								</span>
 
-								<input 
-								type="text"
-								class="form-control"
-								id="icon_social"
-								name="icon_social"
-								onfocus="addIcon(event)"
-								value="fas fa-shopping-bag"
-								required
-								>
+								<input
+									type="text"
+									class="form-control"
+									id="icon_social"
+									name="icon_social"
+									onfocus="addIcon(event)"
+									value="fas fa-shopping-bag"
+									required>
 
 								<div class="valid-feedback">Válido.</div>
 								<div class="invalid-feedback">Por favor llena este campo correctamente.</div>
@@ -161,15 +159,15 @@
 
 						<div class="col">
 							<select class="form-select" onchange="changeColorSocial(event)" id="color_social" name="color_social">
-							  <option value="">Selecciona Color</option>
-							  <option value="text-white">Blanco</option>
-							  <option value="text-dark">Negro</option>
-							  <option value="text-facebook">Facebook</option>
-							  <option value="text-youtube">YouTube</option>
-							  <option value="text-instagram">Instagram</option>
-							  <option value="text-twitter">Twitter</option>
-							  <option value="text-linkedin">Linkedin</option>
-							  <option value="text-twitch">Twitch</option>
+								<option value="">Selecciona Color</option>
+								<option value="text-white">Blanco</option>
+								<option value="text-dark">Negro</option>
+								<option value="text-facebook">Facebook</option>
+								<option value="text-youtube">YouTube</option>
+								<option value="text-instagram">Instagram</option>
+								<option value="text-twitter">Twitter</option>
+								<option value="text-linkedin">Linkedin</option>
+								<option value="text-twitch">Twitch</option>
 							</select>
 						</div>
 					</div>
@@ -179,15 +177,15 @@
 				<!-- Modal footer -->
 				<div class="modal-footer d-flex justify-content-between">
 					<div><button type="button" class="btn btn-dark rounded-pill" data-bs-dismiss="modal">Cerrar</button></div>
-					<div><button type="submit" class="btn btn-default templateColor rounded-pill">Guardar</button></div>  
+					<div><button type="submit" class="btn btn-default templateColor rounded-pill">Guardar</button></div>
 				</div>
 
-				<?php 
+				<?php
 
-					require_once "controllers/socials.controller.php";
-					$manage = new SocialsController();
-					$manage -> socialManage();
-				
+				require_once "controllers/socials.controller.php";
+				$manage = new SocialsController();
+				$manage->socialManage();
+
 				?>
 
 			</form>
@@ -201,38 +199,37 @@ Modal con librería de iconos
 ======================================-->
 
 <div class="modal" id="myIcon">
-	
+
 	<div class="modal-dialog modal-lg modal-dialog-centered ">
-		
+
 		<div class="modal-content">
-			
+
 			<div class="modal-header">
 				<h4 class="modal-title">Cambiar Icono</h4>
-				<button type="button" class="close"  data-bs-dismiss="modal">&times;</button>
+				<button type="button" class="close" data-bs-dismiss="modal">&times;</button>
 			</div>
 
 			<div class="modal-body mx-3">
 
 				<input type="text" class="form-control mt-4 mb-3 myInputIcon" placeholder="Buscar Icono">
-				
-				<?php 
 
-				$data = file_get_contents($path."views/assets/json/fontawesome.json");
+				<?php
+
+				$data = file_get_contents($path . "views/assets/json/fontawesome.json");
 				$icons = json_decode($data);
-		
+
 				?>
 
-				<div 
-				class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-3"
-				style="overflow-y: scroll; overflow-x: hidden; height:500px"
-				>
-					
+				<div
+					class="row row-cols-1 row-cols-sm-2 row-cols-md-4 py-3"
+					style="overflow-y: scroll; overflow-x: hidden; height:500px">
+
 					<?php foreach ($icons as $key => $value): ?>
 
 						<div class="col text-center py-4 btn btnChangeIcon" mode="<?php echo $value  ?>">
 							<i class="<?php echo $value ?> fa-2x"></i>
 						</div>
-						
+
 					<?php endforeach ?>
 
 				</div>
