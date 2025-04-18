@@ -249,7 +249,7 @@ $("#tables").DataTable({
 Eliminar item
 =============================================*/
 
-$(document).on("click",".devareItem", function(){
+$(document).on("click",".deleteItem", function(){
 
   var idItem = $(this).attr("idItem");
   var table = $(this).attr("table");
@@ -266,7 +266,7 @@ $(document).on("click",".devareItem", function(){
       if(rol == "admin"){
 
         var token = localStorage.getItem("token-admin");
-        var url = "/ajax/devare-admin.ajax.php";
+        var url = "/ajax/delete-admin.ajax.php";
       
       }
 
@@ -331,6 +331,7 @@ $(document).on("click",".devareItem", function(){
   })
 
 })
+
 
 /*=============================================
 Suiche
