@@ -1,3 +1,5 @@
+let bodyMySocial = $(".bodyMySocial").html();
+
 $("#tablesStatic").DataTable({
 
     "responsive": true,
@@ -55,25 +57,25 @@ $(document).on("click", ".modalEditSocial", function () {
 
     $("#mySocial").on('shown.bs.modal', function () {
 
-    if(data != undefined){
+        if (data != undefined) {
 
-			$(".bodyMySocial").append(`<input type="hidden" name="idSocial" value="${data.id_social}">`);
+            $(".bodyMySocial").append(`<input type="hidden" name="idSocial" value="${data.id_social}">`);
 
-			$("#name_social").val(data.name_social)
+            $("#name_social").val(data.name_social)
 
-			$("#url_social").val(data.url_social)
+            $("#url_social").val(data.url_social)
 
-			$(".iconView").addClass(data.color_social)
+            $(".iconView").addClass(data.color_social)
 
-			$(".iconView").html(`<i class="${data.icon_social}"></i>`)
+            $(".iconView").html(`<i class="${data.icon_social}"></i>`)
 
-			$("#icon_social").val(data.icon_social)
+            $("#icon_social").val(data.icon_social)
 
-			$("#color_social").val(data.color_social)
+            $("#color_social").val(data.color_social)
 
-			data = undefined;
+            data = undefined;
 
-		}
+        }
 
 
         function changeColorSocial(event) {
@@ -83,3 +85,11 @@ $(document).on("click", ".modalEditSocial", function () {
 
     });
 })
+
+$("#mySocial").on('hidden.bs.modal', function () {
+
+    $(".bodyMySocial").html('')
+
+    $(".bodyMySocial").html(bodyMySocial);
+})
+

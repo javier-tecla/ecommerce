@@ -4,9 +4,9 @@ Tabla para administradores
 
 if($(".adminsTable").length > 0){
 
-  var url = "/ajax/data-admins.ajax.php";
+  let url = "/ajax/data-admins.ajax.php";
 
-  var columns = [
+  let columns = [
      {"data":"id_admin"},
      {"data":"name_admin"},
      {"data":"email_admin"},
@@ -15,7 +15,7 @@ if($(".adminsTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  var order = [0,"desc"];
+  let order = [0,"desc"];
   
 
 }
@@ -26,9 +26,9 @@ Tabla para plantillas
 
 if($(".templatesTable").length > 0){
 
-  var url = "/ajax/data-templates.ajax.php";
+  let url = "/ajax/data-templates.ajax.php";
 
-  var columns = [
+  let columns = [
      {"data":"id_template"},
      {"data":"active_template"},
      {"data":"logo_template"},
@@ -39,7 +39,7 @@ if($(".templatesTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  var order = [0,"desc"];
+  let order = [0,"desc"];
 
 }
 
@@ -49,9 +49,9 @@ Tabla para categorias
 
 if($(".categoriesTable").length > 0){
 
-  var url = "/ajax/data-categories.ajax.php";
+  let url = "/ajax/data-categories.ajax.php";
 
-  var columns = [
+  let columns = [
      {"data":"id_category"},
      {"data":"status_category"},
      {"data":"name_category"},
@@ -66,7 +66,7 @@ if($(".categoriesTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  var order = [0,"desc"];
+  let order = [0,"desc"];
   
 }
 
@@ -76,9 +76,9 @@ Tabla para subcategorias
 
 if($(".subcategoriesTable").length > 0){
 
-  var url = "/ajax/data-subcategories.ajax.php";
+  let url = "/ajax/data-subcategories.ajax.php";
 
-  var columns = [
+  let columns = [
      {"data":"id_subcategory"},
      {"data":"status_subcategory"},
      {"data":"name_subcategory"},
@@ -93,7 +93,7 @@ if($(".subcategoriesTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  var order = [0,"desc"];
+  let order = [0,"desc"];
   
 }
 
@@ -103,9 +103,9 @@ Tabla para productos
 
 if($(".productsTable").length > 0){
 
-  var url = "/ajax/data-products.ajax.php";
+  let url = "/ajax/data-products.ajax.php";
 
-  var columns = [
+  let columns = [
      {"data":"id_product"},
      {"data":"status_product"},
      {"data":"name_product"},
@@ -120,7 +120,7 @@ if($(".productsTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  var order = [0,"desc"];
+  let order = [0,"desc"];
   
 }
 
@@ -130,9 +130,9 @@ Tabla para slides
 
 if($(".slidesTable").length > 0){
 
-  var url = "/ajax/data-slides.ajax.php";
+  let url = "/ajax/data-slides.ajax.php";
 
-  var columns = [
+  let columns = [
      {"data":"id_slide"},
      {"data":"status_slide"},
      {"data":"background_slide"},
@@ -142,7 +142,7 @@ if($(".slidesTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  var order = [0,"desc"];
+  let order = [0,"desc"];
   
 }
 
@@ -152,9 +152,9 @@ Tabla para banners
 
 if($(".bannersTable").length > 0){
 
-  var url = "/ajax/data-banners.ajax.php";
+  let url = "/ajax/data-banners.ajax.php";
 
-  var columns = [
+  let columns = [
      {"data":"id_banner"},
      {"data":"status_banner"},
      {"data":"location_banner"},
@@ -165,7 +165,7 @@ if($(".bannersTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  var order = [0,"desc"];
+  let order = [0,"desc"];
   
 }
 
@@ -175,12 +175,12 @@ Tabla para órdenes
 
 if($(".ordersTable").length > 0){
 
-  var url = "/ajax/data-orders.ajax.php";
+  let url = "/ajax/data-orders.ajax.php";
 
-  var columns = [
+  let columns = [
      {"data":"id_order"},
      {"data":"process_order"},
-     {"data":"media_variant"},
+     {"data":"media_letiant"},
      {"data":"name_product"},
      {"data":"quantity_order"},
      {"data":"price_order"},
@@ -193,12 +193,9 @@ if($(".ordersTable").length > 0){
      {"data":"actions", "orderable":false, "searchable":false}
   ]
 
-  var order = [0,"desc"];
+  let order = [0,"desc"];
   
 }
-
-
-
 
 /*=============================================
 Configuración global Datatable
@@ -238,8 +235,8 @@ $("#tables").DataTable({
         "sPrevious": "Anterior"
       },
       "oAria": {
-        "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
-        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+        "sSortAscending":  ": Actilet para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Actilet para ordenar la columna de manera descendente"
       }
     }
 
@@ -251,10 +248,10 @@ Eliminar item
 
 $(document).on("click",".deleteItem", function(){
 
-  var idItem = $(this).attr("idItem");
-  var table = $(this).attr("table");
-  var column =  $(this).attr("column");
-  var rol =  $(this).attr("rol");
+  let idItem = $(this).attr("idItem");
+  let table = $(this).attr("table");
+  let column =  $(this).attr("column");
+  let rol =  $(this).attr("rol");
 
   fncSweetAlert("confirm","¿Está seguro de borrar este item?","").then(resp=>{
    
@@ -265,12 +262,12 @@ $(document).on("click",".deleteItem", function(){
 
       if(rol == "admin"){
 
-        var token = localStorage.getItem("token-admin");
-        var url = "/ajax/delete-admin.ajax.php";
+        let token = localStorage.getItem("token-admin");
+        let url = "/ajax/delete-admin.ajax.php";
       
       }
 
-      var data = new FormData();
+      let data = new FormData();
       data.append("token", token);
       data.append("table", table);
       data.append("id", idItem);
@@ -344,10 +341,10 @@ $("#tables").on("draw.dt", function(){
 
         onSwitchChange: function(event, state){
          
-          var idItem = $(event.target).attr("idItem");
-          var table = $(event.target).attr("table");
-          var column =  $(event.target).attr("column");
-          var status = 0;
+          let idItem = $(event.target).attr("idItem");
+          let table = $(event.target).attr("table");
+          let column =  $(event.target).attr("column");
+          let status = 0;
 
           if(state){
 
@@ -359,9 +356,9 @@ $("#tables").on("draw.dt", function(){
 
           }
 
-          var token = localStorage.getItem("token-admin");
+          let token = localStorage.getItem("token-admin");
 
-          var data = new FormData();
+          let data = new FormData();
           data.append("token", token);
           data.append("table", table);
           data.append("id", idItem);
