@@ -26,7 +26,6 @@
 
                             </button>
 
-
                         </a>
 
                     </div>
@@ -71,7 +70,7 @@
 
                 <div class="slideText" style="top:20%; right:15%; width:40%"></div>
 
-               
+
             </li>
         </ul>
     </div>
