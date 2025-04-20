@@ -293,6 +293,33 @@ class DeleteController{
 
         }
 
+        /*=============================================
+        Borrar Banners
+        =============================================*/
+
+        if($this->table == "banners"){
+
+            $select = "id_banner,background_banner";
+            $url = "banners?linkTo=id_banner&equalTo=".base64_decode($this->id)."&select=".$select; 
+            $method = "GET";
+            $fields = array();
+
+            $dataItem = CurlController::request($url, $method, $fields)->results[0];
+
+            /*=============================================
+            Borrar Imagenes
+            =============================================*/
+
+            unlink("../views/assets/img/banner/".$dataItem->id_banner."/".$dataItem->background_banner);
+
+            /*=============================================
+            Borrar Directorio
+            =============================================*/
+
+            rmdir("../views/assets/img/banner/".$dataItem->id_banner);
+
+        }
+
         $url = $this->table."?id=".base64_decode($this->id)."&nameId=".$this->nameId."&token=".$this->token."&table=admins&suffix=admin";
     	$method ="DELETE";
     	$fields = array();
@@ -316,3 +343,4 @@ if(isset($_POST["token"])){
     $Delete -> ajaxDelete();
 
 }
+
