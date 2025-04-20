@@ -38,3 +38,5 @@
   ?>
 
  </div>
+
+ <script src="<?php echo $path ?>views/assets/js/banners/banners.js"></script>
