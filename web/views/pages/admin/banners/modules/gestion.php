@@ -84,9 +84,9 @@ if(isset($_GET["banner"])){
 
 					<?php 
 
-						// require_once "controllers/banners.controller.php";
-						// $manage = new BannersController();
-						// $manage -> bannersManage();
+						require_once "controllers/banners.controller.php";
+						$manage = new BannersController();
+						$manage -> bannersManage();
 					
 					?>
 					
