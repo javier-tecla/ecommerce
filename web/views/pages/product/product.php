@@ -350,6 +350,24 @@ if (!empty($product)) {
 
 				</div>
 
+				<!--=====================================
+				Link Whatsapp
+				======================================-->
+
+				<div class="text-center">
+
+					<a
+						href=""
+						class="questionProduct btn btn-default bg-transparent my-4 rounded-pill font-weight-bold"
+						target="_blank"
+						name="<?php echo $product->name_product ?>"
+						phone="<?php echo $phone ?>">
+
+						¿Tienes dudas acerca de este producto? ¡haz clic acá! <i class="fab fa-whatsapp ml-1"></i>
+					</a>
+
+				</div>
+
 
 			</div>
 
@@ -360,5 +378,9 @@ if (!empty($product)) {
 
 
 </div>
+
+<?php
+include "modules/ws.php";
+?>
 
 <script src="<?php echo $path ?>views/assets/js/product/product.js"></script>

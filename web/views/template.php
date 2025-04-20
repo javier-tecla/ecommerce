@@ -40,6 +40,7 @@ Variable Path
 =============================================*/
 
 $path = TemplateController::path();
+$phone = 5491135744311;
 
 /*=============================================
 Capturar las rutas de la URL

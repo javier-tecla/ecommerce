@@ -349,3 +349,17 @@ $(document).on("click", ".addCart", function () {
 	})
 
 })
+
+/*=============================================
+Whatsapp
+=============================================*/
+
+if ($(".questionProduct").length > 0) {
+
+	var questionProduct = $(".questionProduct");
+
+	questionProduct.each((i)=>{
+
+		$(questionProduct[i]).attr("href","https://wa.me/"+$(questionProduct[i]).attr("phone")+"?text="+encodeURIComponent("¡Hola! Tengo una inquietud con el producto "+$(questionProduct[i]).attr("name")));
+	})
+}

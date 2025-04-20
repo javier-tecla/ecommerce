@@ -109,13 +109,6 @@
                   <p>Productos</p>
                 </a>
               </li>
-              <li class="nav-item">
-                <a href="/admin/mensajes" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "mensajes"): ?> active <?php endif ?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Mensajes</p>
-                  <span class="right badge badge-info">5</span>
-                </a>
-              </li>
             </ul>
           </li>
 
