@@ -1,3 +1,29 @@
+<?php
+
+/*=============================================
+Pedidos
+=============================================*/
+
+$select = "id_order";
+$url = "orders?linkTo=process_order&equalTo=0&select=".$select;
+$method = "GET";
+$fields = array();
+
+$orders = CurlController::request($url,$method,$fields);
+
+if($orders->status == 200){
+
+  $orders = $orders->total;
+
+}else{
+
+  $orders = 0;
+
+}
+
+
+?>
+  
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -117,7 +143,7 @@
               <p>
                 Ventas
                 <i class="right fas fa-angle-left"></i>
-                <span class="right badge badge-warning mr-1">5</span>
+                <span class="right badge badge-warning mr-1"><?php echo $orders ?></span>
               </p>
             </a>
             <ul class="nav nav-treeview">
@@ -125,7 +151,7 @@
                 <a href="/admin/pedidos" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "pedidos"): ?> active <?php endif ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Pedidos</p>
-                  <span class="right badge badge-success">2</span>
+                  <span class="right badge badge-success"><?php echo $orders ?></span>
                 </a>
               </li>
               <li class="nav-item">
