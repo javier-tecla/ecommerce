@@ -93,7 +93,18 @@ if ($shopping->status == 200) {
 
                                     <?php if ($warrantyDate >= date("Y-m-d")): ?>
 
-                                        <div class="mr-1 py-2 px-3 bg-warning rounded-pill small">Fecha límite garantía: <?php echo TemplateController::formatDate(1, $warrantyDate) ?></div>
+                                        <a href="" target="_blank" class="mr-1 py-2 px-3 bg-warning rounded-pill small getWarranty" phone="<?php echo $phone ?>" order="<?php echo $value->uniqid_order ?>">Fecha límite garantía: <?php echo TemplateController::formatDate(1, $warrantyDate) ?> <i class="fab fa-whatsapp ml-2"></i></a>
+
+                                    <?php else: ?>
+
+                                        <a
+                                            class="questionOrder bg-transparent border rounded-pill small p-2"
+                                            href=""
+                                            target="_blank"
+                                            order="<?php echo $value->uniqid_order ?>"
+                                            phone="<?php echo $phone ?>">
+                                            ¿Tiene dudas acerca de esta compra? ¡haz clic acá! <i class="fab fa-whatsapp ml-2"></i>
+                                        </a>
 
                                     <?php endif ?>
 
@@ -175,7 +186,18 @@ if ($shopping->status == 200) {
 
                                         <?php if ($warrantyDate >= date("Y-m-d")): ?>
 
-                                            <span class="ml-1 py-2 px-3 bg-warning rounded-pill small">Fecha límite reembolso: <?php echo TemplateController::formatDate(1, $warrantyDate) ?></span>
+                                            <a href="" target="_blank" class="ml-1 py-2 px-3 bg-warning rounded-pill small getRefund" phone="<?php echo $phone ?>" order="<?php echo $value->uniqid_order ?>">Fecha límite reembolso: <?php echo TemplateController::formatDate(1, $warrantyDate) ?></a>
+
+                                        <?php else: ?>
+
+                                            <a
+                                                class="questionOrder bg-transparent border rounded-pill small p-2"
+                                                href=""
+                                                target="_blank"
+                                                order="<?php echo $value->uniqid_order ?>"
+                                                phone="<?php echo $phone ?>">
+                                                ¿Tiene dudas acerca de esta compra? ¡haz clic acá! <i class="fab fa-whatsapp ml-2"></i>
+                                            </a>
 
                                         <?php endif ?>
 
@@ -202,3 +224,5 @@ if ($shopping->status == 200) {
     <?php include "views/pages/no-found/no-found.php" ?>
 
 <?php endif ?>
+
+<script src="<?php echo $path ?>views/assets/js/orders/orders.js"></script>

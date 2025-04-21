@@ -51,7 +51,7 @@ class DatatableController{
 
             }
 
-            $select = "type_variant,process_order,url_product,image_product,media_variant,name_product,description_variant,quantity_order,price_order,name_user,ref_order,method_order,number_order,track_order,start_date_order,medium_date_order,end_date_order,id_order";
+            $select = "type_variant,process_order,url_product,image_product,media_variant,name_product,description_variant,quantity_order,price_order,name_user,ref_order,method_order,number_order,track_order,start_date_order,medium_date_order,end_date_order,id_order,uniqid_order";
 
             /*=============================================
            	Búsqueda de datos
@@ -61,7 +61,7 @@ class DatatableController{
 
             	if(preg_match('/^[0-9A-Za-zñÑáéíóú ]{1,}$/',$_POST['search']['value'])){
 
-            		$linkTo = ["name_product","description_variant","price_order","name_user","ref_order","method_order","number_order","track_order"];
+            		$linkTo = ["name_product","description_variant","price_order","name_user","uniqid_order","method_order","number_order","track_order"];
 
             		$search = str_replace(" ","_",$_POST['search']['value']);
 
@@ -182,7 +182,7 @@ class DatatableController{
 					$quantity_order = $value->quantity_order;
 					$price_order = "<span>$".number_format($value->price_order,2)."</span>";
 					$name_user = $value->name_user;
-					$ref_order = "<span class='badge badge-default bg-white border rounded-pill text-dark px-3 py-1'>".$value->ref_order."</span>";
+					$uniqid_order = "<span class='badge badge-default bg-white border rounded-pill text-dark px-3 py-1'>".$value->uniqid_order."</span>";
 					$method_order = "<p class='text-uppercase'>".$value->method_order."</p>";
 					$number_order = $value->number_order;
 					$track_order =  $value->track_order;
@@ -206,7 +206,7 @@ class DatatableController{
 					     "quantity_order":"'.$quantity_order.'",
 					     "price_order":"'.$price_order.'",
 					     "name_user":"'.$name_user.'",
-					     "ref_order":"'.$ref_order.'",
+					     "uniqid_order":"'.$uniqid_order.'",
 					     "method_order":"'.$method_order.'",
 					     "number_order":"'.$number_order.'",
 					     "track_order":"'.$track_order.'",

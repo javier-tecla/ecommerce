@@ -110,10 +110,20 @@ if (isset($_GET["ref"])) {
 
       foreach ($carts as $key => $value) {
 
+        if($value->type_variant == "gallery"){
+
+          $process_order = 0;
+
+        }else{
+
+          $process_order = 2;
+        }
+
         $url = "orders?token=" . $_SESSION["user"]->token_user . "&table=users&suffix=user";
         $method = 'POST';
         $fields = array(
           "id_user_order" => $value->id_user_cart,
+          "uniqid_order" => uniqid(),
           "id_product_order" => $value->id_product_cart,
           "id_variant_order" => $value->id_variant_cart,
           "quantity_order" => $value->quantity_cart,
@@ -122,6 +132,7 @@ if (isset($_GET["ref"])) {
           "number_order" => $value->order_cart,
           "method_order" => $value->method_cart,
           "warranty_order" => 7,
+          "process_order" => $process_order,
           "start_date_order" => date("Y-m-d"),
           "date_created_order" => date("Y-m-d")
 

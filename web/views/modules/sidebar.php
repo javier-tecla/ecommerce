@@ -155,13 +155,6 @@ if($orders->status == 200){
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/disputas" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "disputas"): ?> active <?php endif ?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Disputas</p>
-                  <span class="right badge badge-danger">3</span>
-                </a>
-              </li>
-              <li class="nav-item">
                 <a href="/admin/informes" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "informes"): ?> active <?php endif ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Informes</p>

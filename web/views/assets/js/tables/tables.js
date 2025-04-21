@@ -185,7 +185,7 @@ if($(".ordersTable").length > 0){
      {"data":"quantity_order"},
      {"data":"price_order"},
      {"data":"name_user"},
-     {"data":"ref_order"},
+     {"data":"uniqid_order"},
      {"data":"method_order"},
      {"data":"number_order"},
      {"data":"track_order"},
