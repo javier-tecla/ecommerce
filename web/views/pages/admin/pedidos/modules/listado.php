@@ -193,9 +193,9 @@ MODAL PARA EDITAR UNA ORDEN
 
 				<?php 
 
-					require_once "controllers/payments.controller.php";
-					$manage = new PaymentsController();
-					$manage -> editOrder();
+					// require_once "controllers/payments.controller.php";
+					// $manage = new PaymentsController();
+					// $manage -> editOrder();
 				
 				?>
 

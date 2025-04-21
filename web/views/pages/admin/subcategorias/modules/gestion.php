@@ -52,7 +52,7 @@ if (isset($_GET["subcategory"])) {
 
                             <div class="col-12 col-lg-6 mt-2 d-none d-lg-block">
 
-                                <!-- <button type="submit" class="btn border-0 templateColor float-right py-2 px-3 btn-sm rounded-pill">Guardar Información</button> -->
+                                <button type="submit" class="btn border-0 templateColor float-right py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
 
                                 <a href="/admin/subcategorias" class="btn btn-default float-right py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a>
 
@@ -64,7 +64,7 @@ if (isset($_GET["subcategory"])) {
                                     <a href="/admin/subcategorias" class="btn btn-default py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a>
                                 </div>
                                 <div>
-                                    <!-- <button type="submit" class="btn border-0 templateColor py-2 px-3 btn-sm rounded-pill">Guardar Información</button> -->
+                                    <button type="submit" class="btn border-0 templateColor py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
                                 </div>
 
                             </div>
@@ -458,14 +458,14 @@ if (isset($_GET["subcategory"])) {
 
                                 <button type="submit" class="btn border-0 templateColor float-right py-2 px-3 btn-sm rounded-pill">Guardar Información
                                 </button>
-                                <!-- <a href="/admin/categorias" class="btn btn-default float-right py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a> -->
+                                <a href="/admin/categorias" class="btn btn-default float-right py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a>
 
                             </div>
 
                             <div class="col-12 text-center d-flex justify-content-center mt-2 d-block d-lg-none">
 
                                 <div>
-                                    <!-- <a href="/admin/categorias" class="btn btn-default py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a> -->
+                                    <a href="/admin/categorias" class="btn btn-default py-2 px-3 btn-sm rounded-pill mr-2">Regresar</a>
                                 </div>
                                 <div>
                                     <button type="submit" class="btn border-0 templateColor py-2 px-3 btn-sm rounded-pill">Guardar Información</button>
