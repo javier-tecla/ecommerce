@@ -185,7 +185,7 @@ if($(".ordersTable").length > 0){
      {"data":"quantity_order"},
      {"data":"price_order"},
      {"data":"name_user"},
-     {"data":"uniqid_order"},
+     {"data":"ref_order"},
      {"data":"method_order"},
      {"data":"number_order"},
      {"data":"track_order"},
@@ -196,6 +196,7 @@ if($(".ordersTable").length > 0){
   var order = [0,"desc"];
   
 }
+
 
 
 

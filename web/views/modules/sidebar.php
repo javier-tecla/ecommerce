@@ -87,7 +87,6 @@
               <p>
                 Inventario
                 <i class="right fas fa-angle-left"></i>
-                <span class="right badge badge-primary mr-1">5</span>
               </p>
             </a>
             <ul class="nav nav-treeview">
