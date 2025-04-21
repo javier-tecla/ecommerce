@@ -164,9 +164,9 @@ $("#tableReportSales").DataTable({
 		dom: 'B<"clear">lfrtip',
 		buttons: [
 	        { extend: 'copy', className: 'btn-light border' },
-	        // { extend: 'csv', className: 'btn-light border' },
+	        { extend: 'csv', className: 'btn-light border' },
 	        { extend: 'excel', className: 'btn-light border' },
-	        // { extend: 'pdf', className: 'btn-light border' },
+	        { extend: 'pdf', className: 'btn-light border' },
 	        { extend: 'print', className: 'btn-light border' },
 	        { extend: 'colvis', className: 'btn-light border' }
 	    ]
