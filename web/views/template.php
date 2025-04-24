@@ -330,6 +330,12 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <script src="<?php echo $path ?>views/assets/js/plugins/daterangepicker/daterangepicker.js"></script>
   <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment-with-locales.min.js"></script>
 
+  <!-- ChartJS -->
+  <script src="<?php echo $path ?>views/assets/js/plugins/chart.js/Chart.min.js"></script>
+  
+  
+  
+
 </head>
 
 <body class="hold-transition sidebar-collapse layout-top-nav">

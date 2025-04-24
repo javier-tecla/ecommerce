@@ -1,3 +1,12 @@
+<?php if ($_SESSION["admin"]->rol_admin == "editor"){
+  
+  echo '<script>
+         window.location = "'.$path.'404";
+      </script>';
+}
+
+?>
+
  <!-- Content Header (Page header) -->
  <div class="content-header">
       <div class="container">

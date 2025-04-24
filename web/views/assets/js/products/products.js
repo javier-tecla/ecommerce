@@ -4,9 +4,9 @@ Grid & List
 
 $(document).on("click", ".btnView", function () {
 
-    let type = $(this).attr("attr-type");
-    let btnType = $("[attr-type]");
-    let index = $(this).attr("attr-index");
+    var type = $(this).attr("attr-type");
+    var btnType = $("[attr-type]");
+    var index = $(this).attr("attr-index");
 
     if (type == "list") {
 
@@ -39,13 +39,13 @@ $(document).on("click", ".btnView", function () {
 Paginación
 ===================================*/
 
-let target = $('.pagination');
+var target = $('.pagination');
 
 if (target.length > 0) {
 
     target.each(function () {
 
-        let el = $(this),
+        var el = $(this),
             totalPages = el.data("total-pages"),
             urlPage = el.data("url-page"),
             currentPage = el.data("current-page");
@@ -88,7 +88,7 @@ Función para buscar productos
 
 $(document).on("click", ".btnSearch", function () {
 
-    let value = $(this).parent().parent().children(".inputSearch").val().toLowerCase();
+    var value = $(this).parent().parent().children(".inputSearch").val().toLowerCase();
 
     value = value.replace(/[#\\;\\$\\&\\%\\=\\(\\)\\:\\,\\'\\"\\.\\¿\\¡\\!\\?]/g, "");
     value = value.replace(/[ ]/g, "-");
@@ -112,7 +112,7 @@ $(".inputSearch").keyup(function (event) {
 
     if (event.keyCode == 13 && $(".inputSearch").val() != "") {
 
-        let value = $(".inputSearch").val().toLowerCase();
+        var value = $(".inputSearch").val().toLowerCase();
 
         value = value.replace(/[#\\;\\$\\&\\%\\=\\(\\)\\:\\,\\'\\"\\.\\¿\\¡\\!\\?]/g, "");
         value = value.replace(/[ ]/g, "-");
@@ -133,11 +133,11 @@ Adicionar a favoritos
 
 $(document).on("click", ".addFavorite", function () {
 
-    let idProduct = $(this).attr("idProduct");
-    let elem = $(this);
+    var idProduct = $(this).attr("idProduct");
+    var elem = $(this);
     $(elem).children("i").css({ "color": "#dc3545" })
 
-    let data = new FormData();
+    var data = new FormData();
     data.append("token", localStorage.getItem("token-user"));
     data.append("idProduct", idProduct);
 
@@ -172,18 +172,18 @@ Quitar de favoritos
 
 $(document).on("click", ".remFavorite", function () {
 
-    let idFavorite = $(this).attr("idFavorite");
-    let elem = $(this);
+    var idFavorite = $(this).attr("idFavorite");
+    var elem = $(this);
     $(elem).children("i").css({ "color": "#000" })
 
-    let pageFavorite = $(this).attr("pageFavorite");
+    var pageFavorite = $(this).attr("pageFavorite");
 
     if (pageFavorite == "yes") {
 
         $(this).parent().parent().parent().parent().parent().remove();
     }
 
-    let data = new FormData();
+    var data = new FormData();
     data.append("token", localStorage.getItem("token-user"));
     data.append("idFavorite", idFavorite);
 

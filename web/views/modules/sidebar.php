@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 /*=============================================
 Pedidos
@@ -21,14 +21,14 @@ if($orders->status == 200){
 
 }
 
+ ?>
 
-?>
-  
+
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/admin" class="brand-link">
-      <img src="<?php echo $path ?>views/assets/img/template/<?php echo $template->id_template ?>/<?php echo $template->icon_template ?>" alt="Logo carrito de compras" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <img src="<?php echo $path ?>views/assets/img/template/<?php echo $template->id_template ?>/<?php echo $template->icon_template ?>" class="brand-image img-circle elevation-3" style="opacity: .8">
       <span class="brand-text font-weight-light">Administradores</span>
     </a>
 
@@ -46,42 +46,47 @@ if($orders->status == 200){
 
       <!-- Sidebar Menu -->
       <nav class="mt-2">
+        
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-          <li class="nav-item">
-            <a href="/admin/administradores" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "administradores"): ?> active <?php endif ?>">
-              <i class="nav-icon fas fa-user-cog"></i>
-              <p>
-                Administradores
-              </p>
-            </a>
-          </li>
+          <?php if ($_SESSION["admin"]->rol_admin == "admin"): ?>
 
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
-              <p>
-                General
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/admin/plantillas" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "plantillas"): ?> active <?php endif ?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Plantillas</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/redes-sociales" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "redes-sociales"): ?> active <?php endif ?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Redes Sociales</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+            <li class="nav-item">
+              <a href="/admin/administradores" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "administradores"): ?> active <?php endif ?>">
+                <i class="nav-icon fas fa-user-cog"></i>
+                <p>
+                  Administradores
+                </p>
+              </a>
+            </li>
+
+            <!-- Add icons to the links using the .nav-icon class
+                 with font-awesome or any other icon font library -->
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-cog"></i>
+                <p>
+                  General
+                  <i class="right fas fa-angle-left"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/admin/plantillas" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "plantillas"): ?> active <?php endif ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Plantillas</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/admin/redes-sociales" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "redes-sociales"): ?> active <?php endif ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Redes Sociales</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+
+          <?php endif ?>
 
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -107,7 +112,7 @@ if($orders->status == 200){
             </ul>
           </li>
 
-          <li class="nav-item">
+           <li class="nav-item">
             <a href="#" class="nav-link">
               <i class="nav-icon fas fa-shopping-bag"></i>
               <p>
@@ -123,7 +128,7 @@ if($orders->status == 200){
                 </a>
               </li>
               <li class="nav-item">
-                <a href="/admin/subcategorias" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "subcategorias"): ?> active <?php endif ?>"">
+                <a href="/admin/subcategorias" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "subcategorias"): ?> active <?php endif ?>">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Subcategorías</p>
                 </a>
@@ -137,40 +142,45 @@ if($orders->status == 200){
             </ul>
           </li>
 
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-funnel-dollar"></i>
-              <p>
-                Ventas
-                <i class="right fas fa-angle-left"></i>
-                <span class="right badge badge-warning mr-1"><?php echo $orders ?></span>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="/admin/pedidos" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "pedidos"): ?> active <?php endif ?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Pedidos</p>
-                  <span class="right badge badge-success"><?php echo $orders ?></span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="/admin/informes" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "informes"): ?> active <?php endif ?>">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Informes</p>
-                </a>
-              </li>
-            </ul>
-          </li>
+          <?php if ($_SESSION["admin"]->rol_admin == "admin"): ?>
 
-          <li class="nav-item">
-            <a href="/admin/clientes" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "clientes"): ?> active <?php endif ?>">
-              <i class="nav-icon fas fa-users"></i>
-              <p>
-                Clientes
-              </p>
-            </a>
-          </li>
+            <li class="nav-item">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-funnel-dollar"></i>
+                <p>
+                 Ventas
+                  <i class="right fas fa-angle-left"></i>
+                  <span class="right badge badge-warning mr-1"><?php echo $orders ?></span>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="/admin/pedidos" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "pedidos"): ?> active <?php endif ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Pedidos</p>
+                    <span class="right badge badge-success"><?php echo $orders ?></span>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="/admin/informes" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "informes"): ?> active <?php endif ?>">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Informes</p>
+                  </a>
+                <li>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a href="/admin/clientes" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "clientes"): ?> active <?php endif ?>">
+                <i class="nav-icon fas fa-users"></i>
+                <p>
+                  Clientes
+                  
+                </p>
+              </a>
+            </li>
+
+          <?php endif ?> 
 
           <li class="nav-item">
             <a href="/salir" class="nav-link">
@@ -180,7 +190,7 @@ if($orders->status == 200){
               </p>
             </a>
           </li>
-
+          
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
