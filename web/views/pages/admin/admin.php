@@ -51,7 +51,8 @@ Lista blanca de url permitidas en el dashboard
             $routesArray[1] == "productos" ||
             $routesArray[1] == "pedidos" ||
             $routesArray[1] == "informes" ||
-            $routesArray[1] == "clientes"
+            $routesArray[1] == "clientes" ||
+            $routesArray[1] == "visitantes"
             ) {
 
             include $routesArray[1] . "/" . $routesArray[1] . ".php";

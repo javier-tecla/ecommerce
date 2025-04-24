@@ -180,6 +180,16 @@ if($orders->status == 200){
               </a>
             </li>
 
+            <li class="nav-item">
+              <a href="/admin/visitantes" class="nav-link <?php if (!empty($routesArray[1]) && $routesArray[1] == "visitantes"): ?> active <?php endif ?>">
+                <i class="fas fa-map-marker-alt"></i>
+                <p>
+                  Visitantes
+                  
+                </p>
+              </a>
+            </li>
+
           <?php endif ?> 
 
           <li class="nav-item">

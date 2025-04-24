@@ -1,4 +1,4 @@
-<!-- <?php 
+<?php 
 
 $ip =  $_SERVER["HTTP_X_REAL_IP"];
 $data = CurlController::apiGeoplugin($ip);
@@ -51,8 +51,8 @@ $fields = array();
 
 $visits = CurlController::request($url,$method,$fields);
 
-$countries = array();
-$jsonCountries = []; 
+$regions = array();
+$jsonRegions = []; 
 
 if($visits->status == 200){
 
@@ -62,19 +62,19 @@ if($visits->status == 200){
 
 	foreach ($visits as $key => $value) {
 
-		array_push($countries, $value->country_visit);
+		array_push($regions, $value->region_visit);
 		
 	}
 
-	$countries = array_unique($countries);
+	$regions = array_unique($regions);
 
-	foreach ($countries as $key => $value) {
+	foreach ($regions as $key => $value) {
 
 		foreach ($visits as $index => $item) {
 
-			if($value == $item->country_visit){
+			if($value == $item->region_visit){
 
-				$jsonCountries[$value] += 1;
+				$jsonRegions[$value] += 1;
 			
 			}
 
@@ -87,7 +87,7 @@ if($visits->status == 200){
 
 ?>
 
-<?php if (!empty($countries)): ?>
+<?php if (!empty($regions)): ?>
 
 <div class="container-fluid bg-light border" id="topVisit">
 
@@ -95,7 +95,7 @@ if($visits->status == 200){
 		
 		<div class="btn-group float-end p-2">
 
-			<p class="pt-3 lead">Tu eres nuestro visitante #<?php echo $totalVisits?></p>
+			<p class="pt-3 lead">Numero de Visitantes #<?php echo $totalVisits?></p>
 			
 		</div>		
 
@@ -107,7 +107,7 @@ if($visits->status == 200){
 	
 	<div class="row row-cols-1 row-cols-sm-2 row-cols-md-6">
 
-		<?php $count = 0; foreach ($jsonCountries as $key => $value): $count++ ?>
+		<?php $count = 0; foreach ($jsonRegions as $key => $value): $count++ ?>
 
 			<?php if ($count < 7): ?>
 				
@@ -138,4 +138,4 @@ if($visits->status == 200){
 
 
 
-<script src="<?php echo $path ?>views/assets/js/visits/visits.js"></script> -->
+<script src="<?php echo $path ?>views/assets/js/visits/visits.js"></script>
